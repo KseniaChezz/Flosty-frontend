@@ -10,6 +10,7 @@ export const TEXT = {
     delete: 'Удалить',
     cancel: 'Отмена',
     show: 'Показать',
+    favorite: 'Избранное',
 
     registration: 'Регистрация',
     of: 'из',
@@ -41,6 +42,7 @@ export const TEXT = {
     emptyUserCardList: 'Пока нет ни одной карты в списке.\n' + 'Добавьте карту оплаты через иконку «+»',
     emptyNotificationList: 'Пока нет уведомлений',
     emptyMessageList: 'Пока нет сообщений',
+    emptyFavoriteList: 'Вам пока ничего не приглянулось. Но это не поздно исправить прямо сейчас!',
     addAddress: 'Добавить адрес',
     addCard: 'Добавить карту',
     editAddress: 'Редактировать адрес',

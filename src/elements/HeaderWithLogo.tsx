@@ -12,12 +12,11 @@ import {RootNavigatorRoutes, AppTab} from '../enums';
 
 import {IState} from '../store';
 
-interface IProps {
-  navigation: any;
-}
+import {navigate} from '../utils';
+
+interface IProps {}
 
 const HeaderWithLogo = memo((props: IProps) => {
-  const {navigation} = props;
   const selectedTab: AppTab = useSelector((state: IState) => state.app.selectedTab);
   const dispatch = useDispatch();
   const img: ImageSourcePropType =
@@ -27,7 +26,7 @@ const HeaderWithLogo = memo((props: IProps) => {
 
   const onUserPress = () => {
     dispatch(setAppTab(AppTab.USER));
-    navigation.navigate(RootNavigatorRoutes.USER_PROFILE);
+    navigate(RootNavigatorRoutes.USER_PROFILE);
   };
 
   return (

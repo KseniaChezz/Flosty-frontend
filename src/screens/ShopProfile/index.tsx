@@ -1,5 +1,5 @@
 import React, {memo, useState} from 'react';
-import {View, Text, ScrollView} from 'react-native';
+import {ScrollView} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
 
 import {styles} from './style';
@@ -22,8 +22,6 @@ import {productList} from '../../constants/product_temp';
 
 import {getSubscribersValueText} from '../../utils';
 
-import {IProduct} from '../../types/product';
-
 type ScreenNavigationProp = StackNavigationProp<IRootNavigatorParamList, RootNavigatorRoutes.SHOP_PROFILE>;
 
 interface IProps {
@@ -37,10 +35,7 @@ const ShopProfile = memo((props:IProps) => {
     const [searchText, setSearchText] = useState<string>('');
 
     return (
-        <CommonScreenWrapper
-            style={styles.container}
-            navigation={navigation}
-        >
+        <CommonScreenWrapper style={styles.container}>
             <ScrollView>
                 <ShopInfoCard
                     name={'AzART'}

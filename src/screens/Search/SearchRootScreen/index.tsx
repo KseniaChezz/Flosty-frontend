@@ -45,10 +45,7 @@ const SearchRootScreen = memo((props:IProps) => {
     };
 
     return (
-        <CommonScreenWrapper
-            style={styles.container}
-            navigation={navigation}
-        >
+        <CommonScreenWrapper style={styles.container}>
             <ScrollView>
                 <SearchInput
                     text={searchText}
@@ -64,7 +61,6 @@ const SearchRootScreen = memo((props:IProps) => {
                     productList={productList}
                 />
             </ScrollView>
-
         </CommonScreenWrapper>
     );
 });

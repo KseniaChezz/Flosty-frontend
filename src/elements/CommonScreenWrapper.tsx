@@ -13,8 +13,6 @@ import {COLORS} from '../constants/colors';
 
 interface IProps {
     children: ReactNode;
-    navigation: any;
-
     style?: ViewStyle;
 }
 
@@ -22,14 +20,11 @@ const CommonScreenWrapper = memo((props:IProps) => {
     const {
         style,
         children,
-        navigation,
     } = props;
 
     return (
         <View style={styles.container}>
-            <HeaderWithLogo
-                navigation={navigation}
-            />
+            <HeaderWithLogo/>
 
             <View style={[styles.innerContainer, style]}>
                 {children}
