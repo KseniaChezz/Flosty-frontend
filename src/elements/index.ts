@@ -8,6 +8,7 @@ import PlainButton from './PlainButton';
 import ImageButton from './ImageButton';
 import ImageButtonWithText from './ImageButtonWithText';
 import ColoredButton from './ColoredButton';
+import RoundButton from './RoundButton';
 
 import PlainTextInput from './PlainTextInput';
 import TextInputWithTitleAndValidation from './TextInputWithTitleAndValidation';
@@ -50,6 +51,7 @@ export {
     ImageButton,
     ImageButtonWithText,
     ColoredButton,
+    RoundButton,
 
     PlainTextInput,
     TextInputWithTitleAndValidation,

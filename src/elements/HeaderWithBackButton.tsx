@@ -16,7 +16,6 @@ interface IProps {
     text: string;
     img?: ImageSourcePropType;
     noShadow?: boolean;
-
     onBackPress: () => void;
     onImgPress?: () => void;
 }

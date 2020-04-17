@@ -2,6 +2,7 @@ import React from 'react';
 import {memo} from 'react';
 import {
     Text,
+    TextStyle,
     StyleSheet,
 } from 'react-native';
 
@@ -9,13 +10,14 @@ import {COLORS} from '../constants';
 
 interface IProps {
     price: number
+    style?: TextStyle | TextStyle[];
 }
 
 const Price = memo((props: IProps) => {
-    const {price} = props;
+    const {price, style} = props;
 
     return (
-        <Text style={styles.priceText}>
+        <Text style={[styles.priceText, style]}>
             {price} {String.fromCharCode(0x20BD)}
         </Text>
     );

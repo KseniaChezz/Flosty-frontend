@@ -296,5 +296,10 @@ export const TEXT = {
     wigs: 'Наращивание волос и парики',
     perfumery: 'Парфюмерия',
     tatoos: 'Татуировки и боди-арт',
-    beautySalonProducts: 'Товары для салонов красоты'
+    beautySalonProducts: 'Товары для салонов красоты',
+
+    bought: 'купили',
+    saved: 'сохранили',
+
+    tags: 'Теги',
 };

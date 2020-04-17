@@ -7,3 +7,7 @@ export const navigationRef = React.createRef();
 export const navigate = (name: RootNavigatorRoutes, params?: any) => {
     navigationRef.current?.navigate(name, params);
 };
+
+export const goBack = () => {
+    navigationRef.current?.goBack();
+};
