@@ -9,9 +9,7 @@ import {styles} from './style';
 import MainProductSection from './MainProductSection';
 import TagListSection from './TagListSection';
 import ProductPropertyPicker from './ProductPropertyPicker';
-import {
-
-} from '../../../elements';
+import ShopSection from './ShopSection';
 
 import {IRootNavigatorParamList} from '../../../types/rootNavigator';
 import {IUserProfileItem} from '../../../types/user';
@@ -83,6 +81,10 @@ const ProductProfile = memo((props: IProps) => {
                 sizeList={product.sizes}
                 selectedSize={productSize}
                 setSelectedSize={setProductSize}
+            />
+
+            <ShopSection
+                shop={product.shop}
             />
         </ScrollView>
 
