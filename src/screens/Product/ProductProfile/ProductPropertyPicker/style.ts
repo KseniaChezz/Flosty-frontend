@@ -1,14 +1,17 @@
 import {StyleSheet} from 'react-native';
 
-import {COLORS} from '../../../constants/colors';
+import {COLORS} from '../../../../constants';
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
         backgroundColor: COLORS.White,
+        marginBottom: 10,
     },
-    sizeContainer: {
+    propertyContainer: {
         paddingHorizontal: 12,
         paddingVertical: 15,
+        borderBottomWidth: 1,
+        borderBottomColor: COLORS.Border,
     },
     text: {
         fontFamily: 'Montserrat',
@@ -50,3 +53,5 @@ export const styles = StyleSheet.create({
         fontWeight: '500',
     },
 });
+
+export default styles;

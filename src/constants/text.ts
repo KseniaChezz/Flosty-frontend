@@ -302,4 +302,20 @@ export const TEXT = {
     saved: 'сохранили',
 
     tags: 'Теги',
+
+    pickColor: 'Выберите цвет',
+    pickSize: 'Выберите размер',
+    color: 'Цвет',
+    size: 'Размер',
+
+    red: 'красный',
+    green: 'зеленый',
+    blue: 'синий',
+    yellow: 'желтый',
+    orange: 'оранжевый',
+    gold: 'золотой',
+    silver: 'серебряный',
+    black: 'черный',
+    grey: 'серый',
+    white: 'белый',
 };

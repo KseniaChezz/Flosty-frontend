@@ -39,7 +39,6 @@ const MainProductSection = memo((props: IProps) => {
                 boughtNumber={boughtNumber}
                 savedNumber={savedNumber}
             />
-
         </View>
     );
 });

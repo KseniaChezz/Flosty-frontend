@@ -8,6 +8,7 @@ import {styles} from './style';
 
 import MainProductSection from './MainProductSection';
 import TagListSection from './TagListSection';
+import ProductPropertyPicker from './ProductPropertyPicker';
 import {
 
 } from '../../../elements';
@@ -15,7 +16,7 @@ import {
 import {IRootNavigatorParamList} from '../../../types/rootNavigator';
 import {IUserProfileItem} from '../../../types/user';
 import { IState } from '../../../store';
-import {IProductDetail} from '../../../types/product';
+import {IProductDetail, IProductProperty} from '../../../types/product';
 
 import {
     TEXT,
@@ -34,6 +35,26 @@ const product: IProductDetail = {
     savedNumber: 123,
     img: require('../../../../assets/images/sneakers1.jpg'),
     tags: ['#azart', '#обувь', '#сапоги', '#осень'],
+    sizes: [
+        {value: '36', isAvailable: false},
+        {value: '37', isAvailable: true},
+        {value: '38', isAvailable: true},
+        {value: '39', isAvailable: true},
+        {value: '40', isAvailable: true},
+        {value: '41', isAvailable: true},
+        {value: '42', isAvailable: true},
+    ],
+    colors: [
+        {value: 'red', isAvailable: true},
+        {value: 'blue', isAvailable: true},
+        {value: 'green', isAvailable: true},
+    ],
+    shop: {
+        id: 'shopId1',
+        name: 'AzART',
+        rating: '4,8',
+        img: require('../../../../assets/images/bag.png'),
+    },
 }
 
 interface IProps {
@@ -42,6 +63,8 @@ interface IProps {
 
 const ProductProfile = memo((props: IProps) => {
     const {navigation} = props;
+    const [productSize, setProductSize] = useState<string>('');
+    const [productColor, setProductColor] = useState<string>('');
 
     return (
         <ScrollView>
@@ -53,7 +76,14 @@ const ProductProfile = memo((props: IProps) => {
                 tagList={product.tags}
             />
 
-
+            <ProductPropertyPicker
+                colorList={product.colors}
+                selectedColor={productColor}
+                setSelectedColor={setProductColor}
+                sizeList={product.sizes}
+                selectedSize={productSize}
+                setSelectedSize={setProductSize}
+            />
         </ScrollView>
 
     );
