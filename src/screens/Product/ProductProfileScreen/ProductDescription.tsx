@@ -18,7 +18,7 @@ import {TEXT, COLORS} from '../../../constants';
 
 interface IProps {
     title: string;
-    description: string;
+    text: string;
     rating: string;
     price: number;
     boughtNumber?: number;
@@ -29,7 +29,7 @@ interface IProps {
 const ProductDescription = memo((props: IProps) => {
     const {
         title,
-        description,
+        text,
         price,
         oldPrice,
         rating,
@@ -58,7 +58,7 @@ const ProductDescription = memo((props: IProps) => {
             </Text>
 
             <Text style={[styles.text, styles.descriptionText]}>
-                {description}
+                {text}
             </Text>
 
             <View style={styles.statisticsContainer}>

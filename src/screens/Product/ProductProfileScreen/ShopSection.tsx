@@ -67,8 +67,8 @@ const styles = StyleSheet.create({
         borderRadius: 20,
     },
     nextImg: {
-        height: 30,
-        width: 30,
+        height: 25,
+        width: 25,
     },
     textContainer: {
         flex: 1,

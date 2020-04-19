@@ -38,18 +38,20 @@ const PropertyPicker = memo((props: IProps) => {
 
     return (
         <View style={styles.propertyContainer}>
-            <Text style={[styles.text, styles.pickText]}>
-                {selectedValue === '' ? defaultTitle : `${propertyName} ${valueToRender}`}
-            </Text>
+            <View style={styles.innerPropertyContainer}>
+                <Text style={[styles.text, styles.pickText]}>
+                    {selectedValue === '' ? defaultTitle : `${propertyName} ${valueToRender}`}
+                </Text>
 
-            <View style={styles.bagesContainer}>
-                {propertyList.map((property: IProductProperty) => {
-                    const {value} = property;
-                    const isSelected: boolean = value === selectedValue;
-                    const onPress = onSizePress(value);
+                <View style={styles.bagesContainer}>
+                    {propertyList.map((property: IProductProperty) => {
+                        const {value} = property;
+                        const isSelected: boolean = value === selectedValue;
+                        const onPress = onSizePress(value);
 
-                    return renderBage(property, isSelected, onPress);
-                })}
+                        return renderBage(property, isSelected, onPress);
+                    })}
+                </View>
             </View>
         </View>
     );

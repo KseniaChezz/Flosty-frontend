@@ -9,8 +9,9 @@ import {
 import styles from './style';
 
 import PropertyPicker from './PropertyPicker';
+import {RowMenuItem} from '../../../../elements';
 
-import {IProductProperty} from '../../../../types/product';
+import {IProductProperty, IDescription} from '../../../../types/product';
 
 import {TEXT} from '../../../../constants';
 
@@ -21,6 +22,8 @@ interface IProps {
     sizeList: IProductProperty[];
     selectedSize: string;
     setSelectedSize: (value: string) => void;
+    descriptionList: IDescription[];
+    onDescriptionPress: () => void;
 }
 
 const ProductPropertyPicker = memo((props: IProps) => {
@@ -31,6 +34,8 @@ const ProductPropertyPicker = memo((props: IProps) => {
         setSelectedColor,
         selectedSize,
         setSelectedSize,
+        descriptionList,
+        onDescriptionPress,
     } = props;
 
     const renderColorBage = (property: IProductProperty, isSelected: boolean, onPress: () => void) => {
@@ -85,6 +90,14 @@ const ProductPropertyPicker = memo((props: IProps) => {
                     selectedValue={selectedSize}
                     setSelectedValue={setSelectedSize}
                     renderBage={renderSizeBage}
+                />
+            }
+
+            {descriptionList. length !== 0 &&
+                <RowMenuItem
+                    text={TEXT.productDescription}
+                    isIconShown={true}
+                    onPress={onDescriptionPress}
                 />
             }
         </View>

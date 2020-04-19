@@ -5,6 +5,7 @@ import {
     View,
     TouchableOpacity,
     Image,
+    ViewStyle,
     StyleSheet,
 } from 'react-native';
 
@@ -12,32 +13,34 @@ import {COLORS} from '../constants';
 
 interface IProps {
     text: string;
-    hasAdditionalMenu: boolean;
+    isIconShown: boolean;
     onPress: () => void;
+    style?: ViewStyle;
 }
 
-const SearchMenuItem = memo((props: IProps) => {
+const RowMenuItem = memo((props: IProps) => {
     const {
         text,
-        hasAdditionalMenu,
+        isIconShown,
         onPress,
+        style,
     } = props;
 
     return (
         <TouchableOpacity
             onPress={onPress}
-            style={styles.menuContainer}
+            style={[styles.menuContainer, style]}
         >
             <View style={styles.menuInnerContainer}>
                 <Text style={styles.text}>
                     {text}
                 </Text>
 
-                {hasAdditionalMenu &&
-                <Image
-                    source={require('../../assets/images/next.png')}
-                    style={styles.img}
-                />
+                {isIconShown &&
+                    <Image
+                        source={require('../../assets/images/next.png')}
+                        style={styles.img}
+                    />
                 }
             </View>
         </TouchableOpacity>
@@ -70,4 +73,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default SearchMenuItem;
+export default RowMenuItem;

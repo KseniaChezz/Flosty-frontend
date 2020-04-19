@@ -15,7 +15,7 @@ const MainProductSection = memo((props: IProps) => {
     const {product} = props;
     const {
         title,
-        description,
+        text,
         price,
         oldPrice,
         rating,
@@ -32,7 +32,7 @@ const MainProductSection = memo((props: IProps) => {
 
             <ProductDescription
                 title={title}
-                description={description}
+                text={text}
                 price={price}
                 oldPrice={oldPrice}
                 rating={rating}

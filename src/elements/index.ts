@@ -38,7 +38,7 @@ import Rating from './Rating';
 import ProductList from './ProductList';
 import PriceInput from './PriceInput';
 import SearchCard from './SearchCard';
-import SearchMenuItem from './SearchMenuItem';
+import RowMenuItem from './RowMenuItem';
 
 export {
     Title,
@@ -81,5 +81,5 @@ export {
     ProductList,
     PriceInput,
     SearchCard,
-    SearchMenuItem,
+    RowMenuItem,
 };

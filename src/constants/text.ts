@@ -11,6 +11,8 @@ export const TEXT = {
     cancel: 'Отмена',
     show: 'Показать',
     favorite: 'Избранное',
+    buyFor: 'Купить за ',
+    rubleSign: '₽',
 
     registration: 'Регистрация',
     of: 'из',
@@ -318,4 +320,13 @@ export const TEXT = {
     black: 'черный',
     grey: 'серый',
     white: 'белый',
+
+    productDescription: 'Описание товара',
+    delivery: 'Доставка',
+    free: 'Бесплатно',
+    guarantee: 'Гарантия',
+    flostyGuaranteeTitle: 'Flosty всегда на стороне покупателя!',
+    returnMoneyTime: 'Мы вернем деньги,  если товар не доставлен в течение 14 рабочих дней после оплаты. У вас есть 2 недели для подачи заявки на возврат.',
+    wrongDescription: 'Товар  не соответствует описанию? Напишите нам в течение 14 дней после получения!',
+    returnMoneyOnCount: 'В случае отмены деньгии поступят на счет в течение 14 дней.',
 };

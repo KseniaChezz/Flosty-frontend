@@ -10,7 +10,7 @@ import {
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
 
-import {ScreenWrapperWithBackButton, SearchMenuItem} from '../../../elements';
+import {ScreenWrapperWithBackButton, RowMenuItem} from '../../../elements';
 
 import {ISearchNavigatorParamList} from '../../../types/searchNavigator';
 import {ISearchClarificationItem} from '../../../types/search';
@@ -69,9 +69,9 @@ const SearchMenuScreen = memo((props: IProps) => {
         const {item} = info;
         const {title, additionalMenu} = item;
         return (
-            <SearchMenuItem
+            <RowMenuItem
                 text={title}
-                hasAdditionalMenu={!!additionalMenu}
+                isIconShown={!!additionalMenu}
                 onPress={onMenuPress(item)}
             />
         )

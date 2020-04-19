@@ -8,7 +8,10 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     propertyContainer: {
-        paddingHorizontal: 12,
+        marginHorizontal: 8,
+    },
+    innerPropertyContainer: {
+        paddingHorizontal: 4,
         paddingVertical: 15,
         borderBottomWidth: 1,
         borderBottomColor: COLORS.Border,
