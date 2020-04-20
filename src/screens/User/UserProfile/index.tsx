@@ -32,6 +32,8 @@ interface IProps {
 const UserProfile = memo((props: IProps) => {
     const {navigation} = props;
     const userName: string = useSelector((state: IState) => state.user.main.name);
+    const state = useSelector((state: IState) => state);
+    console.log('state', state);
     const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
     const onItemPress = (name: RootNavigatorRoutes) => {

@@ -3,8 +3,10 @@ import {useState, memo} from 'react';
 import {
     View,
     Image,
+    ActivityIndicator,
 } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {useSelector, useDispatch} from 'react-redux';
 
 import {styles} from './style';
 
@@ -15,10 +17,15 @@ import {
     ColoredButton,
 } from '../../../elements';
 
-import {IRootNavigatorParamList} from '../../../types/rootNavigator';
+import {loginUser} from '../../../store/user/thunks/login';
 
-import {TEXT} from '../../../constants';
+import {IRootNavigatorParamList} from '../../../types/rootNavigator';
+import {IState} from '../../../store';
+
+import {TEXT, COLORS} from '../../../constants';
 import {RootNavigatorRoutes} from '../../../enums';
+
+import {isNotEmptyString} from '../../../utils';
 
 type ScreenNavigationProp = StackNavigationProp<IRootNavigatorParamList, RootNavigatorRoutes.LOGIN>;
 
@@ -27,11 +34,27 @@ interface IProps {
 }
 
 const Login = memo((props: IProps) => {
+    const {navigation} = props;
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+    const [isValidationShown, setIsValidationShown] = useState<boolean>(false);
+    const isDataProcessing: boolean = useSelector((store: IState) => store.app.isDataProcessing);
+    const dispatch = useDispatch();
 
     const onRegisterPress = () => {
-        props.navigation.navigate(RootNavigatorRoutes.REGISTRATION, {screen: 1});
+        navigation.navigate(RootNavigatorRoutes.REGISTRATION, {screen: 1});
+    };
+
+    const loginSuccessCallback = () => {
+        navigation.navigate(RootNavigatorRoutes.SUBSCRIPTIONS);
+    };
+
+    const onLoginPress = () => {
+        if (isNotEmptyString(email) && isNotEmptyString(password)) {
+            dispatch(loginUser(email, password, loginSuccessCallback));
+        } else {
+            setIsValidationShown(true);
+        }
     };
 
     return (
@@ -48,6 +71,7 @@ const Login = memo((props: IProps) => {
                 value={email}
                 onChange={setEmail}
                 placeholder={TEXT.email}
+                style={isValidationShown && email === '' ? styles.redBorder : {}}
             />
 
             <PlainTextInput
@@ -55,11 +79,12 @@ const Login = memo((props: IProps) => {
                 onChange={setPassword}
                 placeholder={TEXT.password}
                 secureTextEntry={true}
+                style={isValidationShown && password === '' ? styles.redBorder : {}}
             />
 
             <ColoredButton
                 text={TEXT.enter}
-                onPress={()=>{}}
+                onPress={onLoginPress}
                 buttonStyle={styles.enterButton}
             />
 
@@ -72,6 +97,13 @@ const Login = memo((props: IProps) => {
                 text={TEXT.register}
                 onPress={onRegisterPress}
             />
+
+            {isDataProcessing &&
+                <ActivityIndicator
+                    size="large"
+                    color={COLORS.LightGrey}
+                />
+            }
 
         </LoginAndRegistrationScreenWrapper>
     );

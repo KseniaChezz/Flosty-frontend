@@ -13,19 +13,28 @@ instance.interceptors.request.use((config: AxiosRequestConfig) => {
         url,
         baseURL,
         params,
+        data,
     } = config;
-    console.log(`${method.toLocaleUpperCase()} ${baseURL}${url}`);
-    console.log(`params: ${params}`);
+    const methodToUpperCase: string = method.toLocaleUpperCase()
+    console.log(`${methodToUpperCase} ${baseURL}${url}`);
+
+    if (methodToUpperCase === 'GET') {
+        console.log('params: ', params);
+    }
+
+    if (methodToUpperCase === 'POST') {
+        console.log('data: ', data);
+    }
 
     return config;
 }, (err: Error) => {
-    console.log(`requestError: ${err}`);
+    console.log('requestError: ', err);
 
     return Promise.reject(err);
 });
 
-axios.interceptors.response.use(function (response: AxiosResponse) {
-    console.log(`response ${response}`);
+instance.interceptors.response.use(function (response: AxiosResponse) {
+    console.log('response ', response);
 
     return response;
 }, (err: Error) => {
@@ -34,9 +43,9 @@ axios.interceptors.response.use(function (response: AxiosResponse) {
     return Promise.reject(`responseError: ${err}`);
 });
 
-export const get = (url: string, data: any) => axios.get(url, {params: data});
+export const get = (url: string, data: any) => instance.get(url, {params: data});
 
-export const post = (url: string, data: any) => axios.post(url, data);
+export const post = (url: string, data: any) => instance.post(url, data);
 
 export const setToken = (token: string) => {
     axios.defaults.headers.common['Authorization'] = token;

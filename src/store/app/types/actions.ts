@@ -6,4 +6,9 @@ export interface ISetAppTabAction {
     tab: AppTab;
 }
 
-export type IAppAction = ISetAppTabAction;
+export interface ISetIsDataProcessingAction {
+    type: AppAction.APP_SET_IS_DATA_PROCESSING;
+    isProcessing: boolean;
+}
+
+export type IAppAction = ISetAppTabAction | ISetIsDataProcessingAction;

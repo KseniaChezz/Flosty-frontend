@@ -1,5 +1,6 @@
 import {AppTab} from '../../../enums';
 
 export interface IAppState {
-    selectedTab: AppTab,
+    selectedTab: AppTab;
+    isDataProcessing: boolean;
 }

@@ -26,4 +26,7 @@ export const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 35,
     },
+    redBorder: {
+        borderColor: COLORS.Red,
+    },
 });

@@ -6,6 +6,7 @@ import {AppTab} from '../../enums';
 
 const initialState: IAppState = {
     selectedTab: AppTab.MAIN,
+    isDataProcessing: false,
 }
 
 export const appReducer = (state: IAppState = initialState, action: IAppAction): IAppState => {
@@ -14,6 +15,11 @@ export const appReducer = (state: IAppState = initialState, action: IAppAction):
             return {
                 ...state,
                 selectedTab: action.tab,
+            };
+        case AppAction.APP_SET_IS_DATA_PROCESSING:
+            return {
+                ...state,
+                isDataProcessing: action.isProcessing,
             };
         default:
             return state;

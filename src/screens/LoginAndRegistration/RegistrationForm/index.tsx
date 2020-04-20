@@ -1,9 +1,11 @@
 import React, {useState, memo} from 'react';
 import {
     Text,
+    ActivityIndicator,
 } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RouteProp} from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux';
 
 import {styles} from './style';
 
@@ -16,13 +18,19 @@ import {
     Title,
 } from '../../../elements';
 
+import {registerUser} from '../../../store/user/thunks/register';
+
 import {IRootNavigatorParamList} from '../../../types/rootNavigator';
+import {IState} from '../../../store';
 
 import {
     TEXT,
     registrationScreenNumber,
+    COLORS,
 } from '../../../constants';
 import {RootNavigatorRoutes} from '../../../enums';
+
+import {isNotEmptyString} from '../../../utils';
 
 type ScreenNavigationProp = StackNavigationProp<IRootNavigatorParamList, RootNavigatorRoutes.REGISTRATION_FORM>;
 type ScreenRouteProp = RouteProp<IRootNavigatorParamList, RootNavigatorRoutes.REGISTRATION_FORM>;
@@ -44,9 +52,24 @@ const RegistrationForm = memo((props: IProps) => {
     const [email, setEmail] = useState<string>('');
     const [name, setName] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+    const [isValidationShown, setIsValidationShown] = useState<boolean>(false);
+    const isDataProcessing: boolean = useSelector((store: IState) => store.app.isDataProcessing);
+    const dispatch = useDispatch();
 
     const onBackPress = () => {
         navigation.goBack();
+    };
+
+    const registerSuccessCallback = () => {
+        navigation.navigate(RootNavigatorRoutes.SUBSCRIPTIONS);
+    };
+
+    const onRegisterButtonPress = () => {
+        if (isNotEmptyString(email) && isNotEmptyString(name) && isNotEmptyString(password)) {
+            dispatch(registerUser(email, password, name, registerSuccessCallback));
+        } else {
+            setIsValidationShown(true);
+        }
     };
 
     return (
@@ -65,12 +88,14 @@ const RegistrationForm = memo((props: IProps) => {
                 value={email}
                 onChange={setEmail}
                 placeholder={TEXT.email}
+                style={isValidationShown && email === '' ? styles.redBorder : {}}
             />
 
             <PlainTextInput
                 value={name}
                 onChange={setName}
                 placeholder={TEXT.name}
+                style={isValidationShown && name === '' ? styles.redBorder : {}}
             />
 
             <PlainTextInput
@@ -78,6 +103,7 @@ const RegistrationForm = memo((props: IProps) => {
                 onChange={setPassword}
                 placeholder={TEXT.password}
                 secureTextEntry={true}
+                style={isValidationShown && password === '' ? styles.redBorder : {}}
             />
 
             <Text style={styles.conditionsText}>
@@ -103,13 +129,20 @@ const RegistrationForm = memo((props: IProps) => {
 
             <ColoredButton
                 text={TEXT.register}
-                onPress={()=>{}}
+                onPress={onRegisterButtonPress}
             />
 
             <PlainButton
                 text={TEXT.back}
                 onPress={onBackPress}
             />
+
+            {isDataProcessing &&
+                <ActivityIndicator
+                    size="large"
+                    color={COLORS.LightGrey}
+                />
+            }
 
         </LoginAndRegistrationScreenWrapper>
     );

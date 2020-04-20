@@ -1,7 +1,6 @@
 import {TEXT} from './text';
-import {IProductColor} from '../types/product';
 
-export const productColor: IProductColor = {
+export const productColor = {
     red: TEXT.red,
     green: TEXT.green,
     blue: TEXT.blue,

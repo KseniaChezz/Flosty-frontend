@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import { COLORS } from '../../../constants';
 
 export const styles = StyleSheet.create({
     enterButton: {
@@ -14,5 +15,8 @@ export const styles = StyleSheet.create({
     logoImage: {
         height: 65,
         width: 220,
+    },
+    redBorder: {
+        borderColor: COLORS.Red,
     },
 });
