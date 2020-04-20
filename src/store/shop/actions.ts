@@ -3,10 +3,13 @@ import {
     ISetProductFilterMaxPrice,
     ISetProductFilterCheckBox,
     IResetProductFilters,
+    IAddShop,
 } from './types/actions';
 
 import {ShopAction} from './shopActionEnum';
-import { IProductFilterKey } from '../../types/filter';
+
+import {IProductFilterKey} from '../../types/filter';
+import {IShop} from '../../types/shop';
 
 export const setProductFilterMinPrice = (price: string): ISetProductFilterMinPrice => {
     return {
@@ -36,5 +39,12 @@ export const setProductFilterCheckBox = (
 export const resetProductFilters = (): IResetProductFilters => {
     return {
         type: ShopAction.SHOP_PRODUCT_FILTER_RESET,
+    };
+};
+
+export const addShop = (shop: IShop): IAddShop => {
+    return {
+        type: ShopAction.SHOP_ADD,
+        shop,
     };
 };

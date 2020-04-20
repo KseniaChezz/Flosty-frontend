@@ -13,6 +13,7 @@ import {COLORS} from '../constants';
 interface IProps {
     text: string;
     onPress: () => void;
+    isDisabled?: boolean;
     buttonStyle?: ViewStyle;
     textStyle?: TextStyle;
 }
@@ -21,6 +22,7 @@ const ColoredButton = memo((props: IProps) => {
     const {
         text,
         onPress,
+        isDisabled,
         buttonStyle,
         textStyle,
     } = props;
@@ -29,6 +31,7 @@ const ColoredButton = memo((props: IProps) => {
         <TouchableOpacity
             style={[styles.button, buttonStyle]}
             onPress={onPress}
+            disabled={isDisabled}
         >
             <Text
                 style={[styles.buttonText, textStyle]}

@@ -9,6 +9,7 @@ import {
     ISetProductFilterCheckBox,
     IResetProductFilters,
     IShopAction,
+    IAddShop,
 } from './types/actions';
 import { IProductFilter } from '../../types/filter';
 
@@ -24,6 +25,7 @@ const getInitialFilters = (): IProductFilter => {
 
 const initialState: IShopState = {
     filter: getInitialFilters(),
+    shopList: {},
 };
 
 const onSetProductFilterMinPrice = (state: IShopState, action: ISetProductFilterMinPrice): IShopState => {
@@ -69,6 +71,19 @@ const onResetProductFilters = (state: IShopState, action: IResetProductFilters):
     }
 };
 
+const onAddShop = (state: IShopState, action: IAddShop): IShopState => {
+    const {shop} = action;
+    const {id} = shop;
+
+    return {
+        ...state,
+        shopList: {
+            ...state.shopList,
+            [id]: shop,
+        },
+    }
+};
+
 export const shopReducer = (state: IShopState = initialState, action: IShopAction): IShopState => {
     switch (action.type) {
         case ShopAction.SHOP_PRODUCT_FILTER_SET_MIN_PRICE:
@@ -79,6 +94,8 @@ export const shopReducer = (state: IShopState = initialState, action: IShopActio
             return onSetProductFilterCheckBox(state, action);
         case ShopAction.SHOP_PRODUCT_FILTER_RESET:
             return onResetProductFilters(state, action);
+        case ShopAction.SHOP_ADD:
+            return onAddShop(state, action);
         default:
             return state;
     }

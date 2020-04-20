@@ -4,20 +4,27 @@ import {View, Text, StyleSheet} from 'react-native';
 
 import {ColoredButton} from '../../elements';
 
-import {IShopSubscription} from '../../types/subscription';
+import {IShop} from '../../types/shop';
 
 import {TEXT, COLORS} from '../../constants';
 
 import {getSubscribersValueText} from '../../utils';
 
 interface IProps {
-    subscription: IShopSubscription;
+    shop: IShop;
+    onPress: () => void;
 }
 
 const ShopSubscribeCard = memo((props: IProps) => {
-    const {subscription} = props;
-    const {id, name, subscribers, goodsImg} = subscription;
+    const {shop, onPress} = props;
+    const {id, name, subscribers} = shop;
     const imgList: string[] = ['1', '2', '3'];
+    const [isSubscribed, setIsSubscribed] = useState<boolean>(false)
+
+    const onSubscribePress = () => {
+        setIsSubscribed(true);
+        onPress();
+    };
 
     return (
         <View style={styles.card}>
@@ -33,7 +40,7 @@ const ShopSubscribeCard = memo((props: IProps) => {
             </Text>
 
             <View style={styles.shopGoodsContainer}>
-                {goodsImg.map((img: string, index: number) => {
+                {imgList.map((img: string, index: number) => {
                     return (
                         <View key={index} style={styles.shopGood}/>
                     )
@@ -42,9 +49,10 @@ const ShopSubscribeCard = memo((props: IProps) => {
 
             <ColoredButton
                 text={TEXT.subscribe}
-                onPress={()=>{}}
-                buttonStyle={styles.button}
+                onPress={onSubscribePress}
+                buttonStyle={isSubscribed ? styles.disabledButton : styles.button}
                 textStyle={styles.buttonText}
+                isDisabled={isSubscribed}
             />
 
         </View>
@@ -81,6 +89,11 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.GreyBlue,
     },
     button: {
+        height: 44,
+        width: 180,
+    },
+    disabledButton: {
+        backgroundColor: COLORS.LightGrey,
         height: 44,
         width: 180,
     },

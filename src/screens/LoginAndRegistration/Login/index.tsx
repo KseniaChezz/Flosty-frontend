@@ -35,11 +35,27 @@ interface IProps {
 
 const Login = memo((props: IProps) => {
     const {navigation} = props;
-    const [email, setEmail] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
+    const [email, setEmail] = useState<string>('boris1234@mail.ru');
+    const [password, setPassword] = useState<string>('gfhjkmxbr');
     const [isValidationShown, setIsValidationShown] = useState<boolean>(false);
     const isDataProcessing: boolean = useSelector((store: IState) => store.app.isDataProcessing);
     const dispatch = useDispatch();
+
+    const onEmailChange = (value: string) => {
+        if (isValidationShown) {
+            setIsValidationShown(false);
+        }
+
+        setEmail(value);
+    };
+
+    const onPasswordChange = (value: string) => {
+        if (isValidationShown) {
+            setIsValidationShown(false);
+        }
+
+        setPassword(value);
+    };
 
     const onRegisterPress = () => {
         navigation.navigate(RootNavigatorRoutes.REGISTRATION, {screen: 1});
@@ -69,7 +85,7 @@ const Login = memo((props: IProps) => {
 
             <PlainTextInput
                 value={email}
-                onChange={setEmail}
+                onChange={onEmailChange}
                 placeholder={TEXT.email}
                 style={isValidationShown && email === '' ? styles.redBorder : {}}
             />

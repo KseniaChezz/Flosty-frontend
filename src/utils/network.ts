@@ -43,9 +43,9 @@ instance.interceptors.response.use(function (response: AxiosResponse) {
     return Promise.reject(`responseError: ${err}`);
 });
 
-export const get = (url: string, data: any) => instance.get(url, {params: data});
+export const get = (url: string, data?: any) => data ? instance.get(url, {params: data}) : instance.get(url);
 
-export const post = (url: string, data: any) => instance.post(url, data);
+export const post = (url: string, data?: any) => data ? instance.post(url, data) : instance.post(url);
 
 export const setToken = (token: string) => {
     axios.defaults.headers.common['Authorization'] = token;

@@ -24,7 +24,6 @@ export const setUser = (user: IUser): ISetUser => {
 }
 
 export const setAddressList = (addressList: IAddress[]): ISetAddressList => {
-    debugger;
     return {
         type: UserAction.USER_SET_ADDRESS_LIST,
         addressList,
