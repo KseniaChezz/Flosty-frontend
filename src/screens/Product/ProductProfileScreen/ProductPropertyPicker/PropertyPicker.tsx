@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import {memo, useState} from 'react';
 import {
     View,
@@ -17,7 +17,7 @@ interface IProps {
     propertyName: string;
     selectedValue: string;
     setSelectedValue: (value: string) => void;
-    renderBage: (property: IProductProperty, isSelected: boolean, onPress: () => void) => React.Node;
+    renderBage: (property: IProductProperty, isSelected: boolean, onPress: () => void) => ReactNode;
 }
 
 const PropertyPicker = memo((props: IProps) => {
