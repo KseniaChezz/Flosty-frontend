@@ -5,4 +5,6 @@ export enum ShopAction {
     SHOP_PRODUCT_FILTER_RESET = 'ShopProductFilterReset',
 
     SHOP_ADD = 'ShopAdd',
+    SHOP_SET_LIST = 'shopSetList',
+    SHOP_SET_IS_LOADING = 'ShopSetIsLoading',
 };

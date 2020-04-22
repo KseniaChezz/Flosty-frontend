@@ -1,6 +1,12 @@
 import React from 'react';
 import {memo, useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {
+    View,
+    Text,
+    Image,
+    TouchableOpacity,
+    StyleSheet,
+} from 'react-native';
 
 import {ColoredButton} from '../../elements';
 
@@ -12,24 +18,30 @@ import {getSubscribersValueText} from '../../utils';
 
 interface IProps {
     shop: IShop;
-    onPress: () => void;
+    onCardPress: () => void;
+    onSubscribePress: () => void;
 }
 
 const ShopSubscribeCard = memo((props: IProps) => {
-    const {shop, onPress} = props;
-    const {id, name, subscribers} = shop;
-    const imgList: string[] = ['1', '2', '3'];
+    const {shop, onCardPress, onSubscribePress} = props;
+    const {id, name, subscribers, logo, productImgList} = shop;
     const [isSubscribed, setIsSubscribed] = useState<boolean>(false)
 
-    const onSubscribePress = () => {
+    const onSubscribeShopPress = () => {
         setIsSubscribed(true);
-        onPress();
+        onSubscribePress();
     };
 
     return (
-        <View style={styles.card}>
+        <TouchableOpacity
+            style={styles.card}
+            onPress={onCardPress}
+        >
 
-            <View style={styles.shopImg}/>
+            <Image
+                source={{uri: logo}}
+                style={styles.shopImg}
+            />
 
             <Text style={[styles.text, styles.shopName]}>
                 {name}
@@ -40,22 +52,26 @@ const ShopSubscribeCard = memo((props: IProps) => {
             </Text>
 
             <View style={styles.shopGoodsContainer}>
-                {imgList.map((img: string, index: number) => {
+                {productImgList.map((img: string, index: number) => {
                     return (
-                        <View key={index} style={styles.shopGood}/>
+                        <Image
+                            key={img}
+                            source={{uri: img}}
+                            style={styles.shopGood}
+                        />
                     )
                 })}
             </View>
 
             <ColoredButton
                 text={TEXT.subscribe}
-                onPress={onSubscribePress}
+                onPress={onSubscribeShopPress}
                 buttonStyle={isSubscribed ? styles.disabledButton : styles.button}
                 textStyle={styles.buttonText}
                 isDisabled={isSubscribed}
             />
 
-        </View>
+        </TouchableOpacity>
     );
 });
 
@@ -72,7 +88,6 @@ const styles = StyleSheet.create({
         height: 60,
         width: 60,
         borderRadius: 30,
-        backgroundColor: COLORS.Red,
         marginTop: 10,
         marginBottom: 5,
     },
@@ -86,7 +101,6 @@ const styles = StyleSheet.create({
         height: 54,
         width: 54,
         borderRadius: 5,
-        backgroundColor: COLORS.GreyBlue,
     },
     button: {
         height: 44,

@@ -1,108 +1,82 @@
-import React, {RefObject} from 'react';
-import {memo, useState, useRef, useEffect} from 'react';
-import {View, Text, ListRenderItemInfo, ActivityIndicator} from 'react-native';
-import {StackNavigationProp} from '@react-navigation/stack';
-import Carousel, {CarouselStatic} from 'react-native-snap-carousel';
-import {useDispatch} from 'react-redux';
+import React from 'react';
+import {memo, useState, useEffect} from 'react';
+import {
+    View,
+    ActivityIndicator,
+} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 
 import {styles} from './style';
 
 import {CommonScreenWrapper} from '../../elements';
-import ShopSubscribeCard from './ShopSubscribeCard';
-import SearchSubscribeCard from './SearchSubscribeCard';
+import ShopSubscribeCardList from './ShopSubscribeCardList';
+import SubscriptionFeed from './SubscriptionFeed';
 
+import {getSubscriptionList} from '../../store/subscriptionList/thunks/getSubscriptionList';
 import {getShopList} from '../../store/shop/thunks/getShopList';
+import {getFeedList} from '../../store/feed/thunks/getFeedList';
 
-import {IRootNavigatorParamList} from '../../types/rootNavigator';
-import {IShop} from '../../types/shop';
+import {IState} from '../../store';
 
 import {TEXT, COLORS} from '../../constants';
+import {SubscriptionViewMode} from '../../enums';
 
-import {RootNavigatorRoutes} from '../../enums';
-
-type ScreenNavigationProp = StackNavigationProp<IRootNavigatorParamList, RootNavigatorRoutes.SUBSCRIPTIONS>;
-
-interface IProps {
-    navigation: ScreenNavigationProp;
-}
+interface IProps {}
 
 const Subscriptions = memo((props: IProps) => {
-    const {navigation} = props;
-    const [shopList, setShopList] = useState<IShop[]>([]);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    const carousel = useRef<CarouselStatic<IShop>>(null);
+    const subscriptionListLength: number = useSelector((store: IState) => store.subscriptionList.list.length);
+    const subscriptionListIsLoading: boolean = useSelector(
+        (store: IState) => store.subscriptionList.listIsLoading);
+    const feedListLength: number = useSelector((store: IState) => store.feed.list.length);
+    const feedListIsLoading: boolean = useSelector((store: IState) => store.feed.isLoading);
+    const shopListIsLoading: boolean = useSelector((store: IState) => store.shop.isLoading);
+    const [subscriptionViewMode, setSubscriptionViewMode] = useState<SubscriptionViewMode>(SubscriptionViewMode.INITIAL);
     const dispatch = useDispatch();
 
-    const onGetShopListSuccessCallback = (shopList: IShop[]) => {
-        const list: IShop[] = [...shopList, {} as IShop];
-        setShopList(list);
-        setIsLoading(false);
-    }
-
     useEffect(() => {
-        setIsLoading(true);
-        dispatch(getShopList(onGetShopListSuccessCallback));
+        dispatch(getSubscriptionList());
+        dispatch(getShopList());
+        dispatch(getFeedList());
     }, []);
 
-    const renderItem = (item: {item: IShop; index: number;}) => {
-        const {
-            item: shop,
-            index,
-        } = item;
-
-        if (index !== shopList.length - 1) {
-            return (
-                <ShopSubscribeCard
-                    shop={shop}
-                    onPress={onSubscribePress}
-                />
-            );
+    useEffect(() => {
+        if (feedListLength !== 0 && subscriptionListLength !== 0) {
+            setSubscriptionViewMode(SubscriptionViewMode.FEED);
         }
+    }, [subscriptionListLength, feedListLength]);
 
-        return (
-            <SearchSubscribeCard/>
-        );
-    };
-
-    const onSubscribePress = () => {
-        carousel?.current && carousel.current.snapToNext();
-    };
-
-
-    return (
-        <CommonScreenWrapper>
-            <View style={styles.textContainer}>
-                <Text style={[styles.text, styles.title]}>
-                    {TEXT.welcome}
-                </Text>
-
-                <Text style={[styles.text, styles.message]}>
-                    {TEXT.doSubscribe}
-                </Text>
-            </View>
-
-            {isLoading &&
+    const renderContent = () => {
+        if (subscriptionListIsLoading || feedListIsLoading || shopListIsLoading) {
+            return (
                 <View style={styles.textContainer}>
                     <ActivityIndicator
                         size="large"
                         color={COLORS.LightGrey}
                     />
                 </View>
-            }
+            );
+        }
 
-            {!isLoading &&
-                <View style={styles.cardContainer}>
-                    <Carousel<IShop>
-                        data={shopList}
-                        renderItem={renderItem}
-                        sliderWidth={800}
-                        itemWidth={200}
-                        layout={'default'}
-                        firstItem={0}
-                        ref={carousel}
-                    />
-                </View>
-            }
+        if (subscriptionViewMode === SubscriptionViewMode.INITIAL) {
+            return (
+                <ShopSubscribeCardList
+                    setSubscriptionViewMode={setSubscriptionViewMode}
+                />
+            );
+        }
+
+        if (subscriptionViewMode === SubscriptionViewMode.FEED) {
+            return (
+                <SubscriptionFeed/>
+            );
+        }
+
+        return null;
+    }
+
+    return (
+        <CommonScreenWrapper>
+            {renderContent()}
         </CommonScreenWrapper>
     );
 });

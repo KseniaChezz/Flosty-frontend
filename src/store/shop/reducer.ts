@@ -4,14 +4,16 @@ import {TEXT} from '../../constants';
 import {ShopAction} from './shopActionEnum';
 
 import {
-    ISetProductFilterMinPrice,
-    ISetProductFilterMaxPrice,
-    ISetProductFilterCheckBox,
-    IResetProductFilters,
-    IShopAction,
     IAddShop,
+    IResetProductFilters,
+    ISetIsLoading,
+    ISetProductFilterCheckBox,
+    ISetProductFilterMaxPrice,
+    ISetProductFilterMinPrice,
+    ISetShopList,
+    IShopAction,
 } from './types/actions';
-import { IProductFilter } from '../../types/filter';
+import {IProductFilter} from '../../types/filter';
 
 const getInitialFilters = (): IProductFilter => {
     return {
@@ -25,7 +27,9 @@ const getInitialFilters = (): IProductFilter => {
 
 const initialState: IShopState = {
     filter: getInitialFilters(),
-    shopList: {},
+    map: {},
+    list: [],
+    isLoading: false,
 };
 
 const onSetProductFilterMinPrice = (state: IShopState, action: ISetProductFilterMinPrice): IShopState => {
@@ -77,10 +81,28 @@ const onAddShop = (state: IShopState, action: IAddShop): IShopState => {
 
     return {
         ...state,
-        shopList: {
-            ...state.shopList,
+        map: {
+            ...state.map,
             [id]: shop,
         },
+    }
+};
+
+const onSetShopList = (state: IShopState, action: ISetShopList): IShopState => {
+    const {list} = action;
+
+    return {
+        ...state,
+        list,
+    }
+};
+
+const onSetIsLoading = (state: IShopState, action: ISetIsLoading): IShopState => {
+    const {isLoading} = action;
+
+    return {
+        ...state,
+        isLoading
     }
 };
 
@@ -96,6 +118,10 @@ export const shopReducer = (state: IShopState = initialState, action: IShopActio
             return onResetProductFilters(state, action);
         case ShopAction.SHOP_ADD:
             return onAddShop(state, action);
+        case ShopAction.SHOP_SET_IS_LOADING:
+            return onSetIsLoading(state, action);
+        case ShopAction.SHOP_SET_LIST:
+            return onSetShopList(state, action);
         default:
             return state;
     }

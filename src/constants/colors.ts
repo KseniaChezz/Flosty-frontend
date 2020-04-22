@@ -9,6 +9,7 @@ export const COLORS = {
     DarkGrey: 'rgb(66, 66, 66)',
     LightGrey: 'rgb(189,189,189)',
     Border: 'rgb(238, 238, 238)',
+    BorderDark: 'rgb(66, 66, 66)',
     Yellow: 'rgb(255, 225, 120)',
     Red: 'rgb(207, 94, 94)',
     TagLightBlue: 'rgb(147, 184, 239)',

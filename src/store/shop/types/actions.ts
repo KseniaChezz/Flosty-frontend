@@ -27,8 +27,20 @@ export interface IAddShop {
     shop: IShop;
 }
 
+export interface ISetShopList {
+    type: ShopAction.SHOP_SET_LIST;
+    list: IShop[];
+}
+
+export interface ISetIsLoading {
+    type: ShopAction.SHOP_SET_IS_LOADING;
+    isLoading: boolean;
+}
+
 export type IShopAction = ISetProductFilterMinPrice
     | ISetProductFilterMaxPrice
     | ISetProductFilterCheckBox
     | IResetProductFilters
     | IAddShop
+    | ISetShopList
+    | ISetIsLoading

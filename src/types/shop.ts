@@ -1,5 +1,5 @@
 export interface IShop {
-    id: string;
+    id: number;
     name: string;
     logo: string;
     rating: string;
@@ -7,4 +7,5 @@ export interface IShop {
     address: string;
     phoneNumber: string;
     email: string;
+    productImgList: string[];
 }

@@ -101,6 +101,7 @@ export const TEXT = {
     welcome: 'Добро пожаловать в Flosty',
     doSubscribe: 'Подписывайтесь на интересные вам магазины, чтобы видеть товары, которые они публикуют. Также вы можете настроить персональную подписку в соответствии с вашими вкусами',
     subscribe: 'Подписаться',
+    unsubscribe: 'Отписаться',
     writeToVendor: 'Написать продавцу',
     search: 'Поиск ',
     filter: 'Фильтр',
@@ -332,4 +333,13 @@ export const TEXT = {
 
     findSomethingToSubscribe: 'Найдите, на что хотите подписаться',
     subscribeToFollow: 'Подписывайтесь на магазины в Flosty и следите за их  обновлениями',
+    subscriptions: 'Подписки',
+    subscription: 'Подписка',
+    feed: 'Лента',
+    history: 'История',
+    shop: 'магазин',
+
+    allTags: 'Все',
+    shops: 'Магазины',
+    adjusted: 'Настраиваемые',
 };

@@ -1,7 +1,7 @@
 import {ImageSourcePropType} from 'react-native';
 
 export interface IProduct {
-    img: ImageSourcePropType;
+    img: string;
     price: number;
     rating: string;
 }
@@ -40,4 +40,16 @@ export interface IShopShort {
     img: ImageSourcePropType;
 }
 
-
+export interface IFeedProduct {
+    id: number;
+    price: number;
+    img: string;
+    rating: string;
+    ref: {
+        type: string;
+        id: number;
+        name: string;
+    },
+    shopName: string;
+    shopLogo: string;
+}

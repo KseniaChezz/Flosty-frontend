@@ -6,7 +6,7 @@ export const appTabList: IAppTab[] = [
         name: AppTab.MAIN,
         selectedImg: require('../../assets/images/home_select.png'),
         defaultImg: require('../../assets/images/home_default.png'),
-        screen: RootNavigatorRoutes.SHOP_PROFILE,
+        screen: RootNavigatorRoutes.SUBSCRIPTIONS,
     },
     {
         name: AppTab.SEARCH,

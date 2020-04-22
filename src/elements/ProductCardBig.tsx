@@ -1,18 +1,19 @@
-import React, {memo, useState, Fragment} from 'react';
+import React, {memo, useState} from 'react';
 import {View, Text, TouchableOpacity, Image, ImageSourcePropType, StyleSheet} from 'react-native';
 
 import Price from './Price';
 import Rating from './Rating';
 
-import {COLORS} from '../constants';
+import {TEXT, COLORS} from '../constants';
 
-import {IProduct} from '../types/product';
+import {IFeedProduct} from '../types/product';
 
 interface IProps {
-    product: IProduct;
+    product: IFeedProduct;
     onProductPress: () => void;
     onBasketPress: () => void;
     onFavoritePress: () => void;
+    isShopShown?: boolean;
 }
 
 const ProductCardBig = memo((props: IProps) => {
@@ -21,22 +22,49 @@ const ProductCardBig = memo((props: IProps) => {
         onProductPress,
         onBasketPress,
         onFavoritePress,
+        isShopShown,
     }= props;
     const {
         img,
         price,
         rating,
+        shopName,
+        shopLogo,
+        ref: {
+            name,
+            type,
+        }
     } = product;
-    const source =  Image.resolveAssetSource(img)
-    const {width, height} = Image.resolveAssetSource(source);
-    const ratio: number = width / height;
+    const [ratio, setRatio] = useState<number>(0);
+    const subscription: string = type === 'tag' ? `#${name}` : TEXT.shop;
+
+    const source =  Image.getSize(
+        img,
+        (width: number, height: number) => {
+            setRatio(width / height);
+    },
+        (err) => console.log(err));
 
     return (
         <TouchableOpacity onPress={onProductPress} style={styles.container}>
 
+            {!!isShopShown &&
+                <View style={styles.shopContainer}>
+                    <Image
+                        style={styles.logo}
+                        source={{uri: shopLogo}}
+                    />
+
+                    <View>
+                        <Text style={[styles.text, styles.shop]}>{shopName}</Text>
+                        <Text style={[styles.text, styles.subscription]}>{TEXT.subscription} {subscription}</Text>
+                    </View>
+                </View>
+            }
+
             <Image
                 style={[styles.productImage, {aspectRatio: ratio}]}
-                source={img}
+                source={{uri:img}}
             />
 
             <View style={styles.textContainer}>
@@ -45,7 +73,7 @@ const ProductCardBig = memo((props: IProps) => {
 
                     <Price price={price}/>
 
-                    <Rating rating={rating} />
+                    {rating && <Rating rating={rating} />}
 
                 </View>
 
@@ -77,9 +105,21 @@ const styles = StyleSheet.create({
     container: {
        marginTop: 10,
     },
+    shopContainer: {
+        flexDirection: 'row',
+        height: 44,
+        backgroundColor: COLORS.White,
+        paddingHorizontal: 10,
+        alignItems: 'center',
+    },
+    logo: {
+        height: 36,
+        width: 36,
+        borderRadius: 18,
+        marginRight: 15,
+    },
     productImage: {
         width: '100%',
-        height: undefined,
         resizeMode: 'contain',
     },
     textContainer: {
@@ -103,6 +143,19 @@ const styles = StyleSheet.create({
     icon: {
         width: 30,
         height: 30,
+    },
+    text: {
+        fontFamily: 'Montserrat',
+        color: COLORS.DarkGrey,
+    },
+    shop: {
+        fontSize: 14,
+        lineHeight: 18,
+        fontWeight: '600',
+    },
+    subscription: {
+        fontSize: 12,
+        lineHeight: 14,
     },
 });
 

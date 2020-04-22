@@ -43,4 +43,31 @@ export const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
     },
+
+    subscriptionTitleContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginLeft: 10,
+        marginTop: 17,
+        marginBottom: 19,
+    },
+    subscriptionTitle: {
+        fontSize: 18,
+        lineHeight: 22,
+        fontWeight: '600',
+        marginRight: 10,
+    },
+    subscriptionNumber: {
+        fontSize: 14,
+        lineHeight: 22,
+    },
+    tabRow: {
+        flexDirection: 'row',
+        height: 44,
+        marginBottom: 10,
+    },
+
+    mainContent: {
+        flex: 1,
+    },
 });

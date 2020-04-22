@@ -39,6 +39,8 @@ import ProductList from './ProductList';
 import PriceInput from './PriceInput';
 import SearchCard from './SearchCard';
 import RowMenuItem from './RowMenuItem';
+import Tab from './Tab';
+import RoundTab from './RoundTab';
 
 export {
     Title,
@@ -82,4 +84,6 @@ export {
     PriceInput,
     SearchCard,
     RowMenuItem,
+    Tab,
+    RoundTab,
 };

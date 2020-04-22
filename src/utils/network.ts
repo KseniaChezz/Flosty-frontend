@@ -1,11 +1,13 @@
 import {AxiosRequestConfig, AxiosResponse} from 'axios';
 
-const axios = require('axios').default;
+export const axios = require('axios').default;
 
 const instance = axios.create({
     baseURL: 'https://flosty.herokuapp.com',
     timeout: 60000,
 });
+
+let authToken: string = '';
 
 instance.interceptors.request.use((config: AxiosRequestConfig) => {
     const {
@@ -14,9 +16,12 @@ instance.interceptors.request.use((config: AxiosRequestConfig) => {
         baseURL,
         params,
         data,
+        headers,
     } = config;
-    const methodToUpperCase: string = method.toLocaleUpperCase()
+    const methodToUpperCase: string = method.toLocaleUpperCase();
+
     console.log(`${methodToUpperCase} ${baseURL}${url}`);
+    console.log('headers', headers);
 
     if (methodToUpperCase === 'GET') {
         console.log('params: ', params);
@@ -43,9 +48,13 @@ instance.interceptors.response.use(function (response: AxiosResponse) {
     return Promise.reject(`responseError: ${err}`);
 });
 
-export const get = (url: string, data?: any) => data ? instance.get(url, {params: data}) : instance.get(url);
+export const get = (url: string, data?: any) => data
+    ? instance.get(url, {params: data, headers: axios.defaults.headers.common})
+    : instance.get(url, {headers: axios.defaults.headers.common});
 
-export const post = (url: string, data?: any) => data ? instance.post(url, data) : instance.post(url);
+export const post = (url: string, data?: any) => data
+    ? instance.post(url, data, {headers: axios.defaults.headers.common})
+    : instance.post(url, {headers: axios.defaults.headers.common});
 
 export const setToken = (token: string) => {
     axios.defaults.headers.common['Authorization'] = token;

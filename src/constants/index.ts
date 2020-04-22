@@ -18,6 +18,7 @@ import {
 } from './filters';
 import {searchCardList} from './search';
 import {productColor} from './product';
+import {subscriptionFilterList} from './subscriptionFilter';
 
 export {
     COLORS,
@@ -39,4 +40,5 @@ export {
     rootFilter,
     searchCardList,
     productColor,
+    subscriptionFilterList,
 };

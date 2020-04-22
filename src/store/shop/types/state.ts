@@ -3,7 +3,9 @@ import {IShop} from '../../../types/shop';
 
 export interface IShopState {
     filter: IProductFilter;
-    shopList: {
+    map: {
         [shopId: string]: IShop;
     };
+    list: IShop[];
+    isLoading: boolean;
 }
