@@ -1,9 +1,7 @@
 import React, {RefObject, Fragment} from 'react';
 import {memo, useState} from 'react';
-import {View, Text, ListRenderItemInfo, ActivityIndicator, TouchableOpacity, FlatList, RefreshControl, ScrollView} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-
-import {styles} from './style';
 
 import {Tab} from '../../elements';
 import FeedList from './FeedList';
@@ -11,22 +9,14 @@ import HistoryList from './HistoryList';
 
 import {getFeedList} from '../../store/feed/thunks/getFeedList';
 
-import {TEXT, COLORS} from '../../constants';
+import {TEXT, COLORS, subscriptionTabList} from '../../constants';
 import {RootNavigatorRoutes} from '../../enums';
 
 import {navigate} from '../../utils';
 
 import {IState} from '../../store';
 import {IFeedProduct} from '../../types/product';
-
-interface ITab {
-    title: string;
-}
-
-const tabList: ITab[] = [
-    {title: TEXT.feed},
-    {title: TEXT.history},
-];
+import {ISubscriptionTab} from '../../types/subscription';
 
 interface IProps {}
 
@@ -34,7 +24,7 @@ const SubscriptionFeed = memo((props: IProps) => {
     const feedList: IFeedProduct[] = useSelector((store: IState) => store.feed.list);
     const isLoading: boolean = useSelector((store: IState) => store.feed.isLoading);
     const subscriptionList: any[] | undefined = useSelector((store: IState) => store.subscriptionList.list);
-    const [activeTab, setActiveTab] = useState<string>(tabList[0].title);
+    const [activeTab, setActiveTab] = useState<string>(subscriptionTabList[0].title);
     const dispatch = useDispatch();
 
     const onTabPress = (title: string) => {
@@ -75,7 +65,7 @@ const SubscriptionFeed = memo((props: IProps) => {
             </View>
 
             <View style={styles.tabRow}>
-                {tabList.map((tab: ITab) => {
+                {subscriptionTabList.map((tab: ISubscriptionTab) => {
                     const {title} = tab;
 
                     return (
@@ -94,6 +84,39 @@ const SubscriptionFeed = memo((props: IProps) => {
             </View>
         </Fragment>
     );
+});
+
+export const styles = StyleSheet.create({
+    subscriptionTitleContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginLeft: 10,
+        marginTop: 17,
+        marginBottom: 19,
+    },
+    subscriptionTitle: {
+        fontSize: 18,
+        lineHeight: 22,
+        fontWeight: '600',
+        marginRight: 10,
+    },
+    subscriptionNumber: {
+        fontSize: 14,
+        lineHeight: 22,
+    },
+    tabRow: {
+        flexDirection: 'row',
+        height: 44,
+        marginBottom: 10,
+    },
+    mainContent: {
+        flex: 1,
+        position: 'relative',
+    },
+    text: {
+        fontFamily: 'Montserrat',
+        color: COLORS.DarkGrey,
+    },
 });
 
 export default SubscriptionFeed;

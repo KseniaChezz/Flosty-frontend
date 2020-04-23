@@ -27,6 +27,17 @@ export interface ISubscription {
     tags: ISubscriptionTag[]
 }
 
- export interface IFilter {
+export interface ISubscriptionFilter {
     title: string;
+}
+
+export interface ISubscriptionTab {
+    title: string;
+}
+
+export interface ISubscriptionResponse {
+    id: number;
+    updated_at: string;
+    shops: ISubscriptionShop[];
+    tags: ISubscriptionTag[];
 }

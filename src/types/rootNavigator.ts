@@ -19,7 +19,7 @@ export type IRootNavigatorParamList = {
 
     Subscriptions: undefined;
 
-    ShopProfile: undefined;
+    ShopProfile: {id: number};
 
     ProductProfile: undefined;
 

@@ -3,10 +3,9 @@ import {memo, useState, useEffect} from 'react';
 import {
     View,
     ActivityIndicator,
+    StyleSheet,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-
-import {styles} from './style';
 
 import {CommonScreenWrapper} from '../../elements';
 import ShopSubscribeCardList from './ShopSubscribeCardList';
@@ -48,7 +47,7 @@ const Subscriptions = memo((props: IProps) => {
     const renderContent = () => {
         if (subscriptionListIsLoading || feedListIsLoading || shopListIsLoading) {
             return (
-                <View style={styles.textContainer}>
+                <View style={styles.activityIndacitorContainer}>
                     <ActivityIndicator
                         size="large"
                         color={COLORS.LightGrey}
@@ -79,6 +78,14 @@ const Subscriptions = memo((props: IProps) => {
             {renderContent()}
         </CommonScreenWrapper>
     );
+});
+
+const styles = StyleSheet.create({
+    activityIndacitorContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
 });
 
 export default Subscriptions;

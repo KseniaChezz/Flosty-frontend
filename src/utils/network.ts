@@ -23,11 +23,11 @@ instance.interceptors.request.use((config: AxiosRequestConfig) => {
     console.log(`${methodToUpperCase} ${baseURL}${url}`);
     console.log('headers', headers);
 
-    if (methodToUpperCase === 'GET') {
+    if (methodToUpperCase === 'GET' || methodToUpperCase === 'DELETE') {
         console.log('params: ', params);
     }
 
-    if (methodToUpperCase === 'POST') {
+    if (methodToUpperCase === 'POST' || methodToUpperCase === 'PUT') {
         console.log('data: ', data);
     }
 
@@ -55,6 +55,14 @@ export const get = (url: string, data?: any) => data
 export const post = (url: string, data?: any) => data
     ? instance.post(url, data, {headers: axios.defaults.headers.common})
     : instance.post(url, {headers: axios.defaults.headers.common});
+
+export const put = (url: string, data?: any) => data
+    ? instance.put(url, data, {headers: axios.defaults.headers.common})
+    : instance.put(url, {headers: axios.defaults.headers.common});
+
+export const deleteMethod = (url: string, data?: any) => data
+    ? instance.delete(url, {params: data, headers: axios.defaults.headers.common})
+    : instance.delete(url, {headers: axios.defaults.headers.common});
 
 export const setToken = (token: string) => {
     axios.defaults.headers.common['Authorization'] = token;

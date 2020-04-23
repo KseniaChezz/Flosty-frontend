@@ -53,11 +53,10 @@ const onSetSubscriptionLDataIsProcessing = (
 
 const onAddSubscription = (state: ISubscriptionListState, action: IAddSubscription): ISubscriptionListState => {
     const {subscription} = action;
-    const prevList: ISubscription[] | undefined = state.list;
 
     return {
         ...state,
-        list: prevList ? [...prevList, subscription] : [subscription],
+        list: [...state.list, subscription],
     }
 }
 

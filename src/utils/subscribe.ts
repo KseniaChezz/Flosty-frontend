@@ -1,3 +1,6 @@
+import {ISubscriptionShop, ISubscriptionTag, ISubscriptionResponse, ISubscription} from '../types/subscription';
+import {SubscriptionType} from '../enums';
+
 export const getSubscribersValueText = (subscribers: number): string => {
     const thousand: string = 'тыс.';
     const million: string = 'млн.';
@@ -24,4 +27,33 @@ export const getSubscribersValueText = (subscribers: number): string => {
     }
 
     return `${Math.floor(subscribers / 1000000)} ${million} ${subscribersCaseList[2]}`;
-}
+};
+
+export const getSubscriptionType = (shops: ISubscriptionShop[], tags: ISubscriptionTag[]): SubscriptionType => {
+    let type: SubscriptionType = SubscriptionType.ADJUSTED;
+
+    if (shops.length === 0 && tags.length === 1) {
+        type = SubscriptionType.TAG;
+    } else if (shops.length === 1 && tags.length === 0) {
+        type = SubscriptionType.SHOP;
+    }
+
+    return type;
+};
+
+export const mapSubscriptionFomResponse = (subscriptionResponse: ISubscriptionResponse): ISubscription => {
+    const {
+        id,
+        updated_at,
+        shops,
+        tags,
+    } = subscriptionResponse;
+
+    return {
+        id,
+        shops,
+        tags,
+        date: + new Date(updated_at),
+        type: getSubscriptionType(shops, tags),
+    };
+};
