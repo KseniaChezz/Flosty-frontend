@@ -39,10 +39,10 @@ const Subscriptions = memo((props: IProps) => {
     }, []);
 
     useEffect(() => {
-        if (feedListLength !== 0 && subscriptionListLength !== 0) {
+        if (feedListLength !== 0) {
             setSubscriptionViewMode(SubscriptionViewMode.FEED);
         }
-    }, [subscriptionListLength, feedListLength]);
+    }, [feedListLength]);
 
     const renderContent = () => {
         if (subscriptionListIsLoading || feedListIsLoading || shopListIsLoading) {

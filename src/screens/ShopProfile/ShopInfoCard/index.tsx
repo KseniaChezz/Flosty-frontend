@@ -2,6 +2,7 @@ import React, {useState, memo} from 'react';
 import {
     View,
     Text,
+    Image,
 } from 'react-native';
 
 import {styles} from './style';
@@ -35,7 +36,10 @@ const ShopInfoCard = memo((props: IProps) => {
         <View style={styles.shop}>
 
             <View style={styles.logoContainer}>
-                <View style={styles.logo}/>
+                <Image
+                    source={{uri: logo}}
+                    style={styles.logo}
+                />
             </View>
 
             <View style={styles.info}>

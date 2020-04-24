@@ -6,14 +6,20 @@ import Rating from './Rating';
 
 import {TEXT, COLORS} from '../constants';
 
-import {IFeedProduct} from '../types/product';
+import {IFeedProduct, IShopProduct} from '../types/product';
 
 interface IProps {
-    product: IFeedProduct;
+    product: IFeedProduct | IShopProduct;
     onProductPress: () => void;
     onBasketPress: () => void;
     onFavoritePress: () => void;
     isShopShown?: boolean;
+}
+
+const isFeedProduct = (product: IFeedProduct | IShopProduct): product is IFeedProduct => {
+    return (product as IFeedProduct).ref !== undefined &&
+        (product as IFeedProduct).shopName !== undefined &&
+        (product as IFeedProduct).shopLogo !== undefined;
 }
 
 const ProductCardBig = memo((props: IProps) => {
@@ -28,15 +34,22 @@ const ProductCardBig = memo((props: IProps) => {
         img,
         price,
         rating,
-        shopName,
-        shopLogo,
-        ref: {
-            name,
-            type,
-        }
     } = product;
+    let shopName: string = '';
+    let shopLogo: string = '';
+    let refName: string = '';
+    let refType: string = '';
+    let subscription: string = '';
+
+    if (isFeedProduct(product)) {
+        shopName = product.shopName;
+        shopLogo = product.shopLogo;
+        refName = product.ref.name;
+        refType = product.ref.type;
+        subscription = refType === 'tag' ? `#${refName}` : TEXT.shop;
+    }
+
     const [ratio, setRatio] = useState<number>(0);
-    const subscription: string = type === 'tag' ? `#${name}` : TEXT.shop;
 
     const source =  Image.getSize(
         img,
@@ -48,7 +61,7 @@ const ProductCardBig = memo((props: IProps) => {
     return (
         <TouchableOpacity onPress={onProductPress} style={styles.container}>
 
-            {!!isShopShown &&
+            {isFeedProduct(product) &&
                 <View style={styles.shopContainer}>
                     <Image
                         style={styles.logo}

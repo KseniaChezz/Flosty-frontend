@@ -6,12 +6,14 @@ import {userReducer} from './user/reducer';
 import {shopReducer} from './shop/reducer';
 import {subscriptionListReducer} from './subscriptionList/reducer';
 import {feedReducer} from './feed/reducer';
+import {productsReducer} from './products/reducer';
 
 import {IAppState} from './app/types/state';
 import {IUserState} from './user/types/state';
 import {IShopState} from './shop/types/state';
 import {ISubscriptionListState} from './subscriptionList/types/state';
 import {IFeedState} from './feed/types/state';
+import {IProductsState} from './products/types/state';
 
 export interface IState {
     app: IAppState;
@@ -19,6 +21,7 @@ export interface IState {
     shop: IShopState;
     subscriptionList: ISubscriptionListState;
     feed: IFeedState;
+    products: IProductsState;
 }
 
 const rootReducer = combineReducers({
@@ -27,6 +30,7 @@ const rootReducer = combineReducers({
     shop: shopReducer,
     subscriptionList: subscriptionListReducer,
     feed: feedReducer,
+    products: productsReducer,
 })
 
 export const store = createStore(rootReducer, applyMiddleware(thunk));

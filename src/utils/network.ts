@@ -52,13 +52,13 @@ export const get = (url: string, data?: any) => data
     ? instance.get(url, {params: data, headers: axios.defaults.headers.common})
     : instance.get(url, {headers: axios.defaults.headers.common});
 
-export const post = (url: string, data?: any) => data
-    ? instance.post(url, data, {headers: axios.defaults.headers.common})
-    : instance.post(url, {headers: axios.defaults.headers.common});
+export const post = (url: string, data?: any) => instance.post(
+    url,
+    data,
+    {headers: axios.defaults.headers.common},
+);
 
-export const put = (url: string, data?: any) => data
-    ? instance.put(url, data, {headers: axios.defaults.headers.common})
-    : instance.put(url, {headers: axios.defaults.headers.common});
+export const put = (url: string, data?: any) => instance.put(url, data, {headers: axios.defaults.headers.common})
 
 export const deleteMethod = (url: string, data?: any) => data
     ? instance.delete(url, {params: data, headers: axios.defaults.headers.common})

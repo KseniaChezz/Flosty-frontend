@@ -1,83 +1,196 @@
-import React, {memo, useState} from 'react';
-import {ScrollView} from 'react-native';
+import React, {memo, useState, useEffect, Fragment} from 'react';
+import {View, ScrollView, ActivityIndicator} from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {RouteProp} from '@react-navigation/native';
 
 import {styles} from './style';
 
 import ShopInfoCard from './ShopInfoCard';
 import {
-    CommonScreenWrapper,
+    ScreenWrapperWithBackButton,
     ColoredButton,
     SearchInput,
     TagList,
     ProductList,
 } from '../../elements';
 
+import {getShopProducts} from '../../store/products/thunks/getShopProducts';
+import {postSubscription} from '../../store/subscriptionList/thunks/addSubscription';
+import {deleteSubscriptionFromList} from '../../store/subscriptionList/thunks/deleteSubscription';
+
 import {IRootNavigatorParamList} from '../../types/rootNavigator';
+import {IState} from '../../store';
+import {IShop, ITag} from '../../types/shop';
+import {IShopProduct} from '../../types/product';
 
 import {TEXT, COLORS} from '../../constants';
-
-import {RootNavigatorRoutes, ShowShopProductListMode} from '../../enums';
-import {productList} from '../../constants/product_temp';
+import {RootNavigatorRoutes, ShowShopProductListMode, SubscriptionType} from '../../enums';
 
 import {getSubscribersValueText} from '../../utils';
 
 type ScreenNavigationProp = StackNavigationProp<IRootNavigatorParamList, RootNavigatorRoutes.SHOP_PROFILE>;
+type ScreenRouteProp = RouteProp<IRootNavigatorParamList, RootNavigatorRoutes.SHOP_PROFILE>;
 
 interface IProps {
     navigation: ScreenNavigationProp;
+    route: ScreenRouteProp;
 }
 
-const tagList: string[] = ['сапоги', 'туфли', 'балетки', 'зима', 'осень', 'весна', 'лето'];
-
 const ShopProfile = memo((props:IProps) => {
-    const {navigation} = props;
+    const {
+        navigation,
+        route: {
+            params: {
+                id,
+            },
+        },
+    } = props;
     const [searchText, setSearchText] = useState<string>('');
+    const [isSubscribed, setIsSubscribed] = useState<boolean>(false);
+    const [subscriptionId, setSubscriptionId] = useState<number | undefined>();
+    const shop: IShop = useSelector((stor: IState) => stor.shop.map[id]);
+    const isProductListLoading: boolean = useSelector((stor: IState) => stor.products.isLoading);
+    const productList: IShopProduct[] = useSelector((stor: IState) => stor.products.shopMap[id]);
+    const isSubscriptionDataProcessing: boolean = useSelector(
+        (stor: IState) => stor.subscriptionList.dataIsProcessing);
+    const {
+        name,
+        logo,
+        rating,
+        address,
+        phoneNumber,
+        email,
+        subscribers,
+        description,
+        tagList,
+    } = shop;
+    const dispatch = useDispatch();
 
-    return (
-        <CommonScreenWrapper style={styles.container}>
-            <ScrollView>
-                <ShopInfoCard
-                    name={'AzART'}
-                    logo={''}
-                    description={'Дизайнерская обувь / одежда. Этичный бренд. Пошив на заказ'}
-                    address={'Нижний Сусальный пер., 5 стр. 19'}
-                    phoneNumber={'8 (499) 101-01-00'}
-                    email={'info@az-art.me'}
-                    rating={'4,8'}
-                    followers={getSubscribersValueText(70000)}
+    useEffect(() => {
+        dispatch(getShopProducts(id));
+    }, []);
+
+    const onBackPress = () => {
+        navigation.goBack();
+    };
+
+    const onAdjustSubscriptionPress = () => {
+        if (!subscriptionId) return ;
+
+        navigation.navigate(
+            RootNavigatorRoutes.SUBSCRIPTION_DETAIL,
+            {
+                subscriptionId,
+                selectedTags: [{name, id: `${id}`}],
+                shopTagList: tagList,
+            },
+        );
+    };
+
+    const onSubscribeSuccessCallback = (id: number) => {
+        setIsSubscribed(true);
+        setSubscriptionId(id);
+    };
+
+    const onUnsubscribeSuccessCallback = () => {
+        setIsSubscribed(false);
+        setSubscriptionId(undefined);
+    };
+
+    const onSubscribePress = () => {
+        dispatch(postSubscription([], [id], onSubscribeSuccessCallback));
+    };
+
+    const onUnsubscribePress = () => {
+        if (!subscriptionId) return;
+
+        dispatch(deleteSubscriptionFromList(subscriptionId, onUnsubscribeSuccessCallback));
+    };
+
+    const onTagPress = (tag: ITag) => {
+        return () => setSearchText(`#${tag.name}`)
+    };
+
+    const renderProducts = () => {
+        if (isProductListLoading) {
+            return (
+                <ActivityIndicator
+                    size="large"
+                    color={COLORS.LightGrey}
+                    style={styles.activityIndacitor}
                 />
+            );
+        }
 
-                <ColoredButton
-                    text={TEXT.subscribe}
-                    onPress={()=>{}}
-                    buttonStyle={styles.subscribeButton}
-                    textStyle={styles.subscribeText}
-                />
-
-                <ColoredButton
-                    text={TEXT.writeToVendor}
-                    onPress={()=>{}}
-                    buttonStyle={styles.writeButton}
-                    textStyle={styles.writeText}
-                />
-
+        return (
+            <Fragment>
                 <SearchInput
                     text={searchText}
                     onTextChange={setSearchText}
                 />
 
-                <TagList
-                    tagList={tagList}
+                {tagList &&
+                    <TagList
+                        tagList={tagList}
+                        onItemPress={onTagPress}
+                    />
+                }
+
+                {productList &&
+                    <ProductList
+                        productList={productList}
+                    />
+                }
+            </Fragment>
+        )
+    }
+
+    return (
+        <ScreenWrapperWithBackButton
+            text={TEXT.shopWithCapital}
+            onBackPress={onBackPress}
+            style={styles.container}
+        >
+            <ScrollView>
+                <ShopInfoCard
+                    name={name}
+                    logo={logo}
+                    description={description}
+                    address={address}
+                    phoneNumber={phoneNumber}
+                    email={email}
+                    rating={rating}
+                    followers={getSubscribersValueText(subscribers)}
                 />
 
-                <ProductList
-                    productList={productList}
+                <ColoredButton
+                    text={isSubscribed ? TEXT.unsubscribe : TEXT.subscribe}
+                    onPress={isSubscribed ? onUnsubscribePress : onSubscribePress}
+                    buttonStyle={isSubscribed ? styles.unsubscribeButton : styles.subscribeButton}
+                    textStyle={styles.subscribeText}
                 />
+
+                {isSubscribed &&
+                    <ColoredButton
+                        text={TEXT.adjustSubscription}
+                        onPress={onAdjustSubscriptionPress}
+                        buttonStyle={styles.adjustButton}
+                        textStyle={styles.writeAndAdjustText}
+                    />
+                }
+
+                <ColoredButton
+                    text={TEXT.writeToVendor}
+                    onPress={()=>{}}
+                    buttonStyle={styles.writeButton}
+                    textStyle={styles.writeAndAdjustText}
+                />
+
+                {renderProducts()}
 
             </ScrollView>
-
-        </CommonScreenWrapper>
+        </ScreenWrapperWithBackButton>
     );
 });
 

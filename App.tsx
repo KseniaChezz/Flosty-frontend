@@ -30,6 +30,7 @@ import {
     ShopChat,
 } from './src/screens/User';
 import Subscriptions from './src/screens/Subscriptions';
+import SubscriptionDetail from './src/screens/SubscriptionDetail';
 import ShopProfile from './src/screens/ShopProfile';
 import Product from './src/screens/Product';
 import Search from './src/screens/Search';
@@ -55,6 +56,7 @@ const App = () => {
                     <Stack.Screen name={RootNavigatorRoutes.SEARCH} component={Search} />
                     <Stack.Screen name={RootNavigatorRoutes.FAVORITE} component={Favorite} />
                     <Stack.Screen name={RootNavigatorRoutes.SUBSCRIPTIONS} component={Subscriptions} />
+                    <Stack.Screen name={RootNavigatorRoutes.SUBSCRIPTION_DETAIL} component={SubscriptionDetail} />
                     <Stack.Screen name={RootNavigatorRoutes.USER_PROFILE} component={UserProfile} />
                     <Stack.Screen name={RootNavigatorRoutes.USER_PROFILE_ADDRESS_LIST} component={UserAddressList} />
                     <Stack.Screen name={RootNavigatorRoutes.USER_PROFILE_ADDRESS} component={UserAddress} />

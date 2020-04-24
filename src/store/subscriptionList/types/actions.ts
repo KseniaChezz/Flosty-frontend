@@ -27,8 +27,14 @@ export interface IDeleteSubscription {
     subscriptionId: number;
 }
 
+export interface IUpdateSubscription {
+    type: SubscriptionListAction.SUBSCRIPTION_LIST_UPDATE;
+    subscription: ISubscription;
+}
+
 export type ISubscriptionListAction = ISetSubscriptionList
     | ISetSubscriptionDataIsProcessing
     | ISetSubscriptionListIsLoading
     | IAddSubscription
-    | IDeleteSubscription;
+    | IDeleteSubscription
+    | IUpdateSubscription;

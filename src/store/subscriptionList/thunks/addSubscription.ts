@@ -1,6 +1,6 @@
 import {Dispatch} from 'react';
 
-import {setSubscriptionList, setSubscriptionDataIsProcessing, addSubscription} from '../../subscriptionList/actions';
+import {setSubscriptionDataIsProcessing, addSubscription} from '../../subscriptionList/actions';
 
 import {ISubscriptionListAction} from '../../subscriptionList/types/actions';
 import {ISubscription, ISubscriptionShop, ISubscriptionTag} from '../../../types/subscription';
@@ -19,7 +19,7 @@ interface IResponse {
     data: IData;
 }
 
-export const postSubscription = (tags: number[], shops: number[], cb?: () => void) => {
+export const postSubscription = (tags: number[], shops: number[], cb?: (id: number) => void) => {
     return (dispatch: Dispatch<ISubscriptionListAction>) => {
         dispatch(setSubscriptionDataIsProcessing(true));
 
@@ -32,7 +32,7 @@ export const postSubscription = (tags: number[], shops: number[], cb?: () => voi
 
                 dispatch(addSubscription(subscription))
                 dispatch(setSubscriptionDataIsProcessing(false));
-                cb && cb();
+                cb && cb(data.id);
             })
             .catch((err: any) => {
                 console.log('err', err);

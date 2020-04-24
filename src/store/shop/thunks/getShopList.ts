@@ -2,7 +2,7 @@ import {Dispatch} from 'react';
 
 import {addShop, setShopIsLoading, setShopList} from '../actions';
 
-import {IShop} from '../../../types/shop';
+import {IShop, ITag} from '../../../types/shop';
 import {IShopAction} from '../types/actions';
 
 import {get} from '../../../utils/network';
@@ -14,6 +14,7 @@ interface IResponse {
 interface IShopResponse {
     id: number;
     name: string;
+    description: string;
     image: string;
     rating: string;
     address: string;
@@ -21,6 +22,7 @@ interface IShopResponse {
     email: string;
     subscribers: number;
     last_three_product_images: string[];
+    top_tags: ITag[];
 }
 
 export const getShopList = () => {
@@ -38,6 +40,7 @@ export const getShopList = () => {
                         const {
                             id,
                             name,
+                            description,
                             image,
                             address,
                             phone_number,
@@ -45,15 +48,18 @@ export const getShopList = () => {
                             rating,
                             subscribers,
                             last_three_product_images,
+                            top_tags,
                         } = shop;
 
                         return {
                             id,
                             name,
+                            description,
                             address,
                             email,
                             rating,
                             subscribers,
+                            tagList: top_tags,
                             logo: image,
                             phoneNumber: phone_number,
                             productImgList: last_three_product_images,
@@ -62,8 +68,9 @@ export const getShopList = () => {
 
                     shopList.forEach((shop: IShop) => dispatch(addShop(shop)));
                     dispatch(setShopList(shopList));
-                    dispatch(setShopIsLoading(false));
                 }
+
+                dispatch(setShopIsLoading(false));
             })
             .catch((err: any) => {
                 console.log('err', err);

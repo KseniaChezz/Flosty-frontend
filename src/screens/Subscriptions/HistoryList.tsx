@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import {memo, useState} from 'react';
+import {memo, useState, useEffect} from 'react';
 import {
     View,
     Text,
@@ -21,6 +21,7 @@ import {IState} from '../../store';
 import {ISubscription, ISubscriptionFilter} from '../../types/subscription';
 
 import {deleteSubscriptionFromList} from '../../store/subscriptionList/thunks/deleteSubscription';
+import {filterSubscriptionList} from '../../utils/subscribe';
 
 interface IProps {}
 
@@ -29,10 +30,20 @@ const HistoryList = memo((props: IProps) => {
     const isSubscriptionDataProcessing: boolean = useSelector(
         (store: IState) => store.subscriptionList.dataIsProcessing);
     const [filter, setFilter] = useState<string>(subscriptionFilterList[0].title);
+    const [filteredList, setFilteredList] = useState<ISubscription[]>(subscriptionList);
     const dispatch = useDispatch();
 
+    useEffect(() => {
+        setFilteredList(filterSubscriptionList(subscriptionList, filter));
+    }, [subscriptionList]);
+
     const onFilterPress = (title: string) => {
-        return () => setFilter(title);
+        return () => {
+            if (isSubscriptionDataProcessing) return;
+
+            setFilter(title);
+            setFilteredList(filterSubscriptionList(subscriptionList, title));
+        }
     };
 
     const onUnSubscribePress = (id: number) => {
@@ -67,8 +78,8 @@ const HistoryList = memo((props: IProps) => {
                         })}
                     </View>
 
-                    <View>
-                        {subscriptionList.map((subscription: ISubscription) => {
+                    <View style={styles.subscriptionListContainer}>
+                        {filteredList.map((subscription: ISubscription) => {
                             const {id, type} = subscription;
 
                             if (type === SubscriptionType.ADJUSTED) {
@@ -116,6 +127,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    subscriptionListContainer: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+    }
 });
 
 export default HistoryList;

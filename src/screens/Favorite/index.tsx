@@ -8,9 +8,9 @@ import {
 import TwoProductsInRowList from '../../elements/ProductList/TwoProductsInRowList';
 
 import {IRootNavigatorParamList} from '../../types/rootNavigator';
+import {IShopProduct} from '../../types/product';
 
 import {RootNavigatorRoutes} from '../../enums';
-import {productList} from '../../constants/product_temp';
 import {TEXT, COLORS} from '../../constants';
 
 type ScreenNavigationProp = StackNavigationProp<IRootNavigatorParamList, RootNavigatorRoutes.FAVORITE>;
@@ -21,6 +21,7 @@ interface IProps {
 
 const Favorite = memo((props:IProps) => {
     const {navigation} = props;
+    const productList: IShopProduct[] = [];
     const productListLength: number = productList.length;
 
     const renderEmptyList = () => {

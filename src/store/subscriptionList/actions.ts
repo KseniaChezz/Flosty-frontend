@@ -3,7 +3,8 @@ import {
     ISetSubscriptionDataIsProcessing,
     ISetSubscriptionListIsLoading,
     IAddSubscription,
-    IDeleteSubscription
+    IDeleteSubscription,
+    IUpdateSubscription,
 } from './types/actions';
 import {ISubscription} from '../../types/subscription';
 
@@ -41,5 +42,12 @@ export const deleteSubscription = (subscriptionId: number): IDeleteSubscription 
     return {
         type: SubscriptionListAction.SUBSCRIPTION_LIST_DELETE,
         subscriptionId,
+    }
+}
+
+export const updateSubscription = (subscription: ISubscription): IUpdateSubscription => {
+    return {
+        type: SubscriptionListAction.SUBSCRIPTION_LIST_UPDATE,
+        subscription,
     }
 }

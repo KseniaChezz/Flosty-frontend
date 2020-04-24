@@ -6,10 +6,10 @@ import Rating from './Rating';
 
 import {COLORS} from '../constants';
 
-import {IProduct} from '../types/product';
+import {IShopProduct} from '../types/product';
 
 interface IProps {
-    product: IProduct;
+    product: IShopProduct;
     onProductPress: () => void;
 }
 
@@ -23,20 +23,25 @@ const ProductCardSmall = memo((props: IProps) => {
         price,
         rating,
     } = product;
-    const source =  Image.resolveAssetSource(img)
-    const {width, height} = Image.resolveAssetSource(source);
-    const ratio: number = width / height;
+    const [ratio, setRatio] = useState<number>(0);
+
+    const source =  Image.getSize(
+        img,
+        (width: number, height: number) => {
+            setRatio(width / height);
+        },
+        (err) => console.log(err));
 
     return (
         <TouchableOpacity style={{marginTop: 10}}>
             <Image
-                source={img}
+                source={{uri: img}}
                 style={[styles.productImage, {aspectRatio: ratio}]}
             />
             <View style={styles.textContainer}>
                 <Price price={price} />
 
-                <Rating rating={rating} />
+                {rating && <Rating rating={rating} />}
             </View>
         </TouchableOpacity>
     );

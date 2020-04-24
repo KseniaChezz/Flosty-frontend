@@ -2,10 +2,10 @@ import React, {memo, Fragment} from 'react';
 
 import ProductCardBig from '../ProductCardBig';
 
-import {IProduct} from '../../types/product';
+import {IShopProduct} from '../../types/product';
 
 interface IProps {
-    productList: IProduct[];
+    productList: IShopProduct[];
 }
 
 const OneProductInRowList = memo((props: IProps) => {
@@ -13,7 +13,7 @@ const OneProductInRowList = memo((props: IProps) => {
 
     return (
         <Fragment>
-            {productList.map((product: IProduct, index: number) => {
+            {productList.map((product: IShopProduct, index: number) => {
                 return (
                     <ProductCardBig
                         key={index}

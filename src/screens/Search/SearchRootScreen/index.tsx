@@ -13,9 +13,9 @@ import TwoProductsInRowList from '../../../elements/ProductList/TwoProductsInRow
 
 import {ISearchNavigatorParamList} from '../../../types/searchNavigator';
 import {ISearchCard} from '../../../types/search';
+import {IShopProduct} from '../../../types/product';
 
 import {SearchNavigatorRoutes} from '../../../enums';
-import {productList} from '../../../constants/product_temp';
 
 type ScreenNavigationProp = StackNavigationProp<ISearchNavigatorParamList, SearchNavigatorRoutes.SEARCH_ROOT_SCREEN>;
 
@@ -26,6 +26,7 @@ interface IProps {
 const SearchRootScreen = memo((props:IProps) => {
     const {navigation} = props;
     const [searchText, setSearchText] = useState<string>('');
+    const productList: IShopProduct[] = [];
 
     const onCardPress = (card: ISearchCard) => {
         const {title, additionalMenu} = card;

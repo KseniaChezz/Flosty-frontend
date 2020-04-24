@@ -102,6 +102,7 @@ export const TEXT = {
     doSubscribe: 'Подписывайтесь на интересные вам магазины, чтобы видеть товары, которые они публикуют. Также вы можете настроить персональную подписку в соответствии с вашими вкусами',
     subscribe: 'Подписаться',
     unsubscribe: 'Отписаться',
+    adjustSubscription: 'Детализировать подписку',
     writeToVendor: 'Написать продавцу',
     search: 'Поиск ',
     filter: 'Фильтр',
@@ -338,8 +339,13 @@ export const TEXT = {
     feed: 'Лента',
     history: 'История',
     shop: 'магазин',
+    shopWithCapital: 'Магазин',
 
     allTags: 'Все',
     shops: 'Магазины',
     adjusted: 'Настраиваемые',
+    subscriptionAdjustment: 'Детализация подписки',
+    youChoose: 'Вы выбрали',
+    findYouNeed: 'Найдите необходимое',
+    youAlsoLike: 'Возможно, вам еще понравится',
 };

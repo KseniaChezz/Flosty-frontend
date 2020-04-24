@@ -3,22 +3,22 @@ import {View, StyleSheet} from 'react-native';
 
 import ProductCardSmall from '../ProductCardSmall';
 
-import {IProduct} from '../../types/product';
+import {IShopProduct} from '../../types/product';
 
 interface IProps {
-    productList: IProduct[];
+    productList: IShopProduct[];
 }
 
-const ProductList = memo((props:IProps) => {
+const TwoProductsInRowList = memo((props:IProps) => {
     const {productList} = props;
-    const [leftRow, setLeftRow] = useState<IProduct[]>([])
-    const [rightRow, setRightRow] = useState<IProduct[]>([])
+    const [leftRow, setLeftRow] = useState<IShopProduct[]>([]);
+    const [rightRow, setRightRow] = useState<IShopProduct[]>([]);
 
     useEffect(() => {
-        const leftRow: IProduct[] = [];
-        const rightRow: IProduct[] = [];
+        const leftRow: IShopProduct[] = [];
+        const rightRow: IShopProduct[] = [];
 
-        productList.forEach((product: IProduct, index: number) => {
+        productList.forEach((product: IShopProduct, index: number) => {
             if (index % 2 === 0) {
                 leftRow.push(product);
             } else {
@@ -34,7 +34,7 @@ const ProductList = memo((props:IProps) => {
         <Fragment>
             <View style={styles.productContainer}>
                 <View style={[styles.rowContainer, styles.marginRight10]}>
-                    {leftRow.map((item: IProduct, index: number) => {
+                    {leftRow.map((item: IShopProduct, index: number) => {
                         return (
                             <ProductCardSmall
                                 key={index}
@@ -46,7 +46,7 @@ const ProductList = memo((props:IProps) => {
                 </View>
 
                 <View style={styles.rowContainer}>
-                    {rightRow.map((item: IProduct, index: number) => {
+                    {rightRow.map((item: IShopProduct, index: number) => {
                         return (
                             <ProductCardSmall
                                 key={index}
@@ -74,4 +74,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ProductList;
+export default TwoProductsInRowList;

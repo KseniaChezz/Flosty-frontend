@@ -6,7 +6,8 @@ import {
     ISetSubscriptionDataIsProcessing,
     ISetSubscriptionList,
     ISetSubscriptionListIsLoading,
-    ISubscriptionListAction
+    ISubscriptionListAction,
+    IUpdateSubscription,
 } from './types/actions';
 
 import {SubscriptionListAction} from './subscriptionListActionEnum';
@@ -66,6 +67,21 @@ const onDeleteSubscription = (state: ISubscriptionListState, action: IDeleteSubs
     return {
         ...state,
         list: state.list.filter((item: ISubscription) => item.id !== subscriptionId),
+    }
+}
+
+const onUpdateSubscription = (state: ISubscriptionListState, action: IUpdateSubscription): ISubscriptionListState => {
+    const {subscription} = action;
+    const {id} = subscription;
+    const newList: ISubscription[] = state.list.map((item: ISubscription) => {
+        if (item.id === id) return subscription;
+
+        return item;
+    });
+
+    return {
+        ...state,
+        list: newList,
     }
 }
 

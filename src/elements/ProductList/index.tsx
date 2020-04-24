@@ -7,12 +7,12 @@ import TwoProductsInRowList from './TwoProductsInRowList';
 import FilterWindow from './FilterWindow';
 
 import {ShowShopProductListMode} from '../../enums';
-import { TEXT } from '../../constants';
+import {TEXT} from '../../constants';
 
-import {IProduct} from '../../types/product';
+import {IShopProduct} from '../../types/product';
 
 interface IProps {
-    productList: IProduct[];
+    productList: IShopProduct[];
 }
 
 const ProductList = memo((props:IProps) => {
@@ -37,7 +37,7 @@ const ProductList = memo((props:IProps) => {
         setIsFilterWindowVisible(false);
     }
 
-    const renderOneProductInRowList = (productList: IProduct[]) => {
+    const renderOneProductInRowList = (productList: IShopProduct[]) => {
         return (
             <OneProductInRowList
                 productList={productList}
@@ -45,7 +45,7 @@ const ProductList = memo((props:IProps) => {
         );
     };
 
-    const renderTwoProductsInRowList = (productList: IProduct[]) => {
+    const renderTwoProductsInRowList = (productList: IShopProduct[]) => {
         return (
             <TwoProductsInRowList
                 productList={productList}

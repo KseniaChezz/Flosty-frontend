@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: COLORS.White,
         padding: 8,
+        marginBottom: 10,
     },
     tagsContainer: {
         flexDirection: 'row',

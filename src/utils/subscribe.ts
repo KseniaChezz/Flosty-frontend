@@ -1,5 +1,7 @@
 import {ISubscriptionShop, ISubscriptionTag, ISubscriptionResponse, ISubscription} from '../types/subscription';
+
 import {SubscriptionType} from '../enums';
+import {TEXT} from '../constants';
 
 export const getSubscribersValueText = (subscribers: number): string => {
     const thousand: string = 'тыс.';
@@ -56,4 +58,19 @@ export const mapSubscriptionFomResponse = (subscriptionResponse: ISubscriptionRe
         date: + new Date(updated_at),
         type: getSubscriptionType(shops, tags),
     };
+};
+
+export const filterSubscriptionList = (subscriptionList: ISubscription[], filterType: string): ISubscription[] => {
+    switch (filterType) {
+        case TEXT.allTags:
+            return subscriptionList;
+        case TEXT.shops:
+            return subscriptionList.filter((item: ISubscription) => item.type === SubscriptionType.SHOP);
+        case TEXT.tags:
+            return subscriptionList.filter((item: ISubscription) => item.type === SubscriptionType.TAG);
+        case TEXT.adjusted:
+            return subscriptionList.filter((item: ISubscription) => item.type === SubscriptionType.ADJUSTED);
+        default:
+            return subscriptionList;
+    }
 };

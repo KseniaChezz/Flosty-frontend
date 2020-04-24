@@ -41,3 +41,7 @@ export interface ISubscriptionResponse {
     shops: ISubscriptionShop[];
     tags: ISubscriptionTag[];
 }
+
+export interface IFilter {
+    title: string;
+}

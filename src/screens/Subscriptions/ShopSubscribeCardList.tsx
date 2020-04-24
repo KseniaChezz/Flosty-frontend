@@ -1,12 +1,5 @@
-import React, {RefObject, Fragment, useState} from 'react';
-import {memo, useRef} from 'react';
-import {
-    View,
-    Text,
-    ListRenderItemInfo,
-    ActivityIndicator,
-    StyleSheet,
-} from 'react-native';
+import React, {Fragment, memo, useRef} from 'react';
+import {ActivityIndicator, StyleSheet, Text, View,} from 'react-native';
 import Carousel, {CarouselStatic} from 'react-native-snap-carousel';
 import {useDispatch, useSelector} from 'react-redux';
 
@@ -14,11 +7,13 @@ import ShopSubscribeCard from './ShopSubscribeCard';
 import SearchSubscribeCard from './SearchSubscribeCard';
 
 import {postSubscription} from '../../store/subscriptionList/thunks/addSubscription';
+import {getFeedList} from '../../store/feed/thunks/getFeedList';
+
 import {IShop} from '../../types/shop';
 import {IState} from '../../store';
 
-import {TEXT, COLORS} from '../../constants';
-import {RootNavigatorRoutes, SubscriptionViewMode} from '../../enums';
+import {COLORS, TEXT} from '../../constants';
+import {RootNavigatorRoutes, SubscriptionType, SubscriptionViewMode} from '../../enums';
 
 import {navigate} from '../../utils';
 
@@ -59,19 +54,20 @@ const ShopSubscribeCardList = memo((props: IProps) => {
         );
     };
 
-    const onAddSubscriptionSuccessCallback = (index: number) => {
+    const onSubscribeSuccessCallback = (index: number) => {
         return () => {
             carousel?.current && carousel.current.snapToNext();
 
             if (index === shopList.length - 1) {
                 setSubscriptionViewMode(SubscriptionViewMode.FEED);
+                dispatch(getFeedList());
             }
         }
     }
 
     const onSubscribePress = (id: number, index: number) => {
         return () => {
-            dispatch(postSubscription([], [id], onAddSubscriptionSuccessCallback(index)));
+            dispatch(postSubscription([], [id], onSubscribeSuccessCallback(index)));
         }
     };
 
@@ -95,6 +91,7 @@ const ShopSubscribeCardList = memo((props: IProps) => {
                     itemWidth={200}
                     layout={'default'}
                     firstItem={0}
+                    scrollEnabled={!isSubscriptionDataProcessing}
                     ref={carousel}
                 />
 
@@ -105,8 +102,6 @@ const ShopSubscribeCardList = memo((props: IProps) => {
                         style={styles.indicator}
                     />
                 }
-
-                {isSubscriptionDataProcessing && <View style={styles.loadingShild}/>}
             </View>
         </Fragment>
     );
@@ -139,13 +134,6 @@ export const styles = StyleSheet.create({
     cardContainer: {
         alignItems: 'center',
         position: 'relative',
-    },
-    loadingShild: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        bottom: 0,
-        right: 0,
     },
     indicator: {
         marginTop: 30,

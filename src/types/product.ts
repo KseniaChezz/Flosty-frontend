@@ -1,12 +1,14 @@
 import {ImageSourcePropType} from 'react-native';
 
-export interface IProduct {
+export interface IShopProduct {
+    id: number;
     img: string;
     price: number;
     rating: string;
+    date: number;
 }
 
-export interface IProductDetail extends IProduct {
+export interface IDetailProduct extends IShopProduct {
     title: string;
     text: string;
     oldPrice?: number;

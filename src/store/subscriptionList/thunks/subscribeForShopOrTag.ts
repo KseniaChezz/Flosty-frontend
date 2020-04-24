@@ -1,22 +1,23 @@
 import {Dispatch} from 'react';
 
-import {setSubscriptionDataIsProcessing, deleteSubscription} from '../../subscriptionList/actions';
+import {setSubscriptionDataIsProcessing} from '../../subscriptionList/actions';
 
 import {ISubscriptionListAction} from '../../subscriptionList/types/actions';
 
-import {deleteMethod} from '../../../utils/network';
+import {post} from '../../../utils/network';
+
+import {SubscriptionType} from '../../../enums';
 
 interface IResponse {
     data: any;
 }
 
-export const deleteSubscriptionFromList = (id: number, cb?: () => void) => {
+export const subscribeForShopOrTag = (id: number, type: SubscriptionType, cb?: () => void) => {
     return (dispatch: Dispatch<ISubscriptionListAction>) => {
         dispatch(setSubscriptionDataIsProcessing(true));
 
-        return deleteMethod(`/personal_subs/${id}`)
+        return post(`/${type === SubscriptionType.SHOP ? 'shops' : 'tags'}/subscribe/${id}`)
             .then((res: IResponse) => {
-                dispatch(deleteSubscription(id))
                 dispatch(setSubscriptionDataIsProcessing(false));
                 cb && cb();
             })
