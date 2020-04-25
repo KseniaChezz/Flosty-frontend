@@ -2,9 +2,9 @@ import React from 'react';
 import {memo, useState, useEffect} from 'react';
 import {
     View,
-    ActivityIndicator,
     StyleSheet,
 } from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {CommonScreenWrapper} from '../../elements';
@@ -17,7 +17,6 @@ import {getFeedList} from '../../store/feed/thunks/getFeedList';
 
 import {IState} from '../../store';
 
-import {TEXT, COLORS} from '../../constants';
 import {SubscriptionViewMode} from '../../enums';
 
 interface IProps {}
@@ -39,18 +38,19 @@ const Subscriptions = memo((props: IProps) => {
     }, []);
 
     useEffect(() => {
-        if (feedListLength !== 0) {
+        if (feedListLength !== 0 && subscriptionListLength !== 0) {
             setSubscriptionViewMode(SubscriptionViewMode.FEED);
+        } else {
+            setSubscriptionViewMode(SubscriptionViewMode.INITIAL);
         }
-    }, [feedListLength]);
+    }, [feedListLength, subscriptionListLength]);
 
     const renderContent = () => {
         if (subscriptionListIsLoading || feedListIsLoading || shopListIsLoading) {
             return (
                 <View style={styles.activityIndacitorContainer}>
-                    <ActivityIndicator
-                        size="large"
-                        color={COLORS.LightGrey}
+                    <Spinner
+                        visible={true}
                     />
                 </View>
             );

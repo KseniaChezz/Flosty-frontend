@@ -6,11 +6,12 @@ import {TEXT, COLORS} from '../constants';
 interface IProps {
     text: string;
     onTextChange: (text: string) => void;
+    onPress: () => void;
     style?: ViewStyle;
 }
 
 const SearchInput = memo((props:IProps) => {
-    const {text, onTextChange, style} = props;
+    const {text, onTextChange, onPress, style} = props;
 
     const onCleanPress = () => {
         onTextChange('');
@@ -19,7 +20,7 @@ const SearchInput = memo((props:IProps) => {
     return (
         <View style={[styles.searchInputContainer, style]}>
             <TouchableOpacity
-                onPress={()=>{}}
+                onPress={onPress}
             >
                 <Image
                     source={require('../../assets/images/search_default.png')}

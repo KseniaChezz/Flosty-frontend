@@ -1,8 +1,8 @@
 import React, {useState, memo} from 'react';
 import {
     Text,
-    ActivityIndicator,
 } from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
@@ -137,12 +137,9 @@ const RegistrationForm = memo((props: IProps) => {
                 onPress={onBackPress}
             />
 
-            {isDataProcessing &&
-                <ActivityIndicator
-                    size="large"
-                    color={COLORS.LightGrey}
-                />
-            }
+            <Spinner
+                visible={isDataProcessing}
+            />
 
         </LoginAndRegistrationScreenWrapper>
     );

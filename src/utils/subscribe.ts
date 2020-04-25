@@ -60,17 +60,38 @@ export const mapSubscriptionFomResponse = (subscriptionResponse: ISubscriptionRe
     };
 };
 
-export const filterSubscriptionList = (subscriptionList: ISubscription[], filterType: string): ISubscription[] => {
+export const filterSubscriptionList = (subscriptionList: ISubscription[], filterType: string, searchText: string): ISubscription[] => {
+    let filteredList: ISubscription[];
+
     switch (filterType) {
-        case TEXT.allTags:
-            return subscriptionList;
         case TEXT.shops:
-            return subscriptionList.filter((item: ISubscription) => item.type === SubscriptionType.SHOP);
+            return  subscriptionList.filter((item: ISubscription) => {
+                return item.type === SubscriptionType.SHOP && isStringContainsSearchText(item.shops[0].name, searchText);
+            });
         case TEXT.tags:
-            return subscriptionList.filter((item: ISubscription) => item.type === SubscriptionType.TAG);
+            return  subscriptionList.filter((item: ISubscription) => {
+                return item.type === SubscriptionType.TAG && isStringContainsSearchText(item.shops[0].name, searchText);
+            });
         case TEXT.adjusted:
-            return subscriptionList.filter((item: ISubscription) => item.type === SubscriptionType.ADJUSTED);
+            return subscriptionList.filter((item: ISubscription) => {
+                return item.type === SubscriptionType.ADJUSTED && isSubscriptionHasSearchText(item, searchText);
+            });
+        case TEXT.allTags:
         default:
-            return subscriptionList;
+            return subscriptionList.filter((item: ISubscription) => isSubscriptionHasSearchText(item, searchText));
     }
 };
+
+const isSubscriptionHasSearchText = (subscription: ISubscription, text: string): boolean => {
+    if (text === '') return true;
+
+    const {shops, tags} = subscription;
+
+    return [...shops, ...tags].some((item: ISubscriptionShop | ISubscriptionTag) => {
+        return isStringContainsSearchText(item.name, text);
+    });
+}
+
+const isStringContainsSearchText = (str: string, searchText: string): boolean => {
+    return str.toLowerCase().includes(searchText.toLowerCase());
+}

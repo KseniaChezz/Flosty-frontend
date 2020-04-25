@@ -20,16 +20,20 @@ import {SubscriptionType} from '../../enums';
 interface IProps {
     subscription: ISubscription;
     onUnSubscribePress: () => void;
+    onCardPress: () => void;
 }
 
 const PlainSubscriptionCard = memo((props: IProps) => {
-    const {subscription, onUnSubscribePress} = props;
+    const {subscription, onCardPress, onUnSubscribePress} = props;
     const {id, shops, tags, type} = subscription;
     const subscriptionItem: ISubstrictionItem = type === SubscriptionType.SHOP ? shops[0] : tags[0];
     const {name, image, subscribers} = subscriptionItem;
 
     return (
-        <View style={styles.card}>
+        <TouchableOpacity
+            style={styles.card}
+            onPress={onCardPress}
+        >
 
             <Image
                 source={{uri: image}}
@@ -51,7 +55,7 @@ const PlainSubscriptionCard = memo((props: IProps) => {
                 textStyle={styles.buttonText}
             />
 
-        </View>
+        </TouchableOpacity>
     );
 });
 

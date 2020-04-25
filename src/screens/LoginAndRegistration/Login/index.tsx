@@ -3,10 +3,10 @@ import {useState, memo} from 'react';
 import {
     View,
     Image,
-    ActivityIndicator,
 } from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useSelector, useDispatch} from 'react-redux';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 import {styles} from './style';
 
@@ -22,7 +22,7 @@ import {loginUser} from '../../../store/user/thunks/login';
 import {IRootNavigatorParamList} from '../../../types/rootNavigator';
 import {IState} from '../../../store';
 
-import {TEXT, COLORS} from '../../../constants';
+import {TEXT} from '../../../constants';
 import {RootNavigatorRoutes} from '../../../enums';
 
 import {isNotEmptyString} from '../../../utils';
@@ -114,12 +114,9 @@ const Login = memo((props: IProps) => {
                 onPress={onRegisterPress}
             />
 
-            {isDataProcessing &&
-                <ActivityIndicator
-                    size="large"
-                    color={COLORS.LightGrey}
-                />
-            }
+            <Spinner
+                visible={isDataProcessing}
+            />
 
         </LoginAndRegistrationScreenWrapper>
     );

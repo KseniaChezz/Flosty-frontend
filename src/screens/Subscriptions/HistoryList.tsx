@@ -1,27 +1,21 @@
-import React, {Fragment} from 'react';
-import {memo, useState, useEffect} from 'react';
-import {
-    View,
-    Text,
-    TouchableOpacity,
-    ScrollView,
-    ActivityIndicator,
-    StyleSheet,
-} from 'react-native';
+import React, {Fragment, memo, useEffect, useState} from 'react';
+import {ScrollView, StyleSheet, View,} from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {RoundTab} from '../../elements';
+import {RoundTab, SearchInput} from '../../elements';
 import PlainSubscriptionCard from './PlainSubscriptionCard';
 import AdjustedSubscriptionCard from './AdjustedSubscriptionCard';
 
-import {TEXT, COLORS, subscriptionFilterList} from '../../constants';
-import {SubscriptionType} from '../../enums';
+import {subscriptionFilterList} from '../../constants';
+import {SubscriptionType, RootNavigatorRoutes} from '../../enums';
 
 import {IState} from '../../store';
 import {ISubscription, ISubscriptionFilter} from '../../types/subscription';
 
 import {deleteSubscriptionFromList} from '../../store/subscriptionList/thunks/deleteSubscription';
 import {filterSubscriptionList} from '../../utils/subscribe';
+import { navigate } from '../../utils';
 
 interface IProps {}
 
@@ -29,54 +23,76 @@ const HistoryList = memo((props: IProps) => {
     const subscriptionList: ISubscription[] = useSelector((store: IState) => store.subscriptionList.list);
     const isSubscriptionDataProcessing: boolean = useSelector(
         (store: IState) => store.subscriptionList.dataIsProcessing);
+    const [searchText, setSearchText] = useState<string>('');
     const [filter, setFilter] = useState<string>(subscriptionFilterList[0].title);
     const [filteredList, setFilteredList] = useState<ISubscription[]>(subscriptionList);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        setFilteredList(filterSubscriptionList(subscriptionList, filter));
+        setFilteredList(filterSubscriptionList(subscriptionList, filter, searchText));
     }, [subscriptionList]);
 
     const onFilterPress = (title: string) => {
         return () => {
-            if (isSubscriptionDataProcessing) return;
-
             setFilter(title);
-            setFilteredList(filterSubscriptionList(subscriptionList, title));
+            setFilteredList(filterSubscriptionList(subscriptionList, title, searchText));
         }
+    };
+
+    const onSearchTextChange = (text: string) => {
+        setSearchText(text);
+        setFilteredList(filterSubscriptionList(subscriptionList, filter, text));
+    };
+
+    const onSearchPress = () => {
+        setFilteredList(filterSubscriptionList(subscriptionList, filter, searchText));
     };
 
     const onUnSubscribePress = (id: number) => {
         return () => dispatch(deleteSubscriptionFromList(id));
+    };
+
+    const onCardPress = (subscription: ISubscription) => {
+        return () => {
+            const {type, shops, tags} = subscription;
+
+            if (type === SubscriptionType.SHOP) {
+                navigate(RootNavigatorRoutes.SHOP_PROFILE, {id: shops[0].id});
+            }
+        }
     }
 
     return (
         <Fragment>
-            {isSubscriptionDataProcessing &&
-                <View style={styles.activityIndicatorContainer}>
-                    <ActivityIndicator
-                        size="large"
-                        color={COLORS.DarkGrey}
-                    />
+            <Spinner
+                visible={isSubscriptionDataProcessing}
+            />
+
+            <View style={styles.filterAndSearchContainer}>
+                <SearchInput
+                    text={searchText}
+                    onTextChange={onSearchTextChange}
+                    onPress={onSearchPress}
+                />
+
+                <View style={styles.filterRow}>
+                    {subscriptionFilterList.map((item: ISubscriptionFilter) => {
+                        const {title} = item;
+
+                        return (
+                            <RoundTab
+                                key={title}
+                                title={title}
+                                isSelected={filter === title}
+                                onPress={onFilterPress(title)}
+                            />
+                        );
+                    })}
                 </View>
-            }
+            </View>
 
             <ScrollView>
                 <View style={styles.historyContainer}>
-                    <View style={styles.filterRow}>
-                        {subscriptionFilterList.map((item: ISubscriptionFilter) => {
-                            const {title} = item;
-
-                            return (
-                                <RoundTab
-                                    key={title}
-                                    title={title}
-                                    isSelected={filter === title}
-                                    onPress={onFilterPress(title)}
-                                />
-                            );
-                        })}
-                    </View>
 
                     <View style={styles.subscriptionListContainer}>
                         {filteredList.map((subscription: ISubscription) => {
@@ -98,10 +114,12 @@ const HistoryList = memo((props: IProps) => {
                                     key={id}
                                     subscription={subscription}
                                     onUnSubscribePress={onUnSubscribePress(id)}
+                                    onCardPress={onCardPress(subscription)}
                                 />
                             )
                         })}
                     </View>
+
                 </View>
             </ScrollView>
         </Fragment>
@@ -112,20 +130,14 @@ const styles = StyleSheet.create({
     historyContainer: {
         paddingHorizontal: 10,
     },
+    filterAndSearchContainer: {
+        paddingHorizontal: 8,
+    },
     filterRow: {
         flexDirection: 'row',
         height: 44,
         justifyContent: 'space-between',
         marginBottom: 15,
-    },
-    activityIndicatorContainer: {
-        position: 'absolute',
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
-        justifyContent: 'center',
-        alignItems: 'center',
     },
     subscriptionListContainer: {
         flexDirection: 'row',

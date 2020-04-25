@@ -49,7 +49,7 @@ const ShopProfile = memo((props:IProps) => {
     const [searchText, setSearchText] = useState<string>('');
     const [isSubscribed, setIsSubscribed] = useState<boolean>(false);
     const [subscriptionId, setSubscriptionId] = useState<number | undefined>();
-    const shop: IShop = useSelector((stor: IState) => stor.shop.map[id]);
+    const shop: IShop | undefined = useSelector((stor: IState) => stor.shop.map[id]);
     const isProductListLoading: boolean = useSelector((stor: IState) => stor.products.isLoading);
     const productList: IShopProduct[] = useSelector((stor: IState) => stor.products.shopMap[id]);
     const isSubscriptionDataProcessing: boolean = useSelector(
@@ -128,6 +128,7 @@ const ShopProfile = memo((props:IProps) => {
                 <SearchInput
                     text={searchText}
                     onTextChange={setSearchText}
+                    onPress={()=>{}}
                 />
 
                 {tagList &&

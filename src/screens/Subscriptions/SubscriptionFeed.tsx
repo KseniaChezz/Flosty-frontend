@@ -10,9 +10,6 @@ import HistoryList from './HistoryList';
 import {getFeedList} from '../../store/feed/thunks/getFeedList';
 
 import {TEXT, COLORS, subscriptionTabList} from '../../constants';
-import {RootNavigatorRoutes} from '../../enums';
-
-import {navigate} from '../../utils';
 
 import {IState} from '../../store';
 import {IFeedProduct} from '../../types/product';

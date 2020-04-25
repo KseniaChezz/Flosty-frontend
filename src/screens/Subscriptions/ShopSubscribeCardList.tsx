@@ -1,6 +1,11 @@
 import React, {Fragment, memo, useRef} from 'react';
-import {ActivityIndicator, StyleSheet, Text, View,} from 'react-native';
+import {
+    View,
+    Text,
+    StyleSheet,
+} from 'react-native';
 import Carousel, {CarouselStatic} from 'react-native-snap-carousel';
+import Spinner from 'react-native-loading-spinner-overlay';
 import {useDispatch, useSelector} from 'react-redux';
 
 import ShopSubscribeCard from './ShopSubscribeCard';
@@ -95,13 +100,9 @@ const ShopSubscribeCardList = memo((props: IProps) => {
                     ref={carousel}
                 />
 
-                {isSubscriptionDataProcessing &&
-                    <ActivityIndicator
-                        size="large"
-                        color={COLORS.DarkGrey}
-                        style={styles.indicator}
-                    />
-                }
+                <Spinner
+                    visible={isSubscriptionDataProcessing}
+                />
             </View>
         </Fragment>
     );
@@ -134,10 +135,6 @@ export const styles = StyleSheet.create({
     cardContainer: {
         alignItems: 'center',
         position: 'relative',
-    },
-    indicator: {
-        marginTop: 30,
-        flex: 1,
     },
 });
 
