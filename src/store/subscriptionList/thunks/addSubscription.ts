@@ -6,7 +6,7 @@ import {ISubscriptionListAction} from '../../subscriptionList/types/actions';
 import {ISubscription, ISubscriptionShop, ISubscriptionTag} from '../../../types/subscription';
 
 import {post} from '../../../utils/network';
-import {mapSubscriptionFomResponse} from '../../../utils/subscribe';
+import {mapSubscriptionFomResponse} from '../../../utils';
 
 interface IData {
     id: number;

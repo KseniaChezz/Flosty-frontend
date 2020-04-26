@@ -1,4 +1,7 @@
-import {ISubscriptionShop, ISubscriptionTag, ISubscriptionResponse, ISubscription} from '../types/subscription';
+import {useSelector} from 'react-redux';
+
+import {ISubscription, ISubscriptionResponse, ISubscriptionShop, ISubscriptionTag} from '../types/subscription';
+import {IState} from '../store';
 
 import {SubscriptionType} from '../enums';
 import {TEXT} from '../constants';
@@ -61,8 +64,6 @@ export const mapSubscriptionFomResponse = (subscriptionResponse: ISubscriptionRe
 };
 
 export const filterSubscriptionList = (subscriptionList: ISubscription[], filterType: string, searchText: string): ISubscription[] => {
-    let filteredList: ISubscription[];
-
     switch (filterType) {
         case TEXT.shops:
             return  subscriptionList.filter((item: ISubscription) => {
@@ -70,7 +71,7 @@ export const filterSubscriptionList = (subscriptionList: ISubscription[], filter
             });
         case TEXT.tags:
             return  subscriptionList.filter((item: ISubscription) => {
-                return item.type === SubscriptionType.TAG && isStringContainsSearchText(item.shops[0].name, searchText);
+                return item.type === SubscriptionType.TAG && isStringContainsSearchText(item.tags[0].name, searchText);
             });
         case TEXT.adjusted:
             return subscriptionList.filter((item: ISubscription) => {
@@ -94,4 +95,51 @@ const isSubscriptionHasSearchText = (subscription: ISubscription, text: string):
 
 const isStringContainsSearchText = (str: string, searchText: string): boolean => {
     return str.toLowerCase().includes(searchText.toLowerCase());
+}
+
+export const isShopSubscribed = (shopId: number): boolean => {
+    const subscriptionList: ISubscription[] = useSelector((store: IState) => store.subscriptionList.list);
+
+    return subscriptionList.filter((item: ISubscription) => {
+        const {type, shops} = item;
+
+        return type === SubscriptionType.SHOP && shops[0].id === shopId;
+    }).length !==0;
+}
+
+export const isTagSubscribed = (tagId: number): boolean => {
+    const subscriptionList: ISubscription[] = useSelector((store: IState) => store.subscriptionList.list);
+
+    return subscriptionList.filter((item: ISubscription) => {
+        const {type, tags} = item;
+
+        return type === SubscriptionType.TAG && tags[0].id === tagId;
+    }).length !==0;
+}
+
+export const getShopBindedSubscriptions = (shopId: number): ISubscription[] => {
+    const subscriptionList: ISubscription[] = useSelector((store: IState) => store.subscriptionList.list);
+
+    return subscriptionList.filter((item: ISubscription) => {
+        const {type, shops} = item;
+
+        return type === SubscriptionType.ADJUSTED && shops[0]?.id === shopId;
+    });
+}
+
+export const getTagBindedSubscriptions = (tagId: number): ISubscription[] => {
+    const subscriptionList: ISubscription[] = useSelector((store: IState) => store.subscriptionList.list);
+
+    return subscriptionList.filter((item: ISubscription) => {
+        const {type, tags} = item;
+
+        return type === SubscriptionType.ADJUSTED && isTagFoundInTagList(tagId, tags);
+    });
+};
+
+const isTagFoundInTagList = (tagId: number, tagList: ISubscriptionTag[]): boolean => {
+    return tagList.some((item: ISubscriptionTag) => {
+        const {id} = item;
+        return id === tagId;
+    });
 }

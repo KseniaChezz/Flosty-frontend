@@ -1,17 +1,17 @@
 import React, {memo, useState, useEffect, Fragment} from 'react';
-import {View, Text, ScrollView, ActivityIndicator} from 'react-native';
+import {View, Text, ScrollView} from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
 import {useSelector, useDispatch} from 'react-redux';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
 
 import {styles} from './style';
 
-import {
-    ScreenWrapperWithBackButton,
-} from '../../elements';
+import {ScreenWrapperWithBackButton,} from '../../elements';
 import SubscriptionDetalCard from './SubscriptionDetailCard';
 
 import {updateSubscriptionInList} from '../../store/subscriptionList/thunks/updateSubscription';
+import {postSubscription} from '../../store/subscriptionList/thunks/addSubscription';
 
 import {IRootNavigatorParamList} from '../../types/rootNavigator';
 import {IState} from '../../store';
@@ -35,7 +35,7 @@ const SubscsriptionDetail = memo((props:IProps) => {
             params: {
                 subscriptionId,
                 selectedTags,
-                shopTagList,
+                popularTags,
             },
         },
     } = props;
@@ -46,8 +46,6 @@ const SubscsriptionDetail = memo((props:IProps) => {
     const dispatch = useDispatch();
 
     const onBackPress = () => {
-        if (isSubscriptionDataProcessing) return;
-
         navigation.goBack();
     };
 
@@ -74,23 +72,30 @@ const SubscsriptionDetail = memo((props:IProps) => {
             }
         });
 
-        dispatch(updateSubscriptionInList(subscriptionId, tags, shops))
+        if (subscriptionId) {
+            dispatch(updateSubscriptionInList(subscriptionId, tags, shops));
+        } else {
+            dispatch(postSubscription(tags, shops));
+        }
     }
 
     return (
         <ScreenWrapperWithBackButton
-            text={TEXT.subscription}
+            text={subscriptionId ? TEXT.editSubscription : TEXT.subscription}
             onBackPress={onBackPress}
         >
+            <Spinner
+                visible={isSubscriptionDataProcessing}
+            />
+
             <ScrollView>
                 <SubscriptionDetalCard
-                    shopTagList={shopTagList}
+                    popularTagList={popularTags}
                     onShopTagPress={onShopTagPress}
                     selectedTagList={selectedTagList}
                     onSelectedTagPress={onSelectedTagPress}
                     searchText={searchText}
                     setSearchText={setSearchText}
-                    isSubscriptionDataProcessing={isSubscriptionDataProcessing}
                     onSavePress={onSavePress}
                 />
 

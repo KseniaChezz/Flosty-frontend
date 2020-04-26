@@ -55,3 +55,21 @@ export interface IFeedProduct {
     shopName: string;
     shopLogo: string;
 }
+
+export interface IShopProductResponse {
+    id: number;
+    price: number;
+    price_with_sale: number;
+    updated_at: string;
+    rating: string;
+    images: string[];
+}
+
+export interface ITagProductResponse {
+    id: number;
+    price: number;
+    price_with_sale: number;
+    updated_at: string;
+    rating: string;
+    images: string[];
+}

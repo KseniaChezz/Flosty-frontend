@@ -100,6 +100,8 @@ export const subscriptionListReducer = (
             return onAddSubscription(state, action);
         case SubscriptionListAction.SUBSCRIPTION_LIST_DELETE:
             return onDeleteSubscription(state, action);
+        case SubscriptionListAction.SUBSCRIPTION_LIST_UPDATE:
+            return onUpdateSubscription(state, action);
         default:
             return state;
     }

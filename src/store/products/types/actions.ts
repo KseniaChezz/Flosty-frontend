@@ -13,6 +13,12 @@ export interface IAddShopProducts {
     productList: IShopProduct[];
 }
 
+export interface IAddTagProducts {
+    type: ProductsAction.PRODUCTS_ADD_TAG_PRODUCTS;
+    tagId: string;
+    productList: IShopProduct[];
+}
+
 export interface IAddDetailProduct {
     type: ProductsAction.PRODUCTS_ADD_DETAIL_PRODUCT;
     product: IDetailProduct;
@@ -20,4 +26,5 @@ export interface IAddDetailProduct {
 
 export type IProductsAction = ISetIsLoading
     | IAddShopProducts
+    | IAddTagProducts
     | IAddDetailProduct;

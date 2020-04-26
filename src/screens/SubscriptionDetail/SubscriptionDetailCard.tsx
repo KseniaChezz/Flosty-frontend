@@ -3,7 +3,6 @@ import {
     View,
     Text,
     StyleSheet,
-    ActivityIndicator,
 } from 'react-native';
 
 import {
@@ -19,11 +18,10 @@ import {ITag} from '../../types/shop';
 interface IProps {
     selectedTagList: ITag[];
     onSelectedTagPress: (item: ITag) => () => void;
-    shopTagList: ITag[];
+    popularTagList: ITag[] | undefined;
     onShopTagPress: (item: ITag) => () => void;
     searchText: string;
     setSearchText: (value: string) => void;
-    isSubscriptionDataProcessing: boolean;
     onSavePress: () => void;
 }
 
@@ -31,11 +29,10 @@ const SubscriptionDetalCard = memo((props: IProps) => {
     const {
         selectedTagList,
         onSelectedTagPress,
-        shopTagList,
+        popularTagList,
         onShopTagPress,
         searchText,
         setSearchText,
-        isSubscriptionDataProcessing,
         onSavePress,
     } = props;
 
@@ -63,32 +60,29 @@ const SubscriptionDetalCard = memo((props: IProps) => {
             <SearchInput
                 text={searchText}
                 onTextChange={setSearchText}
+                onPress={()=>{}}
             />
 
-            <Text style={[styles.text, styles.titlePlain, styles.marginTop15]}>
-                {TEXT.youAlsoLike}
-            </Text>
+            {popularTagList &&
+                <Text style={[styles.text, styles.titlePlain, styles.marginTop15]}>
+                    {TEXT.youAlsoLike}
+                </Text>
+            }
 
-            <TagList
-                tagList={shopTagList}
-                onItemPress={onShopTagPress}
-            />
+            {popularTagList &&
+                <TagList
+                    tagList={popularTagList}
+                    onItemPress={onShopTagPress}
+                />
+            }
 
             <ColoredButton
                 text={TEXT.save}
                 onPress={onSavePress}
-                buttonStyle={styles.button}
+                buttonStyle={selectedTagList.length === 0 ? styles.disabledButton : styles.button}
                 textStyle={styles.buttonText}
+                isDisabled={selectedTagList.length === 0}
             />
-
-            <View style={styles.activityIndacitorContainer}>
-                {isSubscriptionDataProcessing &&
-                    <ActivityIndicator
-                        size="large"
-                        color={COLORS.LightGrey}
-                    />
-                }
-            </View>
         </View>
     );
 });
@@ -121,6 +115,12 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         marginTop: 0,
     },
+    disabledButton: {
+        height: 44,
+        marginBottom: 10,
+        marginTop: 0,
+        backgroundColor: COLORS.Border,
+    },
     buttonText: {
         fontSize: 16,
         lineHeight: 18,
@@ -130,13 +130,6 @@ const styles = StyleSheet.create({
     marginTop15: {
         marginTop: 15,
     },
-    activityIndacitorContainer: {
-        position: 'absolute',
-        bottom: 15,
-        left: 0,
-        justifyContent: 'center',
-        width: '105%',
-    }
 });
 
 export default SubscriptionDetalCard;

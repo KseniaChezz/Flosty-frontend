@@ -28,7 +28,7 @@ interface IProps {
 
 const ShopSubscribeCardList = memo((props: IProps) => {
     const {setSubscriptionViewMode} = props;
-    const shopList: IShop[] = useSelector((store: IState) => store.shop.list);
+    const shopList: IShop[] = useSelector((store: IState) => store.shop.topTenlist);
     const isSubscriptionDataProcessing: boolean = useSelector(
         (store: IState) => store.subscriptionList.dataIsProcessing);
     const carousel = useRef<CarouselStatic<IShop>>(null);

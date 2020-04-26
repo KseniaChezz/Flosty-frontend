@@ -6,8 +6,7 @@ import {ISubscriptionListAction} from '../../subscriptionList/types/actions';
 import {ISubscriptionResponse} from '../../../types/subscription';
 
 import {put} from '../../../utils/network';
-
-import {mapSubscriptionFomResponse} from '../../../utils/subscribe';
+import {mapSubscriptionFomResponse} from '../../../utils';
 
 interface IResponse {
     data: ISubscriptionResponse;
@@ -19,7 +18,6 @@ export const updateSubscriptionInList = (id: number, tags: number[], shops: numb
 
         return put(`/personal_subs/${id}`, {tags, shops})
             .then((res: IResponse) => {
-                debugger;
                 const {data} = res;
                 dispatch(updateSubscription(mapSubscriptionFomResponse(data)))
                 dispatch(setSubscriptionDataIsProcessing(false));

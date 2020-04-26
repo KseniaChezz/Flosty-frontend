@@ -1,5 +1,6 @@
 import {IUserAddressFieldList, IUserCardFieldList, IMessage} from './user';
 import {ITag} from './shop';
+import {ISubscriptionTag} from './subscription';
 
 export type IRootNavigatorParamList = {
     Login: undefined;
@@ -19,9 +20,11 @@ export type IRootNavigatorParamList = {
     UserProfileShopChat: {shopName: string};
 
     Subscriptions: undefined;
-    SubscriptionDetail: {subscriptionId: number, shopTagList: ITag[], selectedTags: ITag[]};
+    SubscriptionDetail: {subscriptionId?: number, popularTags?: ITag[], selectedTags: ITag[]};
 
     ShopProfile: {id: number};
+
+    TagProfile: {tag: ISubscriptionTag};
 
     ProductProfile: undefined;
 

@@ -306,6 +306,7 @@ export const TEXT = {
     saved: 'сохранили',
 
     tags: 'Теги',
+    tag: 'Тег',
 
     pickColor: 'Выберите цвет',
     pickSize: 'Выберите размер',
@@ -336,6 +337,7 @@ export const TEXT = {
     subscribeToFollow: 'Подписывайтесь на магазины в Flosty и следите за их  обновлениями',
     subscriptions: 'Подписки',
     subscription: 'Подписка',
+    editSubscription: 'Редактирование подписки',
     feed: 'Лента',
     history: 'История',
     shop: 'магазин',

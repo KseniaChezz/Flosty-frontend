@@ -59,6 +59,29 @@ const HistoryList = memo((props: IProps) => {
             if (type === SubscriptionType.SHOP) {
                 navigate(RootNavigatorRoutes.SHOP_PROFILE, {id: shops[0].id});
             }
+
+            if (type === SubscriptionType.TAG) {
+                navigate(RootNavigatorRoutes.TAG_PROFILE, {tag: tags[0]});
+            }
+        }
+    };
+
+    const onEditAdjustableSubscriptionPress = (subscription: ISubscription) => {
+        return () => {
+            const {
+                id: subscriptionId,
+                shops,
+                tags,
+            } = subscription;
+            const {name, id} = shops[0];
+
+            navigate(
+                RootNavigatorRoutes.SUBSCRIPTION_DETAIL,
+                {
+                    subscriptionId,
+                    selectedTags: [{name, id: `${id}`}, ...tags],
+                },
+            );
         }
     }
 
@@ -103,7 +126,7 @@ const HistoryList = memo((props: IProps) => {
                                     <AdjustedSubscriptionCard
                                         key={id}
                                         subscription={subscription}
-                                        onEditPress={()=>{}}
+                                        onEditPress={onEditAdjustableSubscriptionPress(subscription)}
                                         onUnSubscribePress={onUnSubscribePress(id)}
                                     />
                                 );

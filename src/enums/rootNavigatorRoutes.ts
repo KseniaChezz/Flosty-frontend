@@ -20,6 +20,8 @@ export enum RootNavigatorRoutes {
 
     SHOP_PROFILE = 'ShopProfile',
 
+    TAG_PROFILE = 'TagProfile',
+
     PRODUCT_PROFILE = 'ProductProfile',
 
     SEARCH = 'Search',

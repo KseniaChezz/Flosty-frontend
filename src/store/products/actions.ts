@@ -3,6 +3,7 @@ import {ProductsAction} from './productsActionEnum';
 import {
     ISetIsLoading,
     IAddShopProducts,
+    IAddTagProducts,
     IAddDetailProduct,
 } from './types/actions';
 import {IDetailProduct} from '../../types/product';
@@ -18,6 +19,14 @@ export const addShopProducts = (shopId: number, productList: any): IAddShopProdu
     return {
         type: ProductsAction.PRODUCTS_ADD_SHOP_PRODUCTS,
         shopId,
+        productList,
+    };
+};
+
+export const addTagProducts = (tagId: string, productList: any): IAddTagProducts => {
+    return {
+        type: ProductsAction.PRODUCTS_ADD_TAG_PRODUCTS,
+        tagId,
         productList,
     };
 };

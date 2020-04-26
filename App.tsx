@@ -32,6 +32,7 @@ import {
 import Subscriptions from './src/screens/Subscriptions';
 import SubscriptionDetail from './src/screens/SubscriptionDetail';
 import ShopProfile from './src/screens/ShopProfile';
+import TagProfile from './src/screens/TagProfile';
 import Product from './src/screens/Product';
 import Search from './src/screens/Search';
 import Favorite from './src/screens/Favorite';
@@ -53,6 +54,7 @@ const App = () => {
                 <Stack.Navigator headerMode="none" initialRouteName={RootNavigatorRoutes.LOGIN}>
                     <Stack.Screen name={RootNavigatorRoutes.PRODUCT_PROFILE} component={Product} />
                     <Stack.Screen name={RootNavigatorRoutes.SHOP_PROFILE} component={ShopProfile} />
+                    <Stack.Screen name={RootNavigatorRoutes.TAG_PROFILE} component={TagProfile} />
                     <Stack.Screen name={RootNavigatorRoutes.SEARCH} component={Search} />
                     <Stack.Screen name={RootNavigatorRoutes.FAVORITE} component={Favorite} />
                     <Stack.Screen name={RootNavigatorRoutes.SUBSCRIPTIONS} component={Subscriptions} />

@@ -28,7 +28,7 @@ const getInitialFilters = (): IProductFilter => {
 const initialState: IShopState = {
     filter: getInitialFilters(),
     map: {},
-    list: [],
+    topTenlist: [],
     isLoading: false,
 };
 
@@ -93,7 +93,7 @@ const onSetShopList = (state: IShopState, action: ISetShopList): IShopState => {
 
     return {
         ...state,
-        list,
+        topTenlist: list,
     }
 };
 

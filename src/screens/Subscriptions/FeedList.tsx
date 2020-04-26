@@ -24,7 +24,7 @@ const SubscriptionFeed = memo((props: IProps) => {
     } = props;
 
     const keyExtractor = (item: IFeedProduct) => {
-        return item.id.toString();
+        return `${item.id}`;
     };
 
     const renderProduct = (info: ListRenderItemInfo<IFeedProduct>) => {

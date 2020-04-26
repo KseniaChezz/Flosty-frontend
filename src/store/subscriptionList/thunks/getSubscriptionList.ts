@@ -6,7 +6,7 @@ import {ISubscriptionListAction} from '../../subscriptionList/types/actions';
 import {ISubscription, ISubscriptionShop, ISubscriptionTag, ISubscriptionResponse} from '../../../types/subscription';
 
 import {get} from '../../../utils/network';
-import {getSubscriptionType, mapSubscriptionFomResponse} from '../../../utils/subscribe';
+import {getSubscriptionType, mapSubscriptionFomResponse} from '../../../utils';
 
 interface IResponse {
     data: ISubscriptionResponse[];

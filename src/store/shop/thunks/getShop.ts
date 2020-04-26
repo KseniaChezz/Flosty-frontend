@@ -9,28 +9,21 @@ import {get} from '../../../utils/network';
 import {mapShopFromResponse} from '../../../utils';
 
 interface IResponse {
-    data: IShopResponse[];
+    data: IShopResponse;
 }
 
-export const getShopList = () => {
+export const getShop = (id: number) => {
     return (dispatch: Dispatch<IShopAction>) => {
         dispatch(setShopIsLoading(true));
 
-        return get('/shops',)
+        return get(`/shops/${id}`,)
             .then((res: IResponse) => {
                 const {
-                    data: shops,
-                } = res
+                    data,
+                } = res;
+                const shop: IShop = mapShopFromResponse(data);
 
-                if (shops.length !== 0) {
-                    const shopList: IShop[] = shops.map((shop: IShopResponse) => {
-                        return mapShopFromResponse(shop);
-                    });
-
-                    shopList.forEach((shop: IShop) => dispatch(addShop(shop)));
-                    dispatch(setShopList(shopList));
-                }
-
+                dispatch(addShop(shop));
                 dispatch(setShopIsLoading(false));
             })
             .catch((err: any) => {

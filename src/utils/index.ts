@@ -19,8 +19,24 @@ import {
     getTime,
     getTimeOrDate,
 } from './time';
-import {getSubscribersValueText} from './subscribe';
-import {isStringWithNumbers} from './product';
+import {
+    mapShopFromResponse,
+} from './shop';
+import {
+    getSubscribersValueText,
+    filterSubscriptionList,
+    mapSubscriptionFomResponse,
+    getSubscriptionType,
+    isShopSubscribed,
+    isTagSubscribed,
+    getShopBindedSubscriptions,
+    getTagBindedSubscriptions,
+} from './subscribe';
+import {
+    isStringWithNumbers,
+    getTagListId,
+    mapProductFromResponse,
+} from './product';
 import {getEachNthIndexFromZeroTillMax} from './search';
 import {navigate, goBack} from './navigation';
 
@@ -45,11 +61,22 @@ export {
     getTimeOrDate,
 
     getSubscribersValueText,
+    filterSubscriptionList,
+    mapSubscriptionFomResponse,
+    getSubscriptionType,
+    isShopSubscribed,
+    isTagSubscribed,
+    getShopBindedSubscriptions,
+    getTagBindedSubscriptions,
 
     isStringWithNumbers,
+    getTagListId,
+    mapProductFromResponse,
 
     getEachNthIndexFromZeroTillMax,
 
     navigate,
     goBack,
+
+    mapShopFromResponse,
 }

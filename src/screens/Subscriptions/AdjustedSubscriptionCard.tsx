@@ -37,7 +37,7 @@ const AdjustedSubscriptionCard = memo((props: IProps) => {
                         const {name} = shop;
 
                         return (
-                            <Text style={styles.text}>{name}</Text>
+                            <Text style={[styles.text, styles.tagText]}>{name}</Text>
                         )
                     })}
 
@@ -45,7 +45,7 @@ const AdjustedSubscriptionCard = memo((props: IProps) => {
                         const {name} = tag;
 
                         return (
-                            <Text style={styles.text}>`#${name}`</Text>
+                            <Text style={[styles.text, styles.tagText]}>#{name}</Text>
                         )
                     })}
                 </View>
@@ -101,6 +101,9 @@ const styles = StyleSheet.create({
         color: COLORS.DarkGrey,
         fontSize: 14,
         fontWeight: '500',
+    },
+    tagText: {
+        marginRight: 10,
     },
     buttonsContainer: {
         flexDirection: 'row',

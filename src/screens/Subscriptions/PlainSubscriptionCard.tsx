@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
         padding: 8,
         alignItems: 'center',
         marginRight: 5,
+        marginBottom: 10,
     },
     shopImg: {
         height: 60,

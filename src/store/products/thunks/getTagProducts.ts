@@ -1,33 +1,34 @@
 import {Dispatch} from 'react';
 
-import {setIsLoading, addShopProducts} from '../actions';
+import {setIsLoading, addShopProducts, addTagProducts} from '../actions';
 
 import {IProductsAction} from '../types/actions';
-import {IShopProduct, IShopProductResponse} from '../../../types/product';
+import {IShopProduct, ITagProductResponse} from '../../../types/product';
 
 import {get} from '../../../utils/network';
-import {mapProductFromResponse} from '../../../utils';
+import {getTagListId, mapProductFromResponse} from '../../../utils';
 
 interface IResponse {
-    data: IShopProductResponse[];
+    data: ITagProductResponse[];
 }
 
-export const getShopProducts = (shopId: number) => {
+export const getTagProducts = (tagIdList: number[]) => {
     return (dispatch: Dispatch<IProductsAction>) => {
         dispatch(setIsLoading(true));
 
-        return get(`/shops/${shopId}/products`,)
+        return get(`/tags/get_by/`, {tags: tagIdList})
             .then((res: IResponse) => {
                 const {
                     data,
                 } = res;
+                debugger;
 
                 if (data.length !== 0) {
-                    const shopProductList: IShopProduct[] = data.map((item: IShopProductResponse) => {
+                    const tagProductList: IShopProduct[] = data.map((item: ITagProductResponse) => {
                         return mapProductFromResponse(item);
                     });
-
-                    dispatch(addShopProducts(shopId, shopProductList));
+                    debugger;
+                    dispatch(addTagProducts(getTagListId(tagIdList), tagProductList));
                 }
 
                 dispatch(setIsLoading(false));

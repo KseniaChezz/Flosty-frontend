@@ -42,6 +42,8 @@ import RowMenuItem from './RowMenuItem';
 import Tab from './Tab';
 import RoundTab from './RoundTab';
 
+import ButtonsBlock from './ShopAndTagProfile/ButtonsBlock';
+
 export {
     Title,
     SubTitle,
@@ -86,4 +88,6 @@ export {
     RowMenuItem,
     Tab,
     RoundTab,
+
+    ButtonsBlock,
 };

@@ -1,6 +1,7 @@
 import {IProductsState} from './types/state';
 import {
     IAddShopProducts,
+    IAddTagProducts,
     IProductsAction,
     ISetIsLoading,
     IAddDetailProduct,
@@ -11,6 +12,7 @@ import {ProductsAction} from './productsActionEnum';
 const initialState: IProductsState = {
     isLoading: false,
     shopMap: {},
+    tagMap: {},
     productMap: {},
 };
 
@@ -33,6 +35,17 @@ const onAddShopProducts = (state: IProductsState, action: IAddShopProducts): IPr
     }
 };
 
+const onAddTagProducts = (state: IProductsState, action: IAddTagProducts): IProductsState => {
+    const {tagId, productList} = action;
+    return {
+        ...state,
+        tagMap: {
+            ...state.shopMap,
+            [tagId]: productList,
+        },
+    }
+};
+
 const onAddDetailProduct = (state: IProductsState, action: IAddDetailProduct): IProductsState => {
     const {product} = action;
     const {id} = product;
@@ -51,6 +64,8 @@ export const productsReducer = (state: IProductsState = initialState, action: IP
             return onSetIsLoading(state, action);
         case ProductsAction.PRODUCTS_ADD_SHOP_PRODUCTS:
             return onAddShopProducts(state, action);
+        case ProductsAction.PRODUCTS_ADD_TAG_PRODUCTS:
+            return onAddTagProducts(state, action);
         case ProductsAction.PRODUCTS_ADD_DETAIL_PRODUCT:
             return onAddDetailProduct(state, action);
         default:

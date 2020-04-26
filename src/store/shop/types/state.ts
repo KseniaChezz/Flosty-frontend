@@ -6,6 +6,6 @@ export interface IShopState {
     map: {
         [shopId: string]: IShop;
     };
-    list: IShop[];
+    topTenlist: IShop[];
     isLoading: boolean;
 }
