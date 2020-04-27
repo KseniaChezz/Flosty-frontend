@@ -19,7 +19,7 @@ interface IProps {
     selectedTagList: ITag[];
     onSelectedTagPress: (item: ITag) => () => void;
     popularTagList: ITag[] | undefined;
-    onShopTagPress: (item: ITag) => () => void;
+    onPopularTagPress: (item: ITag) => () => void;
     searchText: string;
     setSearchText: (value: string) => void;
     onSavePress: () => void;
@@ -30,7 +30,7 @@ const SubscriptionDetalCard = memo((props: IProps) => {
         selectedTagList,
         onSelectedTagPress,
         popularTagList,
-        onShopTagPress,
+        onPopularTagPress,
         searchText,
         setSearchText,
         onSavePress,
@@ -72,7 +72,7 @@ const SubscriptionDetalCard = memo((props: IProps) => {
             {popularTagList &&
                 <TagList
                     tagList={popularTagList}
-                    onItemPress={onShopTagPress}
+                    onItemPress={onPopularTagPress}
                 />
             }
 

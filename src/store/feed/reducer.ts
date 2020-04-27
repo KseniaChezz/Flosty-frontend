@@ -1,5 +1,10 @@
-import {IFeedAction, ISetFeedList, ISetIsFeedListLoading,} from './types/actions';
+import {
+    IFeedAction,
+    ISetFeedList,
+    ISetIsFeedListLoading,
+} from './types/actions';
 import {IFeedState} from './types/state';
+
 import {FeedAction} from "./feedActionEnum";
 
 const initialState: IFeedState = {

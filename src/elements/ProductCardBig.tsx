@@ -1,19 +1,36 @@
 import React, {memo, useState} from 'react';
-import {View, Text, TouchableOpacity, Image, ImageSourcePropType, StyleSheet} from 'react-native';
+import {
+    View,
+    Text,
+    TouchableOpacity,
+    Image,
+    ImageSourcePropType,
+    StyleSheet,
+} from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
 
 import Price from './Price';
 import Rating from './Rating';
 
+import {addFavoriteProduct} from '../store/favorite/thunks/addFavoriteProduct';
+import {deleteFavoriteProduct} from '../store/favorite/thunks/deleteFavoriteProduct';
+
 import {TEXT, COLORS} from '../constants';
 
 import {IFeedProduct, IShopProduct} from '../types/product';
-import { getLogoForFeedProduct, getShopNameForFeedProduct, getTagLineForFeedProduct } from '../utils';
+import {IState} from '../store';
+
+import {
+    getLogoForFeedProduct,
+    getShopNameForFeedProduct,
+    getTagLineForFeedProduct,
+    isProductFavorite,
+} from '../utils';
 
 interface IProps {
     product: IFeedProduct | IShopProduct;
     onProductPress: () => void;
     onBasketPress: () => void;
-    onFavoritePress: () => void;
     isShopShown?: boolean;
 }
 
@@ -26,16 +43,22 @@ const ProductCardBig = memo((props: IProps) => {
         product,
         onProductPress,
         onBasketPress,
-        onFavoritePress,
         isShopShown,
     }= props;
     const {
+        id,
         img,
         price,
         rating,
     } = product;
 
     const [ratio, setRatio] = useState<number>(0);
+    const favoriteList: IShopProduct[] = useSelector((stor: IState) => stor.favorite.list);
+    const isFavorite: boolean = isProductFavorite(id, favoriteList);
+    const favoriteIcon: ImageSourcePropType = isFavorite
+        ? require('../../assets/images/chosen_select.png')
+        : require('../../assets/images/chosen_default.png');
+    const dispatch = useDispatch();
 
     const source =  Image.getSize(
         img,
@@ -43,6 +66,14 @@ const ProductCardBig = memo((props: IProps) => {
             setRatio(width / height);
     },
         (err) => console.log(err));
+
+    const onAddFavoritePress = () => {
+        dispatch(addFavoriteProduct(product as IShopProduct));
+    }
+
+    const onDeleteFavoritePress = () => {
+        dispatch(deleteFavoriteProduct(id));
+    }
 
     const renderFeedProductInfoFromSubscription = (product: IFeedProduct) => {
         const {subscription} = product;
@@ -82,15 +113,15 @@ const ProductCardBig = memo((props: IProps) => {
 
                     <Price price={price}/>
 
-                    {rating && <Rating rating={rating} />}
+                    {!!rating && <Rating rating={rating} />}
 
                 </View>
 
                 <View style={styles.iconContainer}>
 
-                    <TouchableOpacity onPress={onFavoritePress}>
+                    <TouchableOpacity onPress={isFavorite ? onDeleteFavoritePress : onAddFavoritePress}>
                         <Image
-                            source={require('../../assets/images/chosen_default.png')}
+                            source={favoriteIcon}
                             style={styles.icon}
                         />
                     </TouchableOpacity>

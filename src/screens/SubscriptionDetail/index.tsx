@@ -9,6 +9,7 @@ import {styles} from './style';
 
 import {ScreenWrapperWithBackButton,} from '../../elements';
 import SubscriptionDetalCard from './SubscriptionDetailCard';
+import TwoProductsInRowList from '../../elements/ProductList/TwoProductsInRowList';
 
 import {updateSubscriptionInList} from '../../store/subscriptionList/thunks/updateSubscription';
 import {postSubscription} from '../../store/subscriptionList/thunks/addSubscription';
@@ -16,10 +17,12 @@ import {postSubscription} from '../../store/subscriptionList/thunks/addSubscript
 import {IRootNavigatorParamList} from '../../types/rootNavigator';
 import {IState} from '../../store';
 import {ITag} from '../../types/shop';
+import {IShopProduct} from '../../types/product';
 
 import {TEXT, COLORS} from '../../constants';
 import {RootNavigatorRoutes, ShowShopProductListMode, SubscriptionType} from '../../enums';
-import TwoProductsInRowList from '../../elements/ProductList/TwoProductsInRowList';
+
+import {filterProductListByNameAndTag} from '../../utils';
 
 type ScreenNavigationProp = StackNavigationProp<IRootNavigatorParamList, RootNavigatorRoutes.SUBSCRIPTION_DETAIL>;
 type ScreenRouteProp = RouteProp<IRootNavigatorParamList, RootNavigatorRoutes.SUBSCRIPTION_DETAIL>;
@@ -43,16 +46,26 @@ const SubscsriptionDetail = memo((props:IProps) => {
     } = props;
     const [searchText, setSearchText] = useState<string>('');
     const [selectedTagList, setSelectedTagList] = useState<ITag[]>(selectedTags);
+    const [productListToRender, setProductListToRender] = useState<IShopProduct[] | undefined>(productList);
     const isSubscriptionDataProcessing: boolean = useSelector(
         (store: IState) => store.subscriptionList.dataIsProcessing);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (!productList) return;
+
+        setProductListToRender(filterProductListByNameAndTag(searchText, productList));
+    }, [searchText]);
 
     const onBackPress = () => {
         navigation.goBack();
     };
 
-    const onShopTagPress = (item: ITag) => {
-        return () => setSelectedTagList([...selectedTagList, item]);
+    const onPopularTagPress = (item: ITag) => {
+        return () => {
+            setSelectedTagList([...selectedTagList, item]);
+            setSearchText(`#${item.name}`);
+        }
     };
 
     const onSelectedTagPress = (item: ITag) => {
@@ -86,14 +99,12 @@ const SubscsriptionDetail = memo((props:IProps) => {
             text={subscriptionId ? TEXT.editSubscription : TEXT.subscription}
             onBackPress={onBackPress}
         >
-            <Spinner
-                visible={isSubscriptionDataProcessing}
-            />
+            <Spinner visible={isSubscriptionDataProcessing} />
 
             <ScrollView>
                 <SubscriptionDetalCard
                     popularTagList={popularTags}
-                    onShopTagPress={onShopTagPress}
+                    onPopularTagPress={onPopularTagPress}
                     selectedTagList={selectedTagList}
                     onSelectedTagPress={onSelectedTagPress}
                     searchText={searchText}
@@ -102,9 +113,9 @@ const SubscsriptionDetail = memo((props:IProps) => {
                 />
 
                 <View style={styles.productListContainer}>
-                    {!!productList &&
+                    {!!productListToRender &&
                         <TwoProductsInRowList
-                            productList={productList}
+                            productList={productListToRender}
                         />
                     }
                 </View>

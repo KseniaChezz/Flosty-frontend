@@ -8,6 +8,8 @@ import {
 
 import {COLORS} from '../constants';
 
+import {formatProductPrice} from '../utils';
+
 interface IProps {
     price: number
     style?: TextStyle | TextStyle[];
@@ -18,7 +20,7 @@ const Price = memo((props: IProps) => {
 
     return (
         <Text style={[styles.priceText, style]}>
-            {price} {String.fromCharCode(0x20BD)}
+            {formatProductPrice(price)}
         </Text>
     );
 });

@@ -1,6 +1,7 @@
 import React, {memo, useState} from 'react';
 import {View, Text, ScrollView, StyleSheet} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {useDispatch, useSelector} from 'react-redux';
 
 import {
     CommonScreenWrapper,
@@ -9,6 +10,7 @@ import TwoProductsInRowList from '../../elements/ProductList/TwoProductsInRowLis
 
 import {IRootNavigatorParamList} from '../../types/rootNavigator';
 import {IShopProduct} from '../../types/product';
+import {IState} from '../../store';
 
 import {RootNavigatorRoutes} from '../../enums';
 import {TEXT, COLORS} from '../../constants';
@@ -21,7 +23,7 @@ interface IProps {
 
 const Favorite = memo((props:IProps) => {
     const {navigation} = props;
-    const productList: IShopProduct[] = [];
+    const productList: IShopProduct[] = useSelector((stor: IState) => stor.favorite.list);
     const productListLength: number = productList.length;
 
     const renderEmptyList = () => {

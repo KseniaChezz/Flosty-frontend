@@ -20,7 +20,6 @@ const OneProductInRowList = memo((props: IProps) => {
                         product={product}
                         onProductPress={() => {}}
                         onBasketPress={() => {}}
-                        onFavoritePress={() => {}}
                     />
                 )
             })}

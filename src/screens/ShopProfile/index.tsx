@@ -10,6 +10,7 @@ import {ScreenWrapperWithBackButton} from '../../elements';
 
 import {getShop} from '../../store/shop/thunks/getShop';
 import {getShopProducts} from '../../store/products/thunks/getShopProducts';
+import {resetProductFilters} from '../../store/products/actions';
 
 import {IRootNavigatorParamList} from '../../types/rootNavigator';
 import {IState} from '../../store';
@@ -52,15 +53,14 @@ const ShopProfile = memo((props:IProps) => {
 
     const onBackPress = () => {
         navigation.goBack();
+        dispatch(resetProductFilters());
     };
 
     const renderShop = () => {
         if (!shop) return null;
 
         return (
-            <Shop
-                shop={shop}
-            />
+            <Shop shop={shop} />
         );
     }
 
@@ -70,9 +70,7 @@ const ShopProfile = memo((props:IProps) => {
             onBackPress={onBackPress}
             style={styles.container}
         >
-            <Spinner
-                visible={isProductListLoading || isShopLoading || isSubscriptionDataProcessing}
-            />
+            <Spinner visible={isProductListLoading || isShopLoading || isSubscriptionDataProcessing} />
 
             {renderShop()}
         </ScreenWrapperWithBackButton>

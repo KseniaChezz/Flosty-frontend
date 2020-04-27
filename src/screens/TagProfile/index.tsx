@@ -14,6 +14,7 @@ import {ScreenWrapperWithBackButton} from '../../elements';
 import Tag from './Tag';
 
 import {getTagProducts} from '../../store/products/thunks/getTagProducts';
+import {resetProductFilters} from '../../store/products/actions';
 
 import {IRootNavigatorParamList} from '../../types/rootNavigator';
 import {IState} from '../../store';
@@ -28,13 +29,6 @@ interface IProps {
     navigation: ScreenNavigationProp;
     route: ScreenRouteProp;
 }
-
-// const tag = {
-//     id: 1,
-//     name: 'hg;owir',
-//     image: 'flsj;l',
-//     subscribers: 8,
-// }
 
 const TagProfile = memo((props:IProps) => {
     const {
@@ -60,13 +54,12 @@ const TagProfile = memo((props:IProps) => {
 
     const onBackPress = () => {
         navigation.goBack();
+        dispatch(resetProductFilters());
     };
 
     const renderTag = () => {
         return (
-            <Tag
-                tag={tag}
-            />
+            <Tag tag={tag}/>
         );
     }
 
@@ -76,9 +69,7 @@ const TagProfile = memo((props:IProps) => {
             onBackPress={onBackPress}
             style={styles.container}
         >
-            <Spinner
-                visible={isProductListLoading}
-            />
+            <Spinner visible={isProductListLoading} />
 
             {renderTag()}
         </ScreenWrapperWithBackButton>

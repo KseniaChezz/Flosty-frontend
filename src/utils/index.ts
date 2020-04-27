@@ -37,6 +37,7 @@ import {
     getTagListId,
     mapProductFromResponse,
     filterProductListByNameAndTag,
+    formatProductPrice,
 } from './product';
 import {getEachNthIndexFromZeroTillMax} from './search';
 import {navigate, goBack} from './navigation';
@@ -51,6 +52,7 @@ import {
     getSortingFilterProductList,
     getFilteredProductList,
 } from './filter';
+import {isProductFavorite} from './favorite';
 
 export {
     getAddressObjectForRender,
@@ -85,6 +87,7 @@ export {
     getTagListId,
     mapProductFromResponse,
     filterProductListByNameAndTag,
+    formatProductPrice,
 
     getEachNthIndexFromZeroTillMax,
 
@@ -101,4 +104,6 @@ export {
     getMinPriceFilterProductList,
     getSortingFilterProductList,
     getFilteredProductList,
+
+    isProductFavorite,
 }
