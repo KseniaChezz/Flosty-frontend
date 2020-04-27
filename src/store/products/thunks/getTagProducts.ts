@@ -3,32 +3,45 @@ import {Dispatch} from 'react';
 import {setIsLoading, addShopProducts, addTagProducts} from '../actions';
 
 import {IProductsAction} from '../types/actions';
-import {IShopProduct, ITagProductResponse} from '../../../types/product';
+import {IShopProduct, IProductResponse} from '../../../types/product';
 
 import {get} from '../../../utils/network';
 import {getTagListId, mapProductFromResponse} from '../../../utils';
+import { ITag } from '../../../types/shop';
 
 interface IResponse {
-    data: ITagProductResponse[];
+    data: {
+        id: number;
+        name: string;
+        top_tags: ITag[];
+        products: IProductResponse[];
+    };
 }
 
-export const getTagProducts = (tagIdList: number[]) => {
+export const getTagProducts = (tagId: number) => {
     return (dispatch: Dispatch<IProductsAction>) => {
         dispatch(setIsLoading(true));
 
-        return get(`/tags/get_by/`, {tags: tagIdList})
+        return get(`/tags/${tagId}/products`)
             .then((res: IResponse) => {
                 const {
-                    data,
+                    data: {
+                        top_tags,
+                        products,
+                    },
                 } = res;
-                debugger;
 
-                if (data.length !== 0) {
-                    const tagProductList: IShopProduct[] = data.map((item: ITagProductResponse) => {
+                if (products.length !== 0) {
+                    const tagProductList: IShopProduct[] = products.map((item: IProductResponse) => {
                         return mapProductFromResponse(item);
                     });
-                    debugger;
-                    dispatch(addTagProducts(getTagListId(tagIdList), tagProductList));
+                    dispatch(addTagProducts(
+                        tagId,
+                        {
+                        popularTagList: top_tags,
+                        productList: tagProductList,
+                        },
+                    ));
                 }
 
                 dispatch(setIsLoading(false));

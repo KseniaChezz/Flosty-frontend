@@ -3,13 +3,13 @@ import {Dispatch} from 'react';
 import {setIsLoading, addShopProducts} from '../actions';
 
 import {IProductsAction} from '../types/actions';
-import {IShopProduct, IShopProductResponse} from '../../../types/product';
+import {IShopProduct, IProductResponse} from '../../../types/product';
 
 import {get} from '../../../utils/network';
 import {mapProductFromResponse} from '../../../utils';
 
 interface IResponse {
-    data: IShopProductResponse[];
+    data: IProductResponse[];
 }
 
 export const getShopProducts = (shopId: number) => {
@@ -23,7 +23,7 @@ export const getShopProducts = (shopId: number) => {
                 } = res;
 
                 if (data.length !== 0) {
-                    const shopProductList: IShopProduct[] = data.map((item: IShopProductResponse) => {
+                    const shopProductList: IShopProduct[] = data.map((item: IProductResponse) => {
                         return mapProductFromResponse(item);
                     });
 

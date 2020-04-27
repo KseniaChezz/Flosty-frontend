@@ -7,6 +7,7 @@ import Rating from './Rating';
 import {TEXT, COLORS} from '../constants';
 
 import {IFeedProduct, IShopProduct} from '../types/product';
+import { getLogoForFeedProduct, getShopNameForFeedProduct, getTagLineForFeedProduct } from '../utils';
 
 interface IProps {
     product: IFeedProduct | IShopProduct;
@@ -17,9 +18,7 @@ interface IProps {
 }
 
 const isFeedProduct = (product: IFeedProduct | IShopProduct): product is IFeedProduct => {
-    return (product as IFeedProduct).ref !== undefined &&
-        (product as IFeedProduct).shopName !== undefined &&
-        (product as IFeedProduct).shopLogo !== undefined;
+    return (product as IFeedProduct).subscription !== undefined;
 }
 
 const ProductCardBig = memo((props: IProps) => {
@@ -35,19 +34,6 @@ const ProductCardBig = memo((props: IProps) => {
         price,
         rating,
     } = product;
-    let shopName: string = '';
-    let shopLogo: string = '';
-    let refName: string = '';
-    let refType: string = '';
-    let subscription: string = '';
-
-    if (isFeedProduct(product)) {
-        shopName = product.shopName;
-        shopLogo = product.shopLogo;
-        refName = product.ref.name;
-        refType = product.ref.type;
-        subscription = refType === 'tag' ? `#${refName}` : TEXT.shop;
-    }
 
     const [ratio, setRatio] = useState<number>(0);
 
@@ -58,22 +44,32 @@ const ProductCardBig = memo((props: IProps) => {
     },
         (err) => console.log(err));
 
+    const renderFeedProductInfoFromSubscription = (product: IFeedProduct) => {
+        const {subscription} = product;
+        const logo: ImageSourcePropType = getLogoForFeedProduct(subscription);
+        const shopName: string = getShopNameForFeedProduct(subscription);
+        const tagLine: string = getTagLineForFeedProduct(subscription);
+        const subscriptionText: string = shopName ? `${TEXT.shop} ${tagLine}` : tagLine;
+
+        return (
+            <View style={styles.shopContainer}>
+                <Image
+                    style={styles.logo}
+                    source={logo}
+                />
+
+                <View>
+                    {!!shopName && <Text style={[styles.text, styles.shop]}>{shopName}</Text>}
+                    <Text style={[styles.text, styles.subscription]}>{TEXT.subscription} {subscriptionText}</Text>
+                </View>
+            </View>
+        )
+    }
+
     return (
         <TouchableOpacity onPress={onProductPress} style={styles.container}>
 
-            {isFeedProduct(product) &&
-                <View style={styles.shopContainer}>
-                    <Image
-                        style={styles.logo}
-                        source={{uri: shopLogo}}
-                    />
-
-                    <View>
-                        <Text style={[styles.text, styles.shop]}>{shopName}</Text>
-                        <Text style={[styles.text, styles.subscription]}>{TEXT.subscription} {subscription}</Text>
-                    </View>
-                </View>
-            }
+            {isFeedProduct(product) && renderFeedProductInfoFromSubscription(product)}
 
             <Image
                 style={[styles.productImage, {aspectRatio: ratio}]}

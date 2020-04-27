@@ -19,6 +19,7 @@ import {ITag} from '../../types/shop';
 
 import {TEXT, COLORS} from '../../constants';
 import {RootNavigatorRoutes, ShowShopProductListMode, SubscriptionType} from '../../enums';
+import TwoProductsInRowList from '../../elements/ProductList/TwoProductsInRowList';
 
 type ScreenNavigationProp = StackNavigationProp<IRootNavigatorParamList, RootNavigatorRoutes.SUBSCRIPTION_DETAIL>;
 type ScreenRouteProp = RouteProp<IRootNavigatorParamList, RootNavigatorRoutes.SUBSCRIPTION_DETAIL>;
@@ -36,6 +37,7 @@ const SubscsriptionDetail = memo((props:IProps) => {
                 subscriptionId,
                 selectedTags,
                 popularTags,
+                productList,
             },
         },
     } = props;
@@ -100,7 +102,11 @@ const SubscsriptionDetail = memo((props:IProps) => {
                 />
 
                 <View style={styles.productListContainer}>
-
+                    {!!productList &&
+                        <TwoProductsInRowList
+                            productList={productList}
+                        />
+                    }
                 </View>
 
             </ScrollView>

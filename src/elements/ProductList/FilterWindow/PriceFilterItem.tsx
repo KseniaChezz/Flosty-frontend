@@ -12,7 +12,7 @@ import PriceInput from '../../../elements/PriceInput';
 import {
     setProductFilterMinPrice,
     setProductFilterMaxPrice,
-} from '../../../store/shop/actions';
+} from '../../../store/products/actions';
 
 import {TEXT, COLORS, rootFilter} from '../../../constants';
 import {IFilterItem, IFilterCheckBoxItem, IProductFilter, IProductFilterKey} from '../../../types/filter';
@@ -22,7 +22,7 @@ import { isStringWithNumbers } from '../../../utils';
 interface IProps {}
 
 const PriceFilterItem = memo((props: IProps) => {
-    const filter: IProductFilter = useSelector((state: IState) => state.shop.filter);
+    const filter: IProductFilter = useSelector((state: IState) => state.products.filter);
     const {
         maxPrice,
         minPrice,

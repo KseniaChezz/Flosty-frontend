@@ -15,7 +15,7 @@ import PriceFilterItem from './PriceFilterItem';
 
 import {
     setProductFilterCheckBox,
-} from '../../../store/shop/actions';
+} from '../../../store/products/actions';
 
 import {TEXT, COLORS, rootFilter} from '../../../constants';
 import {FilterNavigatorRoutes} from '../../../enums';
@@ -32,7 +32,7 @@ interface IProps {
 
 const FilterWindow = memo((props: IProps) => {
     const {navigation} = props;
-    const filter: IProductFilter = useSelector((state: IState) => state.shop.filter);
+    const filter: IProductFilter = useSelector((state: IState) => state.products.filter);
     const dispatch = useDispatch();
 
     const onItemPress = (filterItem: IFilterItem) => {

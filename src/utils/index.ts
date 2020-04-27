@@ -36,9 +36,21 @@ import {
     isStringWithNumbers,
     getTagListId,
     mapProductFromResponse,
+    filterProductListByNameAndTag,
 } from './product';
 import {getEachNthIndexFromZeroTillMax} from './search';
 import {navigate, goBack} from './navigation';
+import {
+    getLogoForFeedProduct,
+    getShopNameForFeedProduct,
+    getTagLineForFeedProduct,
+} from './feed';
+import {
+    getMaxPriceFilterProductList,
+    getMinPriceFilterProductList,
+    getSortingFilterProductList,
+    getFilteredProductList,
+} from './filter';
 
 export {
     getAddressObjectForRender,
@@ -72,6 +84,7 @@ export {
     isStringWithNumbers,
     getTagListId,
     mapProductFromResponse,
+    filterProductListByNameAndTag,
 
     getEachNthIndexFromZeroTillMax,
 
@@ -79,4 +92,13 @@ export {
     goBack,
 
     mapShopFromResponse,
+
+    getLogoForFeedProduct,
+    getShopNameForFeedProduct,
+    getTagLineForFeedProduct,
+
+    getMaxPriceFilterProductList,
+    getMinPriceFilterProductList,
+    getSortingFilterProductList,
+    getFilteredProductList,
 }

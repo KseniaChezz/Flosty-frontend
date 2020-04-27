@@ -1,11 +1,15 @@
 import {ImageSourcePropType} from 'react-native';
+import {ISubscription} from './subscription';
+import { ITag } from './shop';
 
 export interface IShopProduct {
     id: number;
+    name: string;
     img: string;
     price: number;
     rating: string;
     date: number;
+    tagList: ITag[];
 }
 
 export interface IDetailProduct extends IShopProduct {
@@ -47,29 +51,18 @@ export interface IFeedProduct {
     price: number;
     img: string;
     rating: string;
-    ref: {
-        type: string;
-        id: number;
-        name: string;
-    },
+    subscription: ISubscription;
     shopName: string;
     shopLogo: string;
 }
 
-export interface IShopProductResponse {
+export interface IProductResponse {
     id: number;
+    name: string;
     price: number;
     price_with_sale: number;
     updated_at: string;
     rating: string;
-    images: string[];
-}
-
-export interface ITagProductResponse {
-    id: number;
-    price: number;
-    price_with_sale: number;
-    updated_at: string;
-    rating: string;
-    images: string[];
+    image: string;
+    tags: ITag[];
 }

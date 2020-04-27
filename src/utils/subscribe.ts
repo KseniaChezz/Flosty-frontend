@@ -117,9 +117,7 @@ export const isTagSubscribed = (tagId: number): boolean => {
     }).length !==0;
 }
 
-export const getShopBindedSubscriptions = (shopId: number): ISubscription[] => {
-    const subscriptionList: ISubscription[] = useSelector((store: IState) => store.subscriptionList.list);
-
+export const getShopBindedSubscriptions = (shopId: number, subscriptionList: ISubscription[]): ISubscription[] => {
     return subscriptionList.filter((item: ISubscription) => {
         const {type, shops} = item;
 
@@ -127,9 +125,7 @@ export const getShopBindedSubscriptions = (shopId: number): ISubscription[] => {
     });
 }
 
-export const getTagBindedSubscriptions = (tagId: number): ISubscription[] => {
-    const subscriptionList: ISubscription[] = useSelector((store: IState) => store.subscriptionList.list);
-
+export const getTagBindedSubscriptions = (tagId: number, subscriptionList: ISubscription[]): ISubscription[] => {
     return subscriptionList.filter((item: ISubscription) => {
         const {type, tags} = item;
 

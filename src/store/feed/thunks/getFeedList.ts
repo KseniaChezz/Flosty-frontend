@@ -4,25 +4,25 @@ import {setIsFeedListLoading, setFeedList} from '../../../store/feed/actions';
 
 import {IFeedAction} from '../../../store/feed/types/actions';
 import {IFeedProduct} from '../../../types/product';
+import {ISubscription, ISubscriptionResponse} from '../../../types/subscription';
 
 import {get} from '../../../utils/network';
+import {mapSubscriptionFomResponse} from '../../../utils';
 
 interface IResponse {
-    data: IFeedResponse[];
+    data: {
+        products: IFeedProductResponse[];
+    };
 }
 
-interface IFeedResponse {
+interface IFeedProductResponse {
     id: number;
     name: string;
     price: number;
     price_with_sale: number;
     image: string;
     rating: string;
-    ref: {
-        type: string;
-        id: number;
-        name: string;
-    },
+    personal_sub: ISubscriptionResponse;
     shop_name: string;
     shop_image: string;
 }
@@ -34,11 +34,13 @@ export const getFeedList = () => {
         return get('/users/feed',)
             .then((res: IResponse) => {
                 const {
-                    data,
+                    data: {
+                        products,
+                    },
                 } = res;
 
-                if (data.length !== 0) {
-                    const feedList: IFeedProduct[] = data.map((item: IFeedResponse) => {
+                if (products.length !== 0) {
+                    const feedList: IFeedProduct[] = products.map((item: IFeedProductResponse) => {
                         const {
                             id,
                             name,
@@ -46,15 +48,15 @@ export const getFeedList = () => {
                             price_with_sale,
                             rating,
                             image,
-                            ref,
+                            personal_sub,
                             shop_name,
                             shop_image,
                         } = item;
 
                         return {
                             id,
-                            ref,
                             rating,
+                            subscription: mapSubscriptionFomResponse(personal_sub),
                             price: price_with_sale ? price_with_sale : price,
                             img: image,
                             shopName:shop_name,

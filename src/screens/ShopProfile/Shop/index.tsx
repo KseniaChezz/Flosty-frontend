@@ -1,4 +1,4 @@
-import React, {memo, useState, Fragment} from 'react';
+import React, {memo, useState, Fragment, useEffect} from 'react';
 import {
     View,
     TouchableOpacity,
@@ -21,6 +21,7 @@ import {deleteSubscriptionFromList} from '../../../store/subscriptionList/thunks
 import {IState} from '../../../store';
 import {IShop, ITag} from '../../../types/shop';
 import {IShopProduct} from '../../../types/product';
+import {ISubscription} from '../../../types/subscription';
 
 import {RootNavigatorRoutes} from '../../../enums';
 
@@ -29,6 +30,7 @@ import {
     isShopSubscribed,
     navigate,
     getShopBindedSubscriptions,
+    filterProductListByNameAndTag,
 } from '../../../utils';
 
 interface IProps {
@@ -53,12 +55,21 @@ const Shop = memo((props:IProps) => {
     const [isSubscribed, setIsSubscribed] = useState<boolean>(isShopSubscribed(id));
     const [subscriptionId, setSubscriptionId] = useState<number | undefined>();
     const productList: IShopProduct[] = useSelector((stor: IState) => stor.products.shopMap[id]);
+    const [productListToRender, setProductListToRender] = useState<IShopProduct[]>(productList);
+    const subscriptionList: ISubscription[] = useSelector((store: IState) => store.subscriptionList.list);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (!productList) return;
+
+        setProductListToRender(filterProductListByNameAndTag(searchText, productList));
+    }, [productList, searchText]);
 
     const onAdjustSubscriptionPress = () => {
         navigate(
             RootNavigatorRoutes.SUBSCRIPTION_DETAIL,
             {
+                productList,
                 selectedTags: [{name, id: `${id}`}],
                 popularTags: tagList,
             },
@@ -86,7 +97,23 @@ const Shop = memo((props:IProps) => {
     };
 
     const onTagPress = (tag: ITag) => {
-        return () => setSearchText(`#${tag.name}`)
+        return () => {
+            setSearchText(`#${tag.name}`);
+            setProductListToRender(filterProductListByNameAndTag(tag.name, productList));
+        }
+    };
+
+    const onSearchPress = () => {
+        setProductListToRender(filterProductListByNameAndTag(searchText, productList));
+    };
+
+    const onBindedSubscriptionsPress = () => {
+        navigate(
+            RootNavigatorRoutes.SUBSCRIPTION_LINKED,
+            {
+                subscriptionId,
+            },
+        );
     };
 
     const renderProducts = () => {
@@ -95,7 +122,7 @@ const Shop = memo((props:IProps) => {
                 <SearchInput
                     text={searchText}
                     onTextChange={setSearchText}
-                    onPress={()=>{}}
+                    onPress={onSearchPress}
                 />
 
                 {tagList &&
@@ -105,7 +132,7 @@ const Shop = memo((props:IProps) => {
                     />
                 }
 
-                {productList && <ProductList productList={productList}/>}
+                {!!productListToRender && <ProductList productList={productListToRender}/>}
             </Fragment>
         )
     };
@@ -128,8 +155,8 @@ const Shop = memo((props:IProps) => {
                 onUnsubscribePress={onUnsubscribePress}
                 onSubscribePress={onSubscribePress}
                 onAdjustSubscriptionPress={onAdjustSubscriptionPress}
-                hasBindedSubscriptions={getShopBindedSubscriptions(id).length !== 0}
-                onBindedSubscriptionsPress={()=>{}}
+                hasBindedSubscriptions={getShopBindedSubscriptions(id, subscriptionList).length !== 0}
+                onBindedSubscriptionsPress={onBindedSubscriptionsPress}
                 isWriteButtonShown={true}
             />
 

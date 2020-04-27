@@ -31,6 +31,7 @@ import {
 } from './src/screens/User';
 import Subscriptions from './src/screens/Subscriptions';
 import SubscriptionDetail from './src/screens/SubscriptionDetail';
+import SubscriptionLinked from './src/screens/SubscriptionLinked';
 import ShopProfile from './src/screens/ShopProfile';
 import TagProfile from './src/screens/TagProfile';
 import Product from './src/screens/Product';
@@ -59,6 +60,7 @@ const App = () => {
                     <Stack.Screen name={RootNavigatorRoutes.FAVORITE} component={Favorite} />
                     <Stack.Screen name={RootNavigatorRoutes.SUBSCRIPTIONS} component={Subscriptions} />
                     <Stack.Screen name={RootNavigatorRoutes.SUBSCRIPTION_DETAIL} component={SubscriptionDetail} />
+                    <Stack.Screen name={RootNavigatorRoutes.SUBSCRIPTION_LINKED} component={SubscriptionLinked} />
                     <Stack.Screen name={RootNavigatorRoutes.USER_PROFILE} component={UserProfile} />
                     <Stack.Screen name={RootNavigatorRoutes.USER_PROFILE_ADDRESS_LIST} component={UserAddressList} />
                     <Stack.Screen name={RootNavigatorRoutes.USER_PROFILE_ADDRESS} component={UserAddress} />

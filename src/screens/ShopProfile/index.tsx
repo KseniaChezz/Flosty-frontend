@@ -41,7 +41,6 @@ const ShopProfile = memo((props:IProps) => {
     const isSubscriptionDataProcessing: boolean = useSelector(
         (stor: IState) => stor.subscriptionList.dataIsProcessing);
     const dispatch = useDispatch();
-    debugger;
 
     useEffect(() => {
         if (!shop) {

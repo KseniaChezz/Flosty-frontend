@@ -23,9 +23,7 @@ import {IFilterNavigatorParamList} from '../../../types/filterNavigator';
 
 interface IProps {
     isWindowVisible: boolean;
-    sortingFilterValue: string;
     onShowPress: () => void;
-    onSortingFilterChange: (value: string) => void;
 }
 
 const Stack = createStackNavigator<IFilterNavigatorParamList>();
@@ -33,11 +31,8 @@ const Stack = createStackNavigator<IFilterNavigatorParamList>();
 const FilterWindow = memo((props: IProps) => {
     const {
         isWindowVisible,
-        sortingFilterValue,
         onShowPress,
-        onSortingFilterChange,
     } = props;
-
 
     return (
         <Modal isVisible={isWindowVisible} style={styles.modalContainer}>

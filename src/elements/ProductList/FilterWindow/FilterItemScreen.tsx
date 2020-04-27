@@ -10,7 +10,7 @@ import {RouteProp} from '@react-navigation/native';
 import HeaderWithBackButton from '../../HeaderWithBackButton';
 import FilterCheckBoxItem from './FilterCheckBoxItem';
 
-import {setProductFilterCheckBox} from '../../../store/shop/actions';
+import {setProductFilterCheckBox} from '../../../store/products/actions';
 
 import {TEXT, COLORS, sortingFilter} from '../../../constants';
 import {FilterNavigatorRoutes} from '../../../enums';
@@ -38,7 +38,7 @@ const FilterItemScreen = memo((props: IProps) => {
             },
         },
     } = props;
-    const filter: IProductFilter = useSelector((state: IState) => state.shop.filter);
+    const filter: IProductFilter = useSelector((state: IState) => state.products.filter);
     const dispatch = useDispatch();
 
     const onCheckBoxPress = (value: string) => {

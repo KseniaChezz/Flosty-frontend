@@ -55,7 +55,7 @@ const TagProfile = memo((props:IProps) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getTagProducts([id]));
+        dispatch(getTagProducts(id));
     }, []);
 
     const onBackPress = () => {

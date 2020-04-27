@@ -338,6 +338,7 @@ export const TEXT = {
     subscriptions: 'Подписки',
     subscription: 'Подписка',
     editSubscription: 'Редактирование подписки',
+    linkedSubscription: 'Связанные подписки',
     feed: 'Лента',
     history: 'История',
     shop: 'магазин',

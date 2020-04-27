@@ -2,7 +2,7 @@ import React, {memo, useState, useEffect, Fragment} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
 
-import {resetProductFilters} from '../store/shop/actions';
+import {resetProductFilters} from '../store/products/actions';
 
 import {TEXT, COLORS} from '../constants';
 
@@ -24,7 +24,7 @@ const FilterListRow = memo((props:IProps) => {
         onTwoItemPress,
     } = props;
     const [filterCount, setFilterCount] = useState<number>(0);
-    const filter: IProductFilter = useSelector((state: IState) => state.shop.filter);
+    const filter: IProductFilter = useSelector((state: IState) => state.products.filter);
     const {
         sorting,
         category,

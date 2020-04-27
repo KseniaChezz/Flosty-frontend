@@ -73,17 +73,16 @@ const HistoryList = memo((props: IProps) => {
                 shops,
                 tags,
             } = subscription;
-            const {name, id} = shops[0];
 
             navigate(
                 RootNavigatorRoutes.SUBSCRIPTION_DETAIL,
                 {
                     subscriptionId,
-                    selectedTags: [{name, id: `${id}`}, ...tags],
+                    selectedTags: shops[0] ? [{name: shops[0].name, id: `${shops[0].id}`}, ...tags] : [...tags],
                 },
             );
         }
-    }
+    };
 
     return (
         <Fragment>
