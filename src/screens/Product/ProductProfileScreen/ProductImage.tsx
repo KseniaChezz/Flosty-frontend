@@ -1,36 +1,78 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {memo} from 'react';
-import {View, Image, ImageSourcePropType, TouchableOpacity, StyleSheet} from 'react-native';
+import {
+    View,
+    Text,
+    Image,
+    TouchableOpacity,
+    StyleSheet,
+    Dimensions,
+} from 'react-native';
+import Carousel, {CarouselStatic} from 'react-native-snap-carousel';
 
 import {goBack} from '../../../utils';
 
+import {COLORS} from '../../../constants';
+
 interface IProps {
-    img: ImageSourcePropType;
+    imageList: string[];
 }
 
+const windowWidth = Dimensions.get('window').width;
+
 const ProductImage = memo((props: IProps) => {
-    const {img} = props;
-    const source =  Image.resolveAssetSource(img)
-    const {width, height} = Image.resolveAssetSource(source);
-    const ratio: number = width / height;
+    const {imageList} = props;
+    const [index, setIndex] = useState<number>(0);
 
     const onBackPress = () => {
         goBack();
     };
 
+    const onSnapToItem = (index: number) => {
+        setIndex(index);
+    };
+
+
+    const renderItem = (item: {item: string; index: number;}) => {
+        const {
+            item: image,
+            index,
+        } = item;
+
+        return (
+            <Image
+                source={{uri: image}}
+                style={[styles.img]}
+            />
+        );
+    };
+
     return (
         <View style={styles.imgContainer}>
-            <Image
-                source={img}
-                style={[styles.img, {aspectRatio: ratio}]}
+            <Carousel<string>
+                data={imageList}
+                renderItem={renderItem}
+                sliderWidth={windowWidth * imageList.length}
+                itemWidth={windowWidth}
+                layout={'default'}
+                firstItem={index}
+                activeSlideAlignment={'start'}
+                onSnapToItem={onSnapToItem}
             />
+
             <View style={styles.backContainer}>
-                <TouchableOpacity onPress={onBackPress}>
+                <TouchableOpacity onPress={onBackPress} style={styles.row}>
                     <Image
                         source={require('../../../../assets/images/before.png')}
                         style={styles.backImg}
                     />
                 </TouchableOpacity>
+
+                <View style={styles.countContainer}>
+                    <Text style={styles.count}>
+                        {index + 1} / {imageList.length}
+                    </Text>
+                </View>
             </View>
         </View>
     );
@@ -41,22 +83,39 @@ const styles = StyleSheet.create({
         position: 'relative',
     },
     img: {
-        width: '100%',
-        height: undefined,
+        width: windowWidth,
+        height: 400,
         resizeMode: 'contain',
     },
     backContainer: {
-        height: 48,
-        flexDirection: 'row',
-        alignItems: 'center',
         position: 'absolute',
         top: 0,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         paddingHorizontal: 10,
+        width: '100%',
+        alignItems: 'center',
+        height: 48,
+    },
+    row: {
     },
     backImg: {
         width: 30,
         height: 30,
     },
+    countContainer: {
+        backgroundColor: COLORS.LightGrey,
+        height: 28,
+        borderRadius: 14,
+        paddingHorizontal: 10,
+    },
+    count: {
+        fontFamily: 'Montserrat',
+        color: COLORS.White,
+        fontSize: 14,
+        lineHeight: 28,
+        fontWeight: '600',
+    }
 });
 
 export default ProductImage;

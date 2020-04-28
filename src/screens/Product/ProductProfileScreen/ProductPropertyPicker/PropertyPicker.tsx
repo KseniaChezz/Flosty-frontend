@@ -15,8 +15,8 @@ interface IProps {
     propertyList: IProductProperty[];
     defaultTitle: string;
     propertyName: string;
-    selectedValue: string;
-    setSelectedValue: (value: string) => void;
+    selectedValue: IProductProperty | undefined;
+    setSelectedValue: (value: IProductProperty) => void;
     renderBage: (property: IProductProperty, isSelected: boolean, onPress: () => void) => ReactNode;
 }
 
@@ -29,25 +29,25 @@ const PropertyPicker = memo((props: IProps) => {
         setSelectedValue,
         renderBage,
     } = props;
-    const isColorProperty: boolean = TEXT.color === propertyName;
-    const valueToRender: string = isColorProperty ? productColor[selectedValue] : selectedValue;
+    // const isColorProperty: boolean = TEXT.color === propertyName;
+    const choosenValue: string | undefined = selectedValue?.value;
 
-    const onSizePress = (value: string) => {
-        return () => setSelectedValue(value);
+    const onItemPress = (item: IProductProperty) => {
+        return () => setSelectedValue(item);
     };
 
     return (
         <View style={styles.propertyContainer}>
             <View style={styles.innerPropertyContainer}>
                 <Text style={[styles.text, styles.pickText]}>
-                    {selectedValue === '' ? defaultTitle : `${propertyName} ${valueToRender}`}
+                    {selectedValue ? `${propertyName} ${selectedValue.value}` : defaultTitle}
                 </Text>
 
                 <View style={styles.bagesContainer}>
                     {propertyList.map((property: IProductProperty) => {
-                        const {value} = property;
-                        const isSelected: boolean = value === selectedValue;
-                        const onPress = onSizePress(value);
+                        const {id} = property;
+                        const isSelected: boolean = id === selectedValue?.id;
+                        const onPress = onItemPress(property);
 
                         return renderBage(property, isSelected, onPress);
                     })}

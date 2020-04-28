@@ -4,6 +4,7 @@ import { ITag } from './shop';
 
 export interface IShopProduct {
     id: number;
+    shopId: number;
     name: string;
     img: string;
     price: number;
@@ -12,31 +13,33 @@ export interface IShopProduct {
     tagList: ITag[];
 }
 
-export interface IDetailProduct extends IShopProduct {
-    title: string;
-    text: string;
+export interface IDetailProduct extends Omit<IShopProduct, 'img'> {
+    description: string;
+    characteristic: string;
+    colorList: IColor[];
+    sizeList: ISize[];
     oldPrice?: number;
-    boughtNumber?: number;
-    savedNumber?: number;
-    tags: string[];
-    colors: IProductProperty[];
-    sizes: IProductProperty[];
-    shop: IShopShort;
-    delivery: {
-        price: number;
-        time: string;
-    };
-    descriptionList: IDescription[];
+    boughtNumber: number;
+    savedNumber: number;
+    imageList: string[];
 }
 
-export interface IDescription {
-    title: string;
+export interface IColor {
+    id: number;
+    code: string;
+    order: number;
     value: string;
 };
 
-export interface IProductProperty {
+export interface ISize {
+    id: number;
     value: string;
-    isAvailable: boolean;
+}
+
+export interface IProductProperty {
+    id: number;
+    value: string;
+    code?: string;
 }
 
 export interface IShopShort {
@@ -48,6 +51,7 @@ export interface IShopShort {
 
 export interface IFeedProduct {
     id: number;
+    shopId: number;
     price: number;
     img: string;
     rating: string;
@@ -58,6 +62,7 @@ export interface IFeedProduct {
 
 export interface IProductResponse {
     id: number;
+    shop_id: number;
     name: string;
     price: number;
     price_with_sale: number;
@@ -65,4 +70,26 @@ export interface IProductResponse {
     rating: string;
     image: string;
     tags: ITag[];
+}
+
+export interface IDetailedProductResponse extends IProductResponse {
+    description: string;
+    number_of_sales: number;
+    number_of_saves: number;
+    characteristic: string;
+    images: string[];
+    colors: IColorResponse[];
+    sizes: ISizeResponse[];
+}
+
+export interface IColorResponse {
+    id: number;
+    order: number;
+    name: string;
+    hex_code: string;
+}
+
+export interface ISizeResponse {
+    id: number;
+    size: string;
 }

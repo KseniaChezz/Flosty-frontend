@@ -1,6 +1,14 @@
-import {IProductResponse, IShopProduct} from '../types/product';
+import {
+    IProductResponse,
+    IShopProduct,
+    IColor,
+    IColorResponse,
+    ISizeResponse,
+    ISize,
+} from '../types/product';
 import {ITag} from '../types/shop';
-import { TEXT } from '../constants';
+
+import {TEXT} from '../constants';
 
 export const isStringWithNumbers = (value: string): boolean => {
     return /^\d{1,}$/.test(value);
@@ -15,6 +23,7 @@ export const getTagListId = (tagIdList: number[]): string => {
 export const mapProductFromResponse = (productResponse: IProductResponse): IShopProduct => {
     const {
         id,
+        shop_id,
         name,
         price,
         rating,
@@ -28,11 +37,40 @@ export const mapProductFromResponse = (productResponse: IProductResponse): IShop
         id,
         name,
         rating,
+        shopId: shop_id,
         price: price_with_sale ? price_with_sale : price,
         date: +new Date(updated_at),
         img: image,
         tagList: tags,
     }
+};
+
+export const mapColorProductResponse = (colorResponse: IColorResponse): IColor => {
+    const {
+        id,
+        name,
+        order,
+        hex_code,
+    } = colorResponse;
+
+    return {
+        id,
+        value: name,
+        order,
+        code: hex_code,
+    }
+};
+
+export const mapSizeProductResponse = (sizeResponse: ISizeResponse): ISize => {
+    const {
+        id,
+        size,
+    } = sizeResponse;
+
+    return {
+        id,
+        value: size,
+    };
 };
 
 export const filterProductListByNameAndTag = (searchText: string, productList: IShopProduct[]): IShopProduct[] => {

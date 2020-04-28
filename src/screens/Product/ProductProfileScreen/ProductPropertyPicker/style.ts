@@ -30,9 +30,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
     },
+    bageColor: {
+        width: 40,
+    },
     bage: {
         height: 40,
-        width: 40,
         borderRadius: 20,
         backgroundColor: COLORS.Border,
         marginRight: 10,
@@ -45,12 +47,6 @@ const styles = StyleSheet.create({
     },
     bageText: {
         color: COLORS.DarkGrey,
-        fontSize: 14,
-        lineHeight: 18,
-        fontWeight: '500',
-    },
-    bageTextDisabled: {
-        color: COLORS.LightGrey,
         fontSize: 14,
         lineHeight: 18,
         fontWeight: '500',

@@ -46,7 +46,10 @@ const ProductCardSmall = memo((props: IProps) => {
         (err) => console.log(err));
 
     return (
-        <TouchableOpacity style={styles.container}>
+        <TouchableOpacity
+            style={styles.container}
+            onPress={onProductPress}
+        >
             <Image
                 source={{uri: img}}
                 style={[styles.productImage, {aspectRatio: ratio}]}

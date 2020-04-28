@@ -49,9 +49,11 @@ const Favorite = memo((props:IProps) => {
                     </Text>
                 </View>
 
-                <TwoProductsInRowList
-                    productList={productList}
-                />
+                <View style={styles.productListContainer}>
+                    <TwoProductsInRowList
+                        productList={productList}
+                    />
+                </View>
             </ScrollView>
         );
     };
@@ -76,6 +78,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: 30,
         paddingBottom: 50,
+    },
+    productListContainer: {
+        paddingHorizontal: 8,
     },
     titleText: {
         color: COLORS.DarkGrey,

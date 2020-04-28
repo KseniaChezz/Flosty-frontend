@@ -61,7 +61,7 @@ const HistoryList = memo((props: IProps) => {
             }
 
             if (type === SubscriptionType.TAG) {
-                navigate(RootNavigatorRoutes.TAG_PROFILE, {tag: tags[0]});
+                navigate(RootNavigatorRoutes.TAG_PROFILE, {id: tags[0].id});
             }
         }
     };

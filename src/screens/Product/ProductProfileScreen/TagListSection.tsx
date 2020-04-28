@@ -8,8 +8,10 @@ import {
 
 import {COLORS, TEXT} from '../../../constants';
 
+import {ITag} from '../../../types/shop';
+
 interface IProps {
-    tagList: string[];
+    tagList: ITag[];
 }
 
 const TagListSection = memo((props: IProps) => {
@@ -22,13 +24,15 @@ const TagListSection = memo((props: IProps) => {
             </Text>
 
             <View style={styles.tagContainer}>
-                {tagList.map((tag: string) => {
+                {tagList.map((tag: ITag) => {
+                    const {name} = tag;
+
                     return (
                         <Text
-                            key={tag}
+                            key={name}
                             style={[styles.text, styles.tag]}
                         >
-                            {tag}
+                            #{name}
                         </Text>
                     )
                 })}

@@ -25,22 +25,22 @@ import {RootNavigatorRoutes} from '../../../enums';
 import {isTagSubscribed, navigate, getTagBindedSubscriptions, filterProductListByNameAndTag} from '../../../utils';
 
 interface IProps {
-    tag: ISubscriptionTag;
+    tagId: number;
 }
 
 const Tag = memo((props:IProps) => {
-    const {tag} = props;
-    const {
-        id,
-        name,
-    } = tag;
+    const {tagId} = props;
     const productList: IShopProduct[] | undefined = useSelector(
-        (stor: IState) => stor.products.tagMap[id]?.productList);
+        (stor: IState) => stor.products.tagMap[tagId]?.productList);
     const popularTagList: ITag[] | undefined = useSelector(
-        (stor: IState) => stor.products.tagMap[id]?.popularTagList);
+        (stor: IState) => stor.products.tagMap[tagId]?.popularTagList);
+    const tagName: string | undefined = useSelector((stor: IState) => stor.products.tagMap[tagId]?.name);
+    const tagLogo: string | undefined = useSelector((stor: IState) => stor.products.tagMap[tagId]?.logo);
+    const tagSubscribers: number | undefined = useSelector(
+        (stor: IState) => stor.products.tagMap[tagId]?.subscribers);
     const subscriptionList: ISubscription[] = useSelector((store: IState) => store.subscriptionList.list);
-    const [productListToRender, setProductListToRender] = useState<IShopProduct[]>(productList);
-    const [isSubscribed, setIsSubscribed] = useState<boolean>(isTagSubscribed(id));
+    const [productListToRender, setProductListToRender] = useState<IShopProduct[] | undefined>(productList);
+    const [isSubscribed, setIsSubscribed] = useState<boolean>(isTagSubscribed(tagId));
     const [subscriptionId, setSubscriptionId] = useState<number | undefined>();
     const [searchText, setSearchText] = useState<string>('');
     const dispatch = useDispatch();
@@ -62,7 +62,7 @@ const Tag = memo((props:IProps) => {
     };
 
     const onSubscribePress = () => {
-        dispatch(postSubscription([], [id], onSubscribeSuccessCallback));
+        dispatch(postSubscription([tagId], [], onSubscribeSuccessCallback));
     };
 
     const onUnsubscribePress = () => {
@@ -77,7 +77,7 @@ const Tag = memo((props:IProps) => {
             {
                 productList,
                 popularTags: popularTagList,
-                selectedTags: [{name, id}],
+                selectedTags: [{tagName, tagId}],
             },
         );
     };
@@ -93,7 +93,7 @@ const Tag = memo((props:IProps) => {
         navigate(
             RootNavigatorRoutes.SUBSCRIPTION_LINKED,
             {
-                subscriptionId: id,
+                subscriptionId: tagId,
             },
         );
     };
@@ -126,7 +126,12 @@ const Tag = memo((props:IProps) => {
     return (
         <ScrollView>
             <TagInfoCard
-                tag={tag}
+                tag={{
+                    id: tagId,
+                    name: tagName,
+                    subscribers: tagSubscribers || 0,
+                    image: tagLogo,
+                }}
             />
 
             <ButtonsBlock
@@ -134,7 +139,7 @@ const Tag = memo((props:IProps) => {
                 onUnsubscribePress={onUnsubscribePress}
                 onSubscribePress={onSubscribePress}
                 onAdjustSubscriptionPress={onAdjustSubscriptionPress}
-                hasBindedSubscriptions={getTagBindedSubscriptions(id, subscriptionList).length !== 0}
+                hasBindedSubscriptions={getTagBindedSubscriptions(tagId, subscriptionList).length !== 0}
                 onBindedSubscriptionsPress={onBindedSubscriptionsPress}
             />
 

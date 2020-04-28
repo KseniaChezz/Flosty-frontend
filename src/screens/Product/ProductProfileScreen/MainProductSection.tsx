@@ -5,40 +5,21 @@ import {View, StyleSheet} from 'react-native';
 import ProductImage from './ProductImage';
 import ProductDescription from './ProductDescription';
 
-import {IProductDetail} from '../../../types/product';
+import {IDetailProduct} from '../../../types/product';
 
 interface IProps {
-    product: IProductDetail;
+    product: IDetailProduct;
 }
 
 const MainProductSection = memo((props: IProps) => {
     const {product} = props;
-    const {
-        title,
-        text,
-        price,
-        oldPrice,
-        rating,
-        img,
-        boughtNumber,
-        savedNumber,
-    } = product;
+    const {imageList} = product;
 
     return (
         <View style={styles.container}>
-            <ProductImage
-                img={img}
-            />
+            <ProductImage imageList={imageList} />
 
-            <ProductDescription
-                title={title}
-                text={text}
-                price={price}
-                oldPrice={oldPrice}
-                rating={rating}
-                boughtNumber={boughtNumber}
-                savedNumber={savedNumber}
-            />
+            <ProductDescription product={product} />
         </View>
     );
 });

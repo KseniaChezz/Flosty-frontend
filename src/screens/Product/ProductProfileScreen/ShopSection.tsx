@@ -10,26 +10,37 @@ import {
 
 import {Rating} from '../../../elements'
 
-import {IShopShort} from '../../../types/product';
+import {IShop} from '../../../types/shop';
 
 import {COLORS} from '../../../constants';
+import {RootNavigatorRoutes} from '../../../enums';
+
+import {navigate} from '../../../utils';
 
 interface IProps {
-    shop: IShopShort;
+    shop: IShop;
 }
 
 const ShopSection = memo((props: IProps) => {
     const {shop} = props;
     const {
-        img,
+        id,
+        logo,
         name,
         rating,
     } = shop;
 
+    const onShopPress = () => {
+        navigate(RootNavigatorRoutes.SHOP_PROFILE, {id});
+    }
+
     return (
-        <TouchableOpacity style={styles.container}>
+        <TouchableOpacity
+            style={styles.container}
+            onPress={onShopPress}
+        >
             <Image
-                source={img}
+                source={{uri: logo}}
                 style={styles.shopImg}
             />
 
@@ -38,9 +49,7 @@ const ShopSection = memo((props: IProps) => {
                     {name}
                 </Text>
 
-                <Rating
-                    rating={rating}
-                />
+                {!!rating && <Rating rating={rating} />}
             </View>
 
             <Image

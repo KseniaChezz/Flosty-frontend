@@ -1,7 +1,5 @@
-import {IDescription} from './product';
-
 export type IProductNavigatorParamList = {
-    ProductProfileScreen: undefined;
-    DescriptionScreen: {descriptionList: IDescription[]};
+    ProductProfileScreen: {shopId: number, productId: number};
+    DescriptionScreen: {characteristic: string};
     GuaranteeScreen: undefined;
 };

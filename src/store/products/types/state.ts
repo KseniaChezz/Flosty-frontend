@@ -15,10 +15,13 @@ interface IShopMap {
 }
 
 interface ITagMap {
-    [tagId: number]: ITagProductList;
+    [tagId: number]: ITagInfoAndITagProductList;
 }
 
-export interface ITagProductList {
+export interface ITagInfoAndITagProductList {
+    name: string;
+    subscribers: number;
+    logo: string;
     popularTagList: ITag[];
     productList: IShopProduct[];
 }

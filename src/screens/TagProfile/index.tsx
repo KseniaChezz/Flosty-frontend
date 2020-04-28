@@ -35,16 +35,10 @@ const TagProfile = memo((props:IProps) => {
         navigation,
         route: {
             params: {
-                tag,
+                id,
             },
         },
     } = props;
-    const {
-        id,
-        name,
-        image,
-        subscribers,
-    } = tag;
     const isProductListLoading: boolean = useSelector((stor: IState) => stor.products.isLoading);
     const dispatch = useDispatch();
 
@@ -59,7 +53,7 @@ const TagProfile = memo((props:IProps) => {
 
     const renderTag = () => {
         return (
-            <Tag tag={tag}/>
+            <Tag tagId={id}/>
         );
     }
 

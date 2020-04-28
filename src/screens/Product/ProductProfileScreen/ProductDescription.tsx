@@ -7,6 +7,7 @@ import {
     TouchableOpacity,
     StyleSheet,
 } from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
 
 import {
     Rating,
@@ -14,28 +15,61 @@ import {
     RoundButton,
 } from '../../../elements';
 
+import {addFavoriteProduct} from '../../../store/favorite/thunks/addFavoriteProduct';
+import {deleteFavoriteProduct} from '../../../store/favorite/thunks/deleteFavoriteProduct';
+
+import {IState} from '../../../store';
+import {IDetailProduct, IShopProduct} from '../../../types/product';
+
+import {isProductFavorite} from '../../../utils';
+
 import {TEXT, COLORS} from '../../../constants';
 
 interface IProps {
-    title: string;
-    text: string;
-    rating: string;
-    price: number;
-    boughtNumber?: number;
-    savedNumber?: number;
-    oldPrice?: number;
+    product: IDetailProduct;
 }
 
 const ProductDescription = memo((props: IProps) => {
+    const {product} = props;
     const {
-        title,
-        text,
+        id,
+        shopId,
+        name,
+        description,
         price,
         oldPrice,
         rating,
+        date,
         boughtNumber,
         savedNumber,
-    } = props;
+        tagList,
+        imageList,
+    } = product;
+    const favoriteProductcList = useSelector((stor: IState) => stor.favorite.list);
+    const isProductInFavoriteList: boolean = isProductFavorite(id, favoriteProductcList);
+    const favoriteImg = isProductInFavoriteList
+        ? require('../../../../assets/images/chosen_select.png')
+        : require('../../../../assets/images/chosen_default.png');
+    const dispatch = useDispatch();
+
+    const onAddFavoritePress = () => {
+        dispatch(addFavoriteProduct({
+            id,
+            shopId,
+            name,
+            price,
+            rating,
+            date,
+            img: imageList[0],
+            tagList,
+        }));
+    };
+
+    const onDeleteFavoritePress = () => {
+        dispatch(deleteFavoriteProduct(id));
+    };
+
+    const onFavoritePress = isProductInFavoriteList ? onDeleteFavoritePress : onAddFavoritePress;
 
     return (
         <View style={styles.descriptionContainer}>
@@ -54,11 +88,11 @@ const ProductDescription = memo((props: IProps) => {
             </View>
 
             <Text style={[styles.text, styles.titleText]}>
-                {title}
+                {name}
             </Text>
 
             <Text style={[styles.text, styles.descriptionText]}>
-                {text}
+                {description}
             </Text>
 
             <View style={styles.statisticsContainer}>
@@ -88,8 +122,8 @@ const ProductDescription = memo((props: IProps) => {
                 />
 
                 <RoundButton
-                    img={require('../../../../assets/images/chosen_default.png')}
-                    onPress={()=>{}}
+                    img={favoriteImg}
+                    onPress={onFavoritePress}
                 />
             </View>
 

@@ -26,9 +26,11 @@ const RatingAndFollowers = memo((props: IProps) => {
                 source={require('../../../../assets/images/star_select.png')}
             />
 
-            <Text style={[styles.text, styles.ratingText]}>
-                {rating}
-            </Text>
+            {!!rating &&
+                <Text style={[styles.text, styles.ratingText]}>
+                    {rating}
+                </Text>
+            }
 
             <Text style={[styles.text, styles.followersText]}>
                 {followers}

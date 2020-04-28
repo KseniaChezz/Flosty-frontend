@@ -13,6 +13,8 @@ interface IResponse {
     data: {
         id: number;
         name: string;
+        image: string;
+        subscribers: number;
         top_tags: ITag[];
         products: IProductResponse[];
     };
@@ -26,6 +28,9 @@ export const getTagProducts = (tagId: number) => {
             .then((res: IResponse) => {
                 const {
                     data: {
+                        name,
+                        subscribers,
+                        image,
                         top_tags,
                         products,
                     },
@@ -38,8 +43,11 @@ export const getTagProducts = (tagId: number) => {
                     dispatch(addTagProducts(
                         tagId,
                         {
-                        popularTagList: top_tags,
-                        productList: tagProductList,
+                            name,
+                            subscribers,
+                            logo: image,
+                            popularTagList: top_tags,
+                            productList: tagProductList,
                         },
                     ));
                 }

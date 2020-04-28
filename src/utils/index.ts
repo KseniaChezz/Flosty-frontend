@@ -38,6 +38,8 @@ import {
     mapProductFromResponse,
     filterProductListByNameAndTag,
     formatProductPrice,
+    mapColorProductResponse,
+    mapSizeProductResponse,
 } from './product';
 import {getEachNthIndexFromZeroTillMax} from './search';
 import {navigate, goBack} from './navigation';
@@ -88,6 +90,8 @@ export {
     mapProductFromResponse,
     filterProductListByNameAndTag,
     formatProductPrice,
+    mapColorProductResponse,
+    mapSizeProductResponse,
 
     getEachNthIndexFromZeroTillMax,
 

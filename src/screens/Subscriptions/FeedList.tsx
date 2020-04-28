@@ -10,6 +10,10 @@ import {ProductCardBig} from '../../elements';
 
 import {IFeedProduct} from '../../types/product';
 
+import {ProductNavigatorRoutes, RootNavigatorRoutes} from '../../enums';
+
+import {navigate} from '../../utils';
+
 interface IProps {
     list: IFeedProduct[];
     onRefresh: () => void;
@@ -23,6 +27,16 @@ const SubscriptionFeed = memo((props: IProps) => {
         isRefreshing,
     } = props;
 
+    const onProductPress = (shopId: number, productId: number) => {
+        return () => {
+            navigate(
+                RootNavigatorRoutes.PRODUCT_PROFILE,
+                {shopId, productId},
+                ProductNavigatorRoutes.PRODUCT_PROFILE_SCREEN,
+            );
+        }
+    };
+
     const keyExtractor = (item: IFeedProduct) => {
         return `${item.id}`;
     };
@@ -31,14 +45,14 @@ const SubscriptionFeed = memo((props: IProps) => {
         const {
             item: product,
         } = info;
+        const {id, shopId} = product;
 
         return (
             <ProductCardBig
                 product={product}
                 isShopShown={true}
-                onProductPress={() => {}}
+                onProductPress={onProductPress(shopId, id)}
                 onBasketPress={() => {}}
-                onFavoritePress={() => {}}
             />
         );
     }

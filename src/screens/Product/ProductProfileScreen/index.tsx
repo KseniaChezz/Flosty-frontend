@@ -1,8 +1,16 @@
 import React from 'react';
-import {memo, useState, Fragment} from 'react';
-import {View, Text, Image, TouchableOpacity, ScrollView} from 'react-native';
+import {memo, useState, useEffect, Fragment} from 'react';
+import {
+    View,
+    Text,
+    Image,
+    TouchableOpacity,
+    ScrollView,
+} from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {useSelector} from 'react-redux';
+import {RouteProp} from '@react-navigation/native';
+import {useSelector, useDispatch} from 'react-redux';
 
 import {styles} from './style';
 
@@ -13,128 +21,122 @@ import ShopSection from './ShopSection';
 import DeliveryAndGuaranteeSection from './DeliveryAndGuaranteeSection';
 import {ColoredButton} from '../../../elements';
 
-import {IProductNavigatorParamList} from '../../../types/productNavigator';
-import {IUserProfileItem} from '../../../types/user';
-import { IState } from '../../../store';
-import {IProductDetail, IProductProperty} from '../../../types/product';
+import {getDetailProduct} from '../../../store/products/thunks/getProductDetail';
+import {getShop} from '../../../store/shop/thunks/getShop';
 
-import {
-    TEXT,
-} from '../../../constants';
-import {ProductNavigatorRoutes} from '../../../enums';
+import {IProductNavigatorParamList} from '../../../types/productNavigator';
+import {IState} from '../../../store';
+import {IDetailProduct, IProductProperty} from '../../../types/product';
+import {IShop} from '../../../types/shop';
+
+import {TEXT} from '../../../constants';
+import {ProductNavigatorRoutes, RootNavigatorRoutes} from '../../../enums';
 
 type ScreenNavigationProp = StackNavigationProp<IProductNavigatorParamList, ProductNavigatorRoutes.PRODUCT_PROFILE_SCREEN>;
-
-const product: IProductDetail = {
-    title: 'Сапоги Red. Раскрасим зиму яркими красками?!',
-    text: 'Фирменая модель от Az-ART красивая необычная обувь для девушек! Удобная колодка со шнурками, которые можно не расшнуривать!',
-    price: 3000,
-    oldPrice: 3500,
-    rating: '5,0',
-    boughtNumber: 45,
-    savedNumber: 123,
-    img: require('../../../../assets/images/sneakers1.jpg'),
-    tags: ['#azart', '#обувь', '#сапоги', '#осень'],
-    sizes: [
-        {value: '36', isAvailable: false},
-        {value: '37', isAvailable: true},
-        {value: '38', isAvailable: true},
-        {value: '39', isAvailable: true},
-        {value: '40', isAvailable: true},
-        {value: '41', isAvailable: true},
-        {value: '42', isAvailable: true},
-    ],
-    colors: [
-        {value: 'red', isAvailable: true},
-        {value: 'blue', isAvailable: true},
-        {value: 'green', isAvailable: true},
-    ],
-    shop: {
-        id: 'shopId1',
-        name: 'AzART',
-        rating: '4,8',
-        img: require('../../../../assets/images/bag.png'),
-    },
-    delivery: {
-        price: 0,
-        time: '2 – 5 дней',
-    },
-    descriptionList: [
-        {
-            title: 'Тип товара',
-            value: 'сапоги женские',
-        },
-        {
-            title: 'Материал',
-            value: 'кожа',
-        },
-        {
-            title: 'Материал подошвы',
-            value: 'резина',
-        },
-    ],
-}
+type ScreenRouteProp = RouteProp<IProductNavigatorParamList, ProductNavigatorRoutes.PRODUCT_PROFILE_SCREEN>;
 
 interface IProps {
     navigation: ScreenNavigationProp;
+    route: ScreenRouteProp;
 }
 
 const ProductProfile = memo((props: IProps) => {
-    const {navigation} = props;
-    const [productSize, setProductSize] = useState<string>('');
-    const [productColor, setProductColor] = useState<string>('');
+    const {
+        navigation,
+        route: {
+            params: {
+                shopId,
+                productId,
+            },
+        },
+    } = props;
+    const [productSize, setProductSize] = useState<IProductProperty | undefined>();
+    const [productColor, setProductColor] = useState<IProductProperty | undefined>();
+    const product: IDetailProduct | undefined = useSelector((stor: IState) => stor.products.productMap[productId]);
+    const shop: IShop | undefined = useSelector((stor: IState) => stor.shop.map[shopId]);
+    const isProductLoading: boolean = useSelector((stor: IState) => stor.products.isLoading);
+    const isShopLoading: boolean = useSelector((stor: IState) => stor.shop.isLoading);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (!product) {
+            dispatch(getDetailProduct(shopId, productId));
+        }
+
+        if (!shop) {
+            dispatch(getShop(shopId));
+        }
+    }, [])
 
     const onDescriptionPress = () => {
-        navigation.navigate(ProductNavigatorRoutes.DESCRIPTION_SCREEN, {descriptionList: product.descriptionList});
+        if (!product) return;
+
+        navigation.navigate(ProductNavigatorRoutes.DESCRIPTION_SCREEN, {characteristic: product.characteristic});
     };
 
     const onGuaranteePress = () => {
         navigation.navigate(ProductNavigatorRoutes.GUARANTEE_SCREEN);
     };
 
+    const renderProduct = () => {
+        if (!product) return null;
+
+        const {
+            tagList,
+            colorList,
+            sizeList,
+            characteristic,
+        } = product;
+
+        return (
+            <Fragment>
+                <View style={styles.container}>
+                    <ScrollView>
+                        <MainProductSection
+                            product={product}
+                        />
+
+                        <TagListSection
+                            tagList={tagList}
+                        />
+
+                        <ProductPropertyPicker
+                            colorList={colorList}
+                            selectedColor={productColor}
+                            setSelectedColor={setProductColor}
+                            sizeList={sizeList}
+                            selectedSize={productSize}
+                            setSelectedSize={setProductSize}
+                            characteristic={characteristic}
+                            onDescriptionPress={onDescriptionPress}
+                        />
+
+                        {!!shop && <ShopSection shop={shop} />}
+
+                        <DeliveryAndGuaranteeSection
+                            // price={product.delivery.price}
+                            // time={product.delivery.time}
+                            onGuaranteePress={onGuaranteePress}
+                        />
+
+                    </ScrollView>
+                </View>
+
+                <View style={styles.buttonContainer}>
+                    <ColoredButton
+                        text={`${TEXT.buyFor}${product.price} ${TEXT.rubleSign}`}
+                        onPress={()=>{}}
+                        buttonStyle={styles.button}
+                    />
+                </View>
+            </Fragment>
+        );
+    };
+
     return (
         <Fragment>
-            <View style={styles.container}>
-                <ScrollView>
-                    <MainProductSection
-                        product={product}
-                    />
-
-                    <TagListSection
-                        tagList={product.tags}
-                    />
-
-                    <ProductPropertyPicker
-                        colorList={product.colors}
-                        selectedColor={productColor}
-                        setSelectedColor={setProductColor}
-                        sizeList={product.sizes}
-                        selectedSize={productSize}
-                        setSelectedSize={setProductSize}
-                        descriptionList={product.descriptionList}
-                        onDescriptionPress={onDescriptionPress}
-                    />
-
-                    <ShopSection
-                        shop={product.shop}
-                    />
-
-                    <DeliveryAndGuaranteeSection
-                        price={product.delivery.price}
-                        time={product.delivery.time}
-                        onGuaranteePress={onGuaranteePress}
-                    />
-
-                </ScrollView>
-            </View>
-
-            <View style={styles.buttonContainer}>
-                <ColoredButton
-                    text={`${TEXT.buyFor}${product.price} ${TEXT.rubleSign}`}
-                    onPress={()=>{}}
-                    buttonStyle={styles.button}
-                />
-            </View>
+            <Spinner visible={isProductLoading || isShopLoading} />
+            {renderProduct()}
         </Fragment>
     );
 });

@@ -11,18 +11,18 @@ import styles from './style';
 import PropertyPicker from './PropertyPicker';
 import {RowMenuItem} from '../../../../elements';
 
-import {IProductProperty, IDescription} from '../../../../types/product';
+import {IProductProperty, IColor} from '../../../../types/product';
 
 import {TEXT} from '../../../../constants';
 
 interface IProps {
-    colorList: IProductProperty[];
-    selectedColor: string;
-    setSelectedColor: (value: string) => void;
+    colorList: IColor[];
+    selectedColor: IProductProperty | undefined;
+    setSelectedColor: (value: IProductProperty) => void;
     sizeList: IProductProperty[];
-    selectedSize: string;
-    setSelectedSize: (value: string) => void;
-    descriptionList: IDescription[];
+    selectedSize: IProductProperty | undefined;
+    setSelectedSize: (value: IProductProperty) => void;
+    characteristic: string;
     onDescriptionPress: () => void;
 }
 
@@ -34,34 +34,32 @@ const ProductPropertyPicker = memo((props: IProps) => {
         setSelectedColor,
         selectedSize,
         setSelectedSize,
-        descriptionList,
+        characteristic,
         onDescriptionPress,
     } = props;
 
     const renderColorBage = (property: IProductProperty, isSelected: boolean, onPress: () => void) => {
-        const {value, isAvailable} = property;
+        const {id, value, code} = property;
 
         return (
             <TouchableOpacity
-                key={value}
-                disabled={!isAvailable}
-                style={[styles.bage, {backgroundColor: value}, isSelected ? styles.bageSelected : null]}
+                key={id}
+                style={[styles.bage, styles.bageColor, {backgroundColor: code}, isSelected ? styles.bageSelected : null]}
                 onPress={onPress}
             />
         );
     };
 
     const renderSizeBage = (property: IProductProperty, isSelected: boolean, onPress: () => void) => {
-        const {value, isAvailable} = property;
+        const {id, value} = property;
 
         return (
             <TouchableOpacity
-                key={value}
-                disabled={!isAvailable}
+                key={id}
                 style={[styles.bage, isSelected ? styles.bageSelected : null]}
                 onPress={onPress}
             >
-                <Text style={[styles.text, isAvailable ? styles.bageText : styles.bageTextDisabled]}>
+                <Text style={[styles.text, styles.bageText]}>
                     {value}
                 </Text>
             </TouchableOpacity>
@@ -93,7 +91,7 @@ const ProductPropertyPicker = memo((props: IProps) => {
                 />
             }
 
-            {descriptionList. length !== 0 &&
+            {!!characteristic &&
                 <RowMenuItem
                     text={TEXT.productDescription}
                     isIconShown={true}

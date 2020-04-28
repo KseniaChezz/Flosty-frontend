@@ -15,7 +15,6 @@ import {TEXT, COLORS} from '../../../constants';
 import {ProductNavigatorRoutes} from '../../../enums';
 
 import {IProductNavigatorParamList} from '../../../types/productNavigator';
-import {IDescription} from '../../../types/product';
 
 type ScreenNavigationProp = StackNavigationProp<IProductNavigatorParamList, ProductNavigatorRoutes.DESCRIPTION_SCREEN>;
 type ScreenRouteProp = RouteProp<IProductNavigatorParamList, ProductNavigatorRoutes.DESCRIPTION_SCREEN>;
@@ -30,7 +29,7 @@ const DescriptionScreen = memo((props: IProps) => {
         navigation,
         route: {
             params: {
-                descriptionList,
+                characteristic,
             }
         }
     } = props;
@@ -46,15 +45,14 @@ const DescriptionScreen = memo((props: IProps) => {
         >
             <View style={styles.container}>
                 <ScrollView>
-                    {descriptionList.map((item: IDescription) => {
-                        const {title, value} = item;
+                    {Object.keys(characteristic).map((key: string) => {
 
                         return (
                             <Text
-                                key={title}
+                                key={key}
                                 style={styles.text}
                             >
-                                {title}: {value}
+                                {key}: {characteristic[key]}
                             </Text>
                         )
                     })}

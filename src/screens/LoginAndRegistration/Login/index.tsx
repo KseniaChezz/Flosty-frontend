@@ -114,9 +114,7 @@ const Login = memo((props: IProps) => {
                 onPress={onRegisterPress}
             />
 
-            <Spinner
-                visible={isDataProcessing}
-            />
+            <Spinner visible={isDataProcessing} />
 
         </LoginAndRegistrationScreenWrapper>
     );

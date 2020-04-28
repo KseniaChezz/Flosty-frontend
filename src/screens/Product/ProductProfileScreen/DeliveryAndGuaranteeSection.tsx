@@ -13,13 +13,17 @@ import {RowMenuItem} from '../../../elements';
 import {COLORS, TEXT} from '../../../constants';
 
 interface IProps {
-    price: number;
-    time: string;
+    // price: number;
+    // time: string;
     onGuaranteePress: () => void;
 }
 
 const DeliveryAndGuaranteeSection = memo((props: IProps) => {
-    const {price, time, onGuaranteePress} = props;
+    const {
+        // price,
+        // time,
+        onGuaranteePress,
+    } = props;
 
     return (
         <View style={styles.container}>
@@ -29,7 +33,8 @@ const DeliveryAndGuaranteeSection = memo((props: IProps) => {
                 </Text>
 
                 <Text style={[styles.text, styles.deliveryText]}>
-                    {price === 0 ? TEXT.free : price}, {time}
+                    {/*{price === 0 ? TEXT.free : price}, {time}*/}
+                    Бесплатно, 2 – 5 дней
                 </Text>
             </View>
 

@@ -11,7 +11,7 @@ import {
     IResetProductFilters,
 } from './types/actions';
 import {IDetailProduct} from '../../types/product';
-import {ITagProductList} from './types/state';
+import {ITagInfoAndITagProductList} from './types/state';
 import {IProductFilterKey} from '../../types/filter';
 
 export const setIsLoading = (isLoading: boolean): ISetIsLoading => {
@@ -29,7 +29,7 @@ export const addShopProducts = (shopId: number, productList: any): IAddShopProdu
     };
 };
 
-export const addTagProducts = (tagId: number, productList: ITagProductList): IAddTagProducts => {
+export const addTagProducts = (tagId: number, productList: ITagInfoAndITagProductList): IAddTagProducts => {
     return {
         type: ProductsAction.PRODUCTS_ADD_TAG_PRODUCTS,
         tagId,
