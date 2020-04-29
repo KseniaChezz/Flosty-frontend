@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
     },
     bage: {
         height: 40,
+        minWidth: 40,
         borderRadius: 20,
         backgroundColor: COLORS.Border,
         marginRight: 10,

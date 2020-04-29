@@ -6,6 +6,8 @@ import {
     StyleSheet,
 } from 'react-native';
 
+import {Rating} from '../../../elements';
+
 import {COLORS} from '../../../constants';
 
 interface IProps {
@@ -21,10 +23,12 @@ const RatingAndFollowers = memo((props: IProps) => {
 
     return (
         <View style={styles.container}>
-            <Image
-                style={styles.rating}
-                source={require('../../../../assets/images/star_select.png')}
-            />
+            {!!rating &&
+                <Image
+                    style={styles.rating}
+                    source={require('../../../../assets/images/star_select.png')}
+                />
+            }
 
             {!!rating &&
                 <Text style={[styles.text, styles.ratingText]}>

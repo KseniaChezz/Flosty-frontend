@@ -96,9 +96,7 @@ const ProductDescription = memo((props: IProps) => {
             </Text>
 
             <View style={styles.statisticsContainer}>
-                <Rating
-                    rating={rating}
-                />
+                {!!rating && <Rating rating={rating} />}
 
                 <View style={styles.textRow}>
                     {!!boughtNumber &&

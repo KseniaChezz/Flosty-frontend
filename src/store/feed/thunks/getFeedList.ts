@@ -25,6 +25,7 @@ interface IFeedProductResponse {
     personal_sub: ISubscriptionResponse;
     shop_name: string;
     shop_image: string;
+    shop_id: number;
 }
 
 export const getFeedList = () => {
@@ -51,6 +52,7 @@ export const getFeedList = () => {
                             personal_sub,
                             shop_name,
                             shop_image,
+                            shop_id,
                         } = item;
 
                         return {
@@ -59,6 +61,7 @@ export const getFeedList = () => {
                             subscription: mapSubscriptionFomResponse(personal_sub),
                             price: price_with_sale ? price_with_sale : price,
                             img: image,
+                            shopId: shop_id,
                             shopName:shop_name,
                             shopLogo: shop_image,
                         }

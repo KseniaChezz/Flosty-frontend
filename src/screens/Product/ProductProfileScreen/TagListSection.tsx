@@ -3,12 +3,15 @@ import {memo, useState} from 'react';
 import {
     Text,
     View,
+    TouchableOpacity,
     StyleSheet,
 } from 'react-native';
 
 import {COLORS, TEXT} from '../../../constants';
 
 import {ITag} from '../../../types/shop';
+import { navigate } from '../../../utils';
+import { RootNavigatorRoutes } from '../../../enums';
 
 interface IProps {
     tagList: ITag[];
@@ -16,6 +19,18 @@ interface IProps {
 
 const TagListSection = memo((props: IProps) => {
     const {tagList} = props;
+
+    const onTagPress = (id: number | string) => {
+        if (typeof id === 'number') {
+            return () => {
+                navigate(RootNavigatorRoutes.TAG_PROFILE, {id})
+            }
+        }
+
+        return () => {
+            navigate(RootNavigatorRoutes.SHOP_PROFILE, {id: +id})
+        }
+    }
 
     return (
         <View style={styles.container}>
@@ -25,15 +40,17 @@ const TagListSection = memo((props: IProps) => {
 
             <View style={styles.tagContainer}>
                 {tagList.map((tag: ITag) => {
-                    const {name} = tag;
+                    const {name, id} = tag;
 
                     return (
-                        <Text
-                            key={name}
-                            style={[styles.text, styles.tag]}
-                        >
-                            #{name}
-                        </Text>
+                        <TouchableOpacity onPress={onTagPress(id)}>
+                            <Text
+                                key={name}
+                                style={[styles.text, styles.tag]}
+                            >
+                                #{name}
+                            </Text>
+                        </TouchableOpacity>
                     )
                 })}
             </View>

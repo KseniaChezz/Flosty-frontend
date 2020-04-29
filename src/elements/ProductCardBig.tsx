@@ -19,13 +19,16 @@ import {TEXT, COLORS} from '../constants';
 
 import {IFeedProduct, IShopProduct} from '../types/product';
 import {IState} from '../store';
+import {ITag} from '../types/shop';
 
 import {
     getLogoForFeedProduct,
     getShopNameForFeedProduct,
-    getTagLineForFeedProduct,
     isProductFavorite,
+    navigate,
 } from '../utils';
+
+import {RootNavigatorRoutes} from '../enums';
 
 interface IProps {
     product: IFeedProduct | IShopProduct;
@@ -75,12 +78,16 @@ const ProductCardBig = memo((props: IProps) => {
         dispatch(deleteFavoriteProduct(id));
     }
 
+    const onTagPress = (id: number) => {
+        return () => navigate(RootNavigatorRoutes.TAG_PROFILE, {id});
+    }
+
     const renderFeedProductInfoFromSubscription = (product: IFeedProduct) => {
         const {subscription} = product;
+        const {tags} = subscription;
         const logo: ImageSourcePropType = getLogoForFeedProduct(subscription);
         const shopName: string = getShopNameForFeedProduct(subscription);
-        const tagLine: string = getTagLineForFeedProduct(subscription);
-        const subscriptionText: string = shopName ? `${TEXT.shop} ${tagLine}` : tagLine;
+        const subscriptionText: string = shopName ? TEXT.shop : '';
 
         return (
             <View style={styles.shopContainer}>
@@ -91,7 +98,20 @@ const ProductCardBig = memo((props: IProps) => {
 
                 <View>
                     {!!shopName && <Text style={[styles.text, styles.shop]}>{shopName}</Text>}
-                    <Text style={[styles.text, styles.subscription]}>{TEXT.subscription} {subscriptionText}</Text>
+
+                    <View style={styles.subscriptionSourceRow}>
+                        <Text style={[styles.text, styles.subscription]}>{TEXT.subscription} {subscriptionText}</Text>
+
+                        {tags.map((item: ITag) => {
+                            const {id, name} = item;
+
+                            return (
+                                <TouchableOpacity onPress={onTagPress(+id)}>
+                                    <Text style={[styles.text, styles.subscription, styles.tag]}>#{name}</Text>
+                                </TouchableOpacity>
+                            )
+                        })}
+                    </View>
                 </View>
             </View>
         )
@@ -196,6 +216,14 @@ const styles = StyleSheet.create({
     subscription: {
         fontSize: 12,
         lineHeight: 14,
+        marginRight: 5,
+    },
+    tag: {
+        color: COLORS.BrightBlue,
+    },
+    subscriptionSourceRow: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
     },
 });
 

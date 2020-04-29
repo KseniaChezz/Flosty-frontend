@@ -50,6 +50,7 @@ const ProductProfile = memo((props: IProps) => {
             },
         },
     } = props;
+    debugger;
     const [productSize, setProductSize] = useState<IProductProperty | undefined>();
     const [productColor, setProductColor] = useState<IProductProperty | undefined>();
     const product: IDetailProduct | undefined = useSelector((stor: IState) => stor.products.productMap[productId]);
@@ -59,12 +60,12 @@ const ProductProfile = memo((props: IProps) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (!product) {
-            dispatch(getDetailProduct(shopId, productId));
-        }
-
         if (!shop) {
             dispatch(getShop(shopId));
+        }
+
+        if (!product) {
+            dispatch(getDetailProduct(shopId, productId));
         }
     }, [])
 

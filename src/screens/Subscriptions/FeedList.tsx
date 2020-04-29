@@ -29,6 +29,7 @@ const SubscriptionFeed = memo((props: IProps) => {
 
     const onProductPress = (shopId: number, productId: number) => {
         return () => {
+            debugger;
             navigate(
                 RootNavigatorRoutes.PRODUCT_PROFILE,
                 {shopId, productId},
