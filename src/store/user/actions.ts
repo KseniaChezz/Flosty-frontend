@@ -11,6 +11,7 @@ import {
     ISetNotificationList,
     IAddMessageInSupportChat,
     IAddMessageInShopChat,
+    IAddFirstMessageInShopChat,
 } from './types/actions';
 import {IUser, IAddress, ICard, INotification, IMessage} from '../../types/user';
 
@@ -86,10 +87,25 @@ export const addMessageInSupportChat = (message: IMessage): IAddMessageInSupport
     };
 }
 
-export const addMessageInShopChat = (shopName: string, message: IMessage): IAddMessageInShopChat => {
+export const addMessageInShopChat = (shopId: number, message: IMessage): IAddMessageInShopChat => {
     return {
         type: UserAction.USER_SHOP_CHAT_ADD_MESSAGE,
-        shopName,
+        shopId,
         message,
+    };
+}
+
+export const addFirstMessageInShopChat = (
+    shopId: number,
+    message: IMessage,
+    shopName: string,
+    shopLogo: string,
+): IAddFirstMessageInShopChat => {
+    return {
+        type: UserAction.USER_SHOP_CHAT_ADD_FIRST_MESSAGE,
+        shopId,
+        message,
+        shopName,
+        shopLogo,
     };
 }

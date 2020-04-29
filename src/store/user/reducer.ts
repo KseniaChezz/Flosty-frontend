@@ -12,6 +12,7 @@ import {
     ISetNotificationList,
     IAddMessageInSupportChat,
     IAddMessageInShopChat,
+    IAddFirstMessageInShopChat,
 } from './types/actions';
 import {IAddress, ICard} from '../../types/user';
 
@@ -43,20 +44,21 @@ const initialState: IUserState = {
             author: MessageAuthor.SUPPORT,
         },
     ],
-    messageList: {
-        'INCITY':
-            {
-                img: '',
-                name: 'INCITY',
-                messageList: [
-                    {
-                        text: TEXT.supportMessage,
-                        date: Date.now(),
-                        author: MessageAuthor.SHOP,
-                    },
-                ]
-            },
-    },
+    messageList: {},
+    // messageList: {
+    //     3:
+    //         {
+    //             logo: '',
+    //             name: 'INCITY',
+    //             messageList: [
+    //                 {
+    //                     text: TEXT.supportMessage,
+    //                     date: Date.now(),
+    //                     author: MessageAuthor.SHOP,
+    //                 },
+    //             ]
+    //         },
+    // },
 }
 
 const onSetUser = (state: IUserState, action: ISetUser): IUserState => {
@@ -151,6 +153,26 @@ const onAddMessageInSupportChat = (state: IUserState, action: IAddMessageInSuppo
 
 const onAddMessageInShopChat = (state: IUserState, action: IAddMessageInShopChat): IUserState => {
     const {
+        shopId,
+        message,
+    } = action;
+
+    return {
+        ...state,
+        messageList: {
+            ...state.messageList,
+            [shopId]: {
+                ...state.messageList[shopId],
+                messageList: [message, ...state.messageList[shopId].messageList],
+            }
+        },
+    };
+}
+
+const onAddFirstMessageInShopChat = (state: IUserState, action: IAddFirstMessageInShopChat): IUserState => {
+    const {
+        shopId,
+        shopLogo,
         shopName,
         message,
     } = action;
@@ -159,9 +181,11 @@ const onAddMessageInShopChat = (state: IUserState, action: IAddMessageInShopChat
         ...state,
         messageList: {
             ...state.messageList,
-            [shopName]: {
-                ...state.messageList[shopName],
-                messageList: [message, ...state.messageList[shopName].messageList],
+            [shopId]: {
+                id: shopId,
+                name: shopName,
+                logo: shopLogo,
+                messageList: [message]
             }
         },
     };
@@ -189,6 +213,8 @@ export const userReducer = (state: IUserState = initialState, action: IUserActio
             return onAddMessageInSupportChat(state, action);
         case UserAction.USER_SHOP_CHAT_ADD_MESSAGE:
             return onAddMessageInShopChat(state, action);
+        case UserAction.USER_SHOP_CHAT_ADD_FIRST_MESSAGE:
+            return onAddFirstMessageInShopChat(state, action);
         default:
             return state;
     }

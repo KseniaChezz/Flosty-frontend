@@ -10,4 +10,5 @@ export enum UserAction {
     USER_SET_NOTIFICATION_LIST = 'UserSetNotificationList',
     USER_SUPPORT_CHAT_ADD_MESSAGE = 'UserSupportChatAddMessage',
     USER_SHOP_CHAT_ADD_MESSAGE = 'UserShopChatAddMessage',
+    USER_SHOP_CHAT_ADD_FIRST_MESSAGE = 'UserShopChatAddFirstMessage',
 };

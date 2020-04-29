@@ -8,7 +8,7 @@ import {styles} from './style';
 
 import {ScreenWrapperWithBackButton, ChatMessage} from '../../../elements';
 
-import {addMessageInShopChat} from '../../../store/user/actions';
+import {addMessageInShopChat, addFirstMessageInShopChat} from '../../../store/user/actions';
 
 import {IRootNavigatorParamList} from '../../../types/rootNavigator';
 import {IState} from '../../../store';
@@ -31,11 +31,13 @@ const ShopChat = memo((props: IProps) => {
         route: {
             params: {
                 shopName,
+                shopId,
+                shopLogo,
             },
         },
     } = props;
     const [message, setMessage] = useState<string>('');
-    const messageList: IMessage[] = useSelector((state: IState) => state.user.messageList[shopName].messageList);
+    const messageList: IMessage[] = useSelector((state: IState) => state.user.messageList[shopId]?.messageList) || [];
     const dispatch = useDispatch();
 
     const onBackPress = () => {
@@ -43,14 +45,18 @@ const ShopChat = memo((props: IProps) => {
     };
 
     const onAddMessagePress = () => {
-        dispatch(addMessageInShopChat(
-            shopName,
-            {
-                text: message,
-                date: Date.now(),
-                author: MessageAuthor.USER,
-            },
-         ));
+        const messageToSend: IMessage = {
+            text: message,
+            date: Date.now(),
+            author: MessageAuthor.USER,
+        };
+
+        if (messageList.length === 0) {
+            dispatch(addFirstMessageInShopChat(shopId, messageToSend, shopName, shopLogo));
+        } else {
+            dispatch(addMessageInShopChat(shopId, messageToSend));
+        }
+
         setMessage('');
     };
 

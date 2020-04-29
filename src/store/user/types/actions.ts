@@ -54,8 +54,16 @@ export interface IAddMessageInSupportChat {
 
 export interface IAddMessageInShopChat {
     type: UserAction.USER_SHOP_CHAT_ADD_MESSAGE;
-    shopName: string;
+    shopId: number;
     message: IMessage;
+};
+
+export interface IAddFirstMessageInShopChat {
+    type: UserAction.USER_SHOP_CHAT_ADD_FIRST_MESSAGE;
+    shopId: number;
+    message: IMessage;
+    shopName: string;
+    shopLogo: string;
 };
 
 export type IUserAction = ISetUser
@@ -69,3 +77,4 @@ export type IUserAction = ISetUser
     | ISetNotificationList
     | IAddMessageInSupportChat
     | IAddMessageInShopChat
+    | IAddFirstMessageInShopChat

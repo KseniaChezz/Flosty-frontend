@@ -21,7 +21,10 @@ const RoundButton = memo((props: IProps) => {
     } = props;
 
     return (
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity
+            style={styles.button}
+            onPress={onPress}
+        >
             <Image
                 source={img}
                 style={styles.img}

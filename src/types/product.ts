@@ -42,12 +42,12 @@ export interface IProductProperty {
     code?: string;
 }
 
-export interface IShopShort {
-    id: string;
-    name: string;
-    rating: string;
-    img: ImageSourcePropType;
-}
+// export interface IShopShort {
+//     id: string;
+//     name: string;
+//     rating: string;
+//     img: ImageSourcePropType;
+// }
 
 export interface IFeedProduct {
     id: number;

@@ -5,6 +5,7 @@ import {
     Text,
     Image,
     TouchableOpacity,
+    ViewStyle,
     StyleSheet,
 } from 'react-native';
 
@@ -13,20 +14,32 @@ import {ColoredButton} from '../../elements';
 import {ISubscription, ISubstrictionItem, ISubscriptionShop} from '../../types/subscription';
 
 import {TEXT, COLORS} from '../../constants';
+import {RootNavigatorRoutes} from '../../enums';
+
+import {navigate} from '../../utils';
 
 interface IProps {
     subscription: ISubscription;
     onEditPress: () => void;
     onUnSubscribePress: () => void;
+    style?: ViewStyle;
+    tagsContainerStyle? : ViewStyle;
 }
 
 const AdjustedSubscriptionCard = memo((props: IProps) => {
-    const {subscription, onEditPress, onUnSubscribePress} = props;
+    const {subscription, onEditPress, onUnSubscribePress, style, tagsContainerStyle} = props;
     const {shops, tags} = subscription;
 
+    const onCardPress = () => {
+        navigate(RootNavigatorRoutes.SUBSCRIPTION_PERSONAL, {subscription});
+    };
+
     return (
-        <View style={styles.card}>
-            <View style={styles.tagsContainer}>
+        <TouchableOpacity
+            style={[styles.card, style]}
+            onPress={onCardPress}
+        >
+            <View style={[styles.tagsContainer, tagsContainerStyle]}>
                 <Image
                     source={require('../../../assets/images/link.png')}
                     style={styles.linkImg}
@@ -69,7 +82,7 @@ const AdjustedSubscriptionCard = memo((props: IProps) => {
                     />
                 </TouchableOpacity>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 });
 

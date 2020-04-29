@@ -2,6 +2,7 @@ import {IProductsState} from './types/state';
 import {
     IAddShopProducts,
     IAddTagProducts,
+    IAddTagListProducts,
     IProductsAction,
     ISetIsLoading,
     IAddDetailProduct,
@@ -29,6 +30,7 @@ const initialState: IProductsState = {
     isLoading: false,
     shopMap: {},
     tagMap: {},
+    tagListMap: {},
     productMap: {},
     filter: getInitialFilters(),
 };
@@ -59,6 +61,17 @@ const onAddTagProducts = (state: IProductsState, action: IAddTagProducts): IProd
         tagMap: {
             ...state.tagMap,
             [tagId]: productList,
+        },
+    }
+};
+
+const onAddTagListProducts = (state: IProductsState, action: IAddTagListProducts): IProductsState => {
+    const {tagListId, productList} = action;
+    return {
+        ...state,
+        tagListMap: {
+            ...state.tagListMap,
+            [tagListId]: productList,
         },
     }
 };
@@ -126,6 +139,8 @@ export const productsReducer = (state: IProductsState = initialState, action: IP
             return onAddShopProducts(state, action);
         case ProductsAction.PRODUCTS_ADD_TAG_PRODUCTS:
             return onAddTagProducts(state, action);
+        case ProductsAction.PRODUCTS_ADD_TAG_LIST_PRODUCTS:
+            return onAddTagListProducts(state, action);
         case ProductsAction.PRODUCTS_ADD_DETAIL_PRODUCT:
             return onAddDetailProduct(state, action);
         case ProductsAction.PRODUCTS_FILTER_SET_MIN_PRICE:

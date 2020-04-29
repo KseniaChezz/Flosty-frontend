@@ -337,6 +337,7 @@ export const TEXT = {
     subscribeToFollow: 'Подписывайтесь на магазины в Flosty и следите за их  обновлениями',
     subscriptions: 'Подписки',
     subscription: 'Подписка',
+    personalSubscription: 'Персональная подписка',
     editSubscription: 'Редактирование подписки',
     linkedSubscription: 'Связанные подписки',
     feed: 'Лента',

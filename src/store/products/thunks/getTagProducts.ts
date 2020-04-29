@@ -1,13 +1,13 @@
 import {Dispatch} from 'react';
 
-import {setIsLoading, addShopProducts, addTagProducts} from '../actions';
+import {setIsLoading, addTagProducts} from '../actions';
 
 import {IProductsAction} from '../types/actions';
 import {IShopProduct, IProductResponse} from '../../../types/product';
+import {ITag} from '../../../types/shop';
 
 import {get} from '../../../utils/network';
 import {getTagListId, mapProductFromResponse} from '../../../utils';
-import { ITag } from '../../../types/shop';
 
 interface IResponse {
     data: {

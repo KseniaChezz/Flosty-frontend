@@ -17,6 +17,7 @@ export enum RootNavigatorRoutes {
 
     SUBSCRIPTIONS = 'Subscriptions',
     SUBSCRIPTION_DETAIL = 'SubscriptionDetail',
+    SUBSCRIPTION_PERSONAL = 'SubscriptionPersonal',
     SUBSCRIPTION_LINKED = 'SubscriptionLinked',
 
     SHOP_PROFILE = 'ShopProfile',

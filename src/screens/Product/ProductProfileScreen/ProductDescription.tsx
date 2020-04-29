@@ -20,10 +20,12 @@ import {deleteFavoriteProduct} from '../../../store/favorite/thunks/deleteFavori
 
 import {IState} from '../../../store';
 import {IDetailProduct, IShopProduct} from '../../../types/product';
+import {IShop} from '../../../types/shop';
 
-import {isProductFavorite} from '../../../utils';
+import {isProductFavorite, navigate} from '../../../utils';
 
 import {TEXT, COLORS} from '../../../constants';
+import {RootNavigatorRoutes} from '../../../enums';
 
 interface IProps {
     product: IDetailProduct;
@@ -46,6 +48,7 @@ const ProductDescription = memo((props: IProps) => {
         imageList,
     } = product;
     const favoriteProductcList = useSelector((stor: IState) => stor.favorite.list);
+    const shop: IShop = useSelector((stor: IState) => stor.shop.map[shopId]);
     const isProductInFavoriteList: boolean = isProductFavorite(id, favoriteProductcList);
     const favoriteImg = isProductInFavoriteList
         ? require('../../../../assets/images/chosen_select.png')
@@ -70,6 +73,10 @@ const ProductDescription = memo((props: IProps) => {
     };
 
     const onFavoritePress = isProductInFavoriteList ? onDeleteFavoritePress : onAddFavoritePress;
+
+    const onSendMessagePress = () => {
+        navigate(RootNavigatorRoutes.USER_PROFILE_SHOP_CHAT, {shopId, shopName: shop.name});
+    };
 
     return (
         <View style={styles.descriptionContainer}>
@@ -116,7 +123,7 @@ const ProductDescription = memo((props: IProps) => {
             <View style={styles.buttonsContainer}>
                 <RoundButton
                     img={require('../../../../assets/images/messages.png')}
-                    onPress={()=>{}}
+                    onPress={onSendMessagePress}
                 />
 
                 <RoundButton

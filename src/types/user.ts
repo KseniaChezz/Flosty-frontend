@@ -74,11 +74,12 @@ export interface IMessage {
 }
 
 export interface IShopMessageMap {
-    [shopName: string]: IShopMessage;
+    [shopId: number]: IShopInfoAndMessage;
 }
 
-export interface IShopMessage {
-    img: string;
+export interface IShopInfoAndMessage {
+    id: number;
+    logo: string;
     name: string;
     messageList: IMessage[];
 }
