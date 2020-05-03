@@ -23,6 +23,7 @@ import {ColoredButton} from '../../../elements';
 
 import {getDetailProduct} from '../../../store/products/thunks/getProductDetail';
 import {getShop} from '../../../store/shop/thunks/getShop';
+import {putProductToBasket} from '../../../store/basket/thunks/putProductToBasket';
 
 import {IProductNavigatorParamList} from '../../../types/productNavigator';
 import {IState} from '../../../store';
@@ -31,6 +32,8 @@ import {IShop} from '../../../types/shop';
 
 import {TEXT} from '../../../constants';
 import {ProductNavigatorRoutes, RootNavigatorRoutes} from '../../../enums';
+
+import {formatProductPrice} from '../../../utils';
 
 type ScreenNavigationProp = StackNavigationProp<IProductNavigatorParamList, ProductNavigatorRoutes.PRODUCT_PROFILE_SCREEN>;
 type ScreenRouteProp = RouteProp<IProductNavigatorParamList, ProductNavigatorRoutes.PRODUCT_PROFILE_SCREEN>;
@@ -78,6 +81,12 @@ const ProductProfile = memo((props: IProps) => {
         navigation.navigate(ProductNavigatorRoutes.GUARANTEE_SCREEN);
     };
 
+    const onBuyPress = () => {
+        if (!product) return;
+
+        dispatch(putProductToBasket(product.id, productColor?.value, productSize?.value));
+    }
+
     const renderProduct = () => {
         if (!product) return null;
 
@@ -124,8 +133,8 @@ const ProductProfile = memo((props: IProps) => {
 
                 <View style={styles.buttonContainer}>
                     <ColoredButton
-                        text={`${TEXT.buyFor}${product.price} ${TEXT.rubleSign}`}
-                        onPress={()=>{}}
+                        text={`${TEXT.buyFor}${formatProductPrice(product.price)}`}
+                        onPress={onBuyPress}
                         buttonStyle={styles.button}
                     />
                 </View>

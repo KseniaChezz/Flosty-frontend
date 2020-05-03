@@ -41,6 +41,8 @@ import SearchCard from './SearchCard';
 import RowMenuItem from './RowMenuItem';
 import Tab from './Tab';
 import RoundTab from './RoundTab';
+import RowWithCheckbox from './RowWithCheckbox';
+import BasketProductCard from './BasketProductCard';
 
 import ButtonsBlock from './ShopAndTagProfile/ButtonsBlock';
 
@@ -88,6 +90,8 @@ export {
     RowMenuItem,
     Tab,
     RoundTab,
+    RowWithCheckbox,
+    BasketProductCard,
 
     ButtonsBlock,
 };

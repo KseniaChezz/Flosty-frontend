@@ -30,7 +30,7 @@ import {
     isShopSubscribed,
     navigate,
     getShopBindedSubscriptions,
-    filterProductListByNameAndTag,
+    getFilteredProductListByTagAndTagId,
 } from '../../../utils';
 
 interface IProps {
@@ -62,7 +62,8 @@ const Shop = memo((props:IProps) => {
     useEffect(() => {
         if (!productList) return;
 
-        setProductListToRender(filterProductListByNameAndTag(searchText, productList));
+        const {list} = getFilteredProductListByTagAndTagId(searchText, productList);
+        setProductListToRender(list);
     }, [productList, searchText]);
 
     const onAdjustSubscriptionPress = () => {
@@ -99,12 +100,14 @@ const Shop = memo((props:IProps) => {
     const onTagPress = (tag: ITag) => {
         return () => {
             setSearchText(`#${tag.name}`);
-            setProductListToRender(filterProductListByNameAndTag(tag.name, productList));
+            const {list} = getFilteredProductListByTagAndTagId(tag.name, productList);
+            setProductListToRender(list);
         }
     };
 
     const onSearchPress = () => {
-        setProductListToRender(filterProductListByNameAndTag(searchText, productList));
+        const {list} = getFilteredProductListByTagAndTagId(searchText, productList);
+        setProductListToRender(list);
     };
 
     const onBindedSubscriptionsPress = () => {

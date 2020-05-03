@@ -73,15 +73,31 @@ export const mapSizeProductResponse = (sizeResponse: ISizeResponse): ISize => {
     };
 };
 
-export const filterProductListByNameAndTag = (searchText: string, productList: IShopProduct[]): IShopProduct[] => {
-    return productList.filter((item: IShopProduct) => {
+export const getFilteredProductListByTagAndTagId = (
+    searchText: string,
+    productList: IShopProduct[],
+): {list: IShopProduct[]; tagId: number | undefined} => {
+    let tagId: number | undefined;
+    const list: IShopProduct[] =  productList.filter((item: IShopProduct) => {
         if (searchText === '') return productList;
 
         const text: string = searchText.replace('#', '');
-        const {name, tagList} = item;
+        const {tagList} = item;
 
-        return name.includes(text) || tagList.some((tag: ITag) => tag.name.includes(text));
+        return tagList.some((tag: ITag) => {
+            if (tag.name.includes(text)) {
+                tagId = +tag.id;
+                return true;
+            }
+
+            return false;
+        });
     });
+
+    return {
+        list,
+        tagId,
+    };
 };
 
 export const formatProductPrice = (price: number): string => {

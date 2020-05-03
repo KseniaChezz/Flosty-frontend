@@ -18,7 +18,7 @@ export type IRootNavigatorParamList = {
     UserProfileNotifications: undefined;
     UserProfileSupport: undefined;
     UserProfileMessageList: undefined;
-    UserProfileShopChat: {shopId: number, shopName?: string, shopLogo?: string};
+    UserProfileShopChat: {shopId: number, shopName: string, shopLogo?: string};
 
     Subscriptions: undefined;
     SubscriptionDetail: {
@@ -39,6 +39,8 @@ export type IRootNavigatorParamList = {
     Search: undefined;
 
     Favorite: undefined;
+
+    Basket: undefined;
 };
 
 

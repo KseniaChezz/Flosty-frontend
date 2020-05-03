@@ -45,6 +45,7 @@ export const TEXT = {
     emptyNotificationList: 'Пока нет уведомлений',
     emptyMessageList: 'Пока нет сообщений',
     emptyFavoriteList: 'Вам пока ничего не приглянулось. Но это не поздно исправить прямо сейчас!',
+    emptyBasket: 'Корзина пока пуста. Это повод наполнить ее чем-нибудь!',
     addAddress: 'Добавить адрес',
     addCard: 'Добавить карту',
     editAddress: 'Редактировать адрес',
@@ -352,4 +353,10 @@ export const TEXT = {
     youChoose: 'Вы выбрали',
     findYouNeed: 'Найдите необходимое',
     youAlsoLike: 'Возможно, вам еще понравится',
+
+    basket: 'Корзина',
+    selectAll: 'Выбрать все',
+    sendMessage: 'Связаться',
+    deleteSelected: 'Удалить выбранное',
+    selectProduct: 'Выберите товар',
 };

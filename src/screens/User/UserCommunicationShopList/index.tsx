@@ -1,5 +1,11 @@
 import React, {memo, useState} from 'react';
-import {FlatList, Text, TouchableOpacity, View, ListRenderItemInfo} from 'react-native';
+import {
+    FlatList,
+    Text,
+    TouchableOpacity,
+    View,
+    ListRenderItemInfo,
+} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useSelector} from 'react-redux';
 
@@ -32,9 +38,9 @@ const UserCommunicationShopList = memo((props: IProps) => {
         navigation.goBack();
     };
 
-    const onShopCardPress = (id: number) => {
+    const onShopCardPress = (id: number, name: string) => {
         return () => {
-            navigation.navigate(RootNavigatorRoutes.USER_PROFILE_SHOP_CHAT, {shopId: id});
+            navigation.navigate(RootNavigatorRoutes.USER_PROFILE_SHOP_CHAT, {shopId: id, shopName: name});
         }
     };
 
@@ -43,14 +49,13 @@ const UserCommunicationShopList = memo((props: IProps) => {
     };
 
     const renderCommunicationShop = (info: ListRenderItemInfo<IShopInfoAndMessage>) => {
-        const {
-            item: shopItem,
-        } = info;
+        const {item} = info;
+        const {id, name} = item;
 
         return (
             <CommunicationShopCard
-                shopItem={shopItem}
-                onPress={onShopCardPress(shopItem.id)}
+                shopItem={item}
+                onPress={onShopCardPress(id, name)}
             />
         );
     };

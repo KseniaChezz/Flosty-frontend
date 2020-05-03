@@ -5,6 +5,7 @@ import {IState} from '../store';
 
 import {SubscriptionType} from '../enums';
 import {TEXT} from '../constants';
+import { ITag } from '../types/shop';
 
 export const getSubscribersValueText = (subscribers: number): string => {
     const thousand: string = 'тыс.';
@@ -138,4 +139,18 @@ const isTagFoundInTagList = (tagId: number, tagList: ISubscriptionTag[]): boolea
         const {id} = item;
         return id === tagId;
     });
+}
+
+export const isTagListSame = (initialTagList: ITag[], selectedTagList: ITag[]): boolean => {
+    if (initialTagList.length !== selectedTagList.length) return false;
+
+    let result: boolean = true;
+
+    initialTagList.forEach((tag: ITag) => {
+        if (!selectedTagList.some((item: ITag) => tag.id === item.id)) {
+            result = false;
+        }
+    })
+
+    return result;
 }

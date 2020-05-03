@@ -52,7 +52,7 @@ const ShopChat = memo((props: IProps) => {
         };
 
         if (messageList.length === 0) {
-            dispatch(addFirstMessageInShopChat(shopId, messageToSend, shopName, shopLogo));
+            dispatch(addFirstMessageInShopChat(shopId, messageToSend, shopName, shopLogo as string));
         } else {
             dispatch(addMessageInShopChat(shopId, messageToSend));
         }

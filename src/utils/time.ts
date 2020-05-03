@@ -55,8 +55,10 @@ const getStringMonth = (month: number) => {
 
 export const getTime = (timestamp: number): string => {
     const date: Date = new Date(timestamp);
+    const hours: number = date.getHours();
+    const minutes: number = date.getMinutes();
 
-    return date.getHours() + ':' + date.getMinutes();
+    return `${hours > 9 ? hours : '0' + hours}:${minutes > 9 ? minutes : '0' + minutes}`;
 };
 
 export const getTimeOrDate = (timestamp: number): string => {

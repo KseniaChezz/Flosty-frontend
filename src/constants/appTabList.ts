@@ -24,6 +24,6 @@ export const appTabList: IAppTab[] = [
         name: AppTab.BASKET,
         selectedImg: require('../../assets/images/basket_select.png'),
         defaultImg: require('../../assets/images/basket_default.png'),
-        screen: RootNavigatorRoutes.SEARCH,
+        screen: RootNavigatorRoutes.BASKET,
     },
 ];

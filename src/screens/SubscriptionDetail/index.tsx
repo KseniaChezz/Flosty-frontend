@@ -22,7 +22,7 @@ import {IShopProduct} from '../../types/product';
 import {TEXT, COLORS} from '../../constants';
 import {RootNavigatorRoutes, ShowShopProductListMode, SubscriptionType} from '../../enums';
 
-import {filterProductListByNameAndTag} from '../../utils';
+import {getFilteredProductListByTagAndTagId, isTagListSame} from '../../utils';
 
 type ScreenNavigationProp = StackNavigationProp<IRootNavigatorParamList, RootNavigatorRoutes.SUBSCRIPTION_DETAIL>;
 type ScreenRouteProp = RouteProp<IRootNavigatorParamList, RootNavigatorRoutes.SUBSCRIPTION_DETAIL>;
@@ -54,7 +54,8 @@ const SubscsriptionDetail = memo((props:IProps) => {
     useEffect(() => {
         if (!productList) return;
 
-        setProductListToRender(filterProductListByNameAndTag(searchText, productList));
+        const {list, tagId} = getFilteredProductListByTagAndTagId(searchText, productList);
+        setProductListToRender(list);
     }, [searchText]);
 
     const onBackPress = () => {
@@ -110,6 +111,7 @@ const SubscsriptionDetail = memo((props:IProps) => {
                     searchText={searchText}
                     setSearchText={setSearchText}
                     onSavePress={onSavePress}
+                    isSelectedTagListSame={isTagListSame(selectedTags,selectedTagList)}
                 />
 
                 <View style={styles.productListContainer}>

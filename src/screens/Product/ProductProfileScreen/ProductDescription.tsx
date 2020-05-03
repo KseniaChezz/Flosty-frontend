@@ -75,7 +75,7 @@ const ProductDescription = memo((props: IProps) => {
     const onFavoritePress = isProductInFavoriteList ? onDeleteFavoritePress : onAddFavoritePress;
 
     const onSendMessagePress = () => {
-        navigate(RootNavigatorRoutes.USER_PROFILE_SHOP_CHAT, {shopId, shopName: shop.name});
+        navigate(RootNavigatorRoutes.USER_PROFILE_SHOP_CHAT, {shopId, shopName: shop.name, shopLogo: shop.logo});
     };
 
     return (

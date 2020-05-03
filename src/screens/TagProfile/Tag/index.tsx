@@ -22,7 +22,12 @@ import {ITag} from '../../../types/shop';
 
 import {RootNavigatorRoutes} from '../../../enums';
 
-import {isTagSubscribed, navigate, getTagBindedSubscriptions, filterProductListByNameAndTag} from '../../../utils';
+import {
+    isTagSubscribed,
+    navigate,
+    getTagBindedSubscriptions,
+    getFilteredProductListByTagAndTagId,
+} from '../../../utils';
 
 interface IProps {
     tagId: number;
@@ -48,7 +53,8 @@ const Tag = memo((props:IProps) => {
     useEffect(() => {
         if (!productList) return;
 
-        setProductListToRender(filterProductListByNameAndTag(searchText, productList));
+        const {list} = getFilteredProductListByTagAndTagId(searchText, productList);
+        setProductListToRender(list);
     }, [productList, searchText]);
 
     const onSubscribeSuccessCallback = (id: number) => {
@@ -77,15 +83,16 @@ const Tag = memo((props:IProps) => {
             {
                 productList,
                 popularTags: popularTagList,
-                selectedTags: [{tagName, tagId}],
+                selectedTags: [{name: tagName, id: tagId}],
             },
         );
     };
 
     const onTagPress = (tag: ITag) => {
         return () => {
+            const {list} = getFilteredProductListByTagAndTagId(searchText, productList);
             setSearchText(`#${tag.name}`);
-            setProductListToRender(filterProductListByNameAndTag(tag.name, productList));
+            setProductListToRender(list);
         }
     };
 
@@ -99,7 +106,8 @@ const Tag = memo((props:IProps) => {
     };
 
     const onSearchPress = () => {
-        setProductListToRender(filterProductListByNameAndTag(searchText, productList));
+        const {list} = getFilteredProductListByTagAndTagId(searchText, productList);
+        setProductListToRender(list);
     };
 
     const renderProducts = () => {

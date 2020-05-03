@@ -38,6 +38,7 @@ import TagProfile from './src/screens/TagProfile';
 import Product from './src/screens/Product';
 import Search from './src/screens/Search';
 import Favorite from './src/screens/Favorite';
+import Basket from './src/screens/Basket';
 
 import {store} from './src/store';
 
@@ -54,6 +55,7 @@ const App = () => {
         <Provider store={store}>
             <NavigationContainer ref={navigationRef}>
                 <Stack.Navigator headerMode="none" initialRouteName={RootNavigatorRoutes.LOGIN}>
+                    <Stack.Screen name={RootNavigatorRoutes.BASKET} component={Basket} />
                     <Stack.Screen name={RootNavigatorRoutes.PRODUCT_PROFILE} component={Product} />
                     <Stack.Screen name={RootNavigatorRoutes.SHOP_PROFILE} component={ShopProfile} />
                     <Stack.Screen name={RootNavigatorRoutes.TAG_PROFILE} component={TagProfile} />

@@ -23,6 +23,7 @@ interface IProps {
     searchText: string;
     setSearchText: (value: string) => void;
     onSavePress: () => void;
+    isSelectedTagListSame: boolean;
 }
 
 const SubscriptionDetalCard = memo((props: IProps) => {
@@ -34,7 +35,9 @@ const SubscriptionDetalCard = memo((props: IProps) => {
         searchText,
         setSearchText,
         onSavePress,
+        isSelectedTagListSame,
     } = props;
+    const isDisabled: boolean = selectedTagList.length === 0 || isSelectedTagListSame;
 
     return (
         <View style={styles.detailContainer}>
@@ -79,9 +82,9 @@ const SubscriptionDetalCard = memo((props: IProps) => {
             <ColoredButton
                 text={TEXT.save}
                 onPress={onSavePress}
-                buttonStyle={selectedTagList.length === 0 ? styles.disabledButton : styles.button}
+                buttonStyle={isDisabled ? styles.disabledButton : styles.button}
                 textStyle={styles.buttonText}
-                isDisabled={selectedTagList.length === 0}
+                isDisabled={isDisabled}
             />
         </View>
     );

@@ -29,4 +29,6 @@ export enum RootNavigatorRoutes {
     SEARCH = 'Search',
 
     FAVORITE = 'Favorite',
+
+    BASKET = 'Basket',
 }

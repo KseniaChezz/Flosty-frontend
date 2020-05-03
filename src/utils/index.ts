@@ -31,12 +31,13 @@ import {
     isTagSubscribed,
     getShopBindedSubscriptions,
     getTagBindedSubscriptions,
+    isTagListSame,
 } from './subscribe';
 import {
     isStringWithNumbers,
     getTagListId,
     mapProductFromResponse,
-    filterProductListByNameAndTag,
+    getFilteredProductListByTagAndTagId,
     formatProductPrice,
     mapColorProductResponse,
     mapSizeProductResponse,
@@ -55,6 +56,19 @@ import {
     getFilteredProductList,
 } from './filter';
 import {isProductFavorite} from './favorite';
+import {
+    mapBasketProductResponse,
+    getTotalBasketProductsCount,
+    isShopSelected,
+    isProductSelected,
+    selectAllBasketProducts,
+    selectAllShopBasketProducts,
+    selectBasketProduct,
+    unSelectBasketProduct,
+    unSelectAllShopBasketProducts,
+    getSelectedBasketProductsCount,
+    getSelectedBasketProductsPrice,
+} from './basket';
 
 export {
     getAddressObjectForRender,
@@ -84,11 +98,12 @@ export {
     isTagSubscribed,
     getShopBindedSubscriptions,
     getTagBindedSubscriptions,
+    isTagListSame,
 
     isStringWithNumbers,
     getTagListId,
     mapProductFromResponse,
-    filterProductListByNameAndTag,
+    getFilteredProductListByTagAndTagId,
     formatProductPrice,
     mapColorProductResponse,
     mapSizeProductResponse,
@@ -110,4 +125,16 @@ export {
     getFilteredProductList,
 
     isProductFavorite,
+
+    mapBasketProductResponse,
+    getTotalBasketProductsCount,
+    isShopSelected,
+    isProductSelected,
+    selectAllBasketProducts,
+    selectAllShopBasketProducts,
+    selectBasketProduct,
+    unSelectBasketProduct,
+    unSelectAllShopBasketProducts,
+    getSelectedBasketProductsCount,
+    getSelectedBasketProductsPrice,
 }

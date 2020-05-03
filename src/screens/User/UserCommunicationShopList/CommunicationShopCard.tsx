@@ -1,7 +1,13 @@
 import React, {memo, useState} from 'react';
-import {Text, TouchableOpacity, View, StyleSheet} from 'react-native';
+import {
+    Text,
+    TouchableOpacity,
+    View,
+    Image,
+    StyleSheet,
+} from 'react-native';
 
-import {IMessage, IShopMessageMap, IShopMessage} from '../../../types/user';
+import {IMessage, IShopMessageMap, IShopInfoAndMessage} from '../../../types/user';
 
 import {getUserCommunicationShopList, getTimeOrDate} from '../../../utils';
 import {getMessageCut} from '../../../utils/user';
@@ -9,14 +15,14 @@ import {getMessageCut} from '../../../utils/user';
 import {COLORS} from '../../../constants';
 
 interface IProps {
-    shopItem: IShopMessage;
-
+    shopItem: IShopInfoAndMessage;
     onPress: () => void;
 }
 
 const CommunicationShopCard = memo((props: IProps) => {
     const {
         shopItem: {
+            logo,
             messageList,
             name,
         },
@@ -31,7 +37,10 @@ const CommunicationShopCard = memo((props: IProps) => {
             onPress={onPress}
         >
 
-            <View style={styles.shopImgContainer}/>
+            <Image
+                source={{uri: logo}}
+                style={styles.shopImgContainer}
+            />
 
             <View style={styles.shopTextContainer}>
 
@@ -69,7 +78,6 @@ const styles = StyleSheet.create({
         height: 40,
         width: 40,
         borderRadius: 20,
-        backgroundColor: COLORS.BrightBlue,
     },
     shopTextContainer: {
         flex: 1,
