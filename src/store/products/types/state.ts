@@ -8,6 +8,7 @@ export interface IProductsState {
     tagMap: ITagMap;
     tagListMap: ITagListMap;
     productMap: IProductMap;
+    popularProductList: IShopProduct[];
     filter: IProductFilter;
 }
 

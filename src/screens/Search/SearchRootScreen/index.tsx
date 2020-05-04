@@ -1,6 +1,7 @@
 import React, {memo, useState} from 'react';
 import {View, Text, Image, ScrollView} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {useSelector} from 'react-redux';
 
 import {styles} from './style';
 
@@ -16,6 +17,7 @@ import {ISearchCard} from '../../../types/search';
 import {IShopProduct} from '../../../types/product';
 
 import {SearchNavigatorRoutes} from '../../../enums';
+import { IState } from '../../../store';
 
 type ScreenNavigationProp = StackNavigationProp<ISearchNavigatorParamList, SearchNavigatorRoutes.SEARCH_ROOT_SCREEN>;
 
@@ -26,7 +28,7 @@ interface IProps {
 const SearchRootScreen = memo((props:IProps) => {
     const {navigation} = props;
     const [searchText, setSearchText] = useState<string>('');
-    const productList: IShopProduct[] = [];
+    const productList: IShopProduct[] = useSelector((store: IState) => store.products.popularProductList);
 
     const onCardPress = (card: ISearchCard) => {
         const {title, additionalMenu} = card;
@@ -50,6 +52,7 @@ const SearchRootScreen = memo((props:IProps) => {
             <ScrollView>
                 <SearchInput
                     text={searchText}
+                    onPress={()=>{}}
                     onTextChange={setSearchText}
                     style={styles.marginTop15}
                 />

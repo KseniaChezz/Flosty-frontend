@@ -6,6 +6,7 @@ import {
     IAddTagProducts,
     IAddDetailProduct,
     IAddTagListProducts,
+    ISetPopularProductList,
     ISetProductFilterMinPrice,
     ISetProductFilterMaxPrice,
     ISetProductFilterCheckBox,
@@ -50,6 +51,13 @@ export const addDetailProduct = (product: IDetailProduct): IAddDetailProduct => 
     return {
         type: ProductsAction.PRODUCTS_ADD_DETAIL_PRODUCT,
         product,
+    };
+};
+
+export const setPopularProductList = (productList: IShopProduct[]): ISetPopularProductList => {
+    return {
+        type: ProductsAction.PRODUCTS_SET_POPULAR_PRODUCT_LIST,
+        productList,
     };
 };
 

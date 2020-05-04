@@ -6,6 +6,7 @@ import {
     IProductsAction,
     ISetIsLoading,
     IAddDetailProduct,
+    ISetPopularProductList,
     ISetProductFilterMinPrice,
     ISetProductFilterMaxPrice,
     ISetProductFilterCheckBox,
@@ -32,6 +33,7 @@ const initialState: IProductsState = {
     tagMap: {},
     tagListMap: {},
     productMap: {},
+    popularProductList: [],
     filter: getInitialFilters(),
 };
 
@@ -79,12 +81,22 @@ const onAddTagListProducts = (state: IProductsState, action: IAddTagListProducts
 const onAddDetailProduct = (state: IProductsState, action: IAddDetailProduct): IProductsState => {
     const {product} = action;
     const {id} = product;
+
     return {
         ...state,
         productMap: {
             ...state.productMap,
             [id]: product,
         },
+    }
+};
+
+const onSetPopularProductList = (state: IProductsState, action: ISetPopularProductList): IProductsState => {
+    const {productList} = action;
+
+    return {
+        ...state,
+        popularProductList: productList,
     }
 };
 
@@ -143,6 +155,8 @@ export const productsReducer = (state: IProductsState = initialState, action: IP
             return onAddTagListProducts(state, action);
         case ProductsAction.PRODUCTS_ADD_DETAIL_PRODUCT:
             return onAddDetailProduct(state, action);
+        case ProductsAction.PRODUCTS_SET_POPULAR_PRODUCT_LIST:
+            return onSetPopularProductList(state, action);
         case ProductsAction.PRODUCTS_FILTER_SET_MIN_PRICE:
             return onSetProductFilterMinPrice(state, action);
         case ProductsAction.PRODUCTS_FILTER_SET_MAX_PRICE:

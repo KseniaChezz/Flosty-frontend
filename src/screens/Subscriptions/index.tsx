@@ -15,6 +15,7 @@ import {getSubscriptionList} from '../../store/subscriptionList/thunks/getSubscr
 import {getShopList} from '../../store/shop/thunks/getShopList';
 import {getFeedList} from '../../store/feed/thunks/getFeedList';
 import {getFavoriteList} from '../../store/favorite/thunks/getFavoriteList';
+import {getPopularProducts} from '../../store/products/thunks/getPopularProducts';
 
 import {IState} from '../../store';
 
@@ -37,6 +38,7 @@ const Subscriptions = memo((props: IProps) => {
         dispatch(getShopList());
         dispatch(getFeedList());
         dispatch(getFavoriteList());
+        dispatch(getPopularProducts());
     }, []);
 
     useEffect(() => {

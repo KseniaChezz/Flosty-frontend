@@ -32,6 +32,11 @@ export interface IAddDetailProduct {
     product: IDetailProduct;
 }
 
+export interface ISetPopularProductList {
+    type: ProductsAction.PRODUCTS_SET_POPULAR_PRODUCT_LIST;
+    productList: IShopProduct[];
+}
+
 export interface ISetProductFilterMinPrice {
     type: ProductsAction.PRODUCTS_FILTER_SET_MIN_PRICE;
     price: string;
@@ -57,6 +62,7 @@ export type IProductsAction = ISetIsLoading
     | IAddTagProducts
     | IAddTagListProducts
     | IAddDetailProduct
+    | ISetPopularProductList
     | ISetProductFilterMinPrice
     | ISetProductFilterMaxPrice
     | ISetProductFilterCheckBox
