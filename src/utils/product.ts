@@ -14,10 +14,16 @@ export const isStringWithNumbers = (value: string): boolean => {
     return /^\d{1,}$/.test(value);
 };
 
-export const getTagListId = (tagIdList: number[]): string => {
-    if (tagIdList.length === 1) return tagIdList[0].toString();
+export const getTagListAndShopId = (tagIdList: number[], shopId: number[] | undefined): string => {
+    let id: string = '';
 
-    return tagIdList.join(',');
+    if (shopId) {
+        id += `${shopId[0]}_`;
+    }
+
+    if (tagIdList.length === 1) return id += tagIdList[0];
+
+    return id += tagIdList.join(',');
 };
 
 export const mapProductFromResponse = (productResponse: IProductResponse): IShopProduct => {
@@ -100,6 +106,27 @@ export const getFilteredProductListByTagAndTagId = (
     };
 };
 
+export const getFilteredTagList = (searchText: string, productList: IShopProduct[]): ITag[] => {
+    if (!searchText) return [];
+
+    const tagMap: Record<number, ITag> = {};
+
+    productList.forEach((item: IShopProduct) => {
+        const {tagList} = item;
+
+        tagList.forEach((tag: ITag) => {
+            const {id} = tag;
+            tagMap[+id] = tag;
+        })
+    });
+
+    const allTags: ITag[] = Object.keys(tagMap).map((key: string) => tagMap[+key]);
+
+    const text: string = searchText.replace('#', '');
+
+    return allTags.filter((item: ITag) => item.name.includes(text));
+};
+
 export const formatProductPrice = (price: number): string => {
     const priceString: string = price.toString();
     const rub: string = TEXT.rubleSign;
@@ -112,4 +139,8 @@ export const formatProductPrice = (price: number): string => {
     }
 
     return `${priceString} ${rub}`;
-}
+};
+
+export const getIdListFromTagList = (tagList: ITag[]): number[] => {
+    return tagList.map((item: ITag) => +item.id);
+};

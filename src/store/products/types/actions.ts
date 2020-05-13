@@ -1,7 +1,7 @@
 import {ProductsAction} from '../productsActionEnum';
 
 import {IShopProduct, IDetailProduct} from '../../../types/product';
-import {ITagInfoAndITagProductList} from './state';
+import {ITagInfoAndITagProductList, IShopTaglistInfo} from './state';
 import {IProductFilterKey} from '../../../types/filter';
 
 export interface ISetIsLoading {
@@ -21,10 +21,10 @@ export interface IAddTagProducts {
     productList: ITagInfoAndITagProductList;
 }
 
-export interface IAddTagListProducts {
-    type: ProductsAction.PRODUCTS_ADD_TAG_LIST_PRODUCTS;
-    tagListId: string;
-    productList: IShopProduct[];
+export interface IAddShopAndTagListProducts {
+    type: ProductsAction.PRODUCTS_ADD_SHOP_AND_TAG_LIST_PRODUCTS;
+    shopAndTagListId: string;
+    shopAndTagListInfo: IShopTaglistInfo;
 }
 
 export interface IAddDetailProduct {
@@ -60,7 +60,7 @@ export interface IResetProductFilters {
 export type IProductsAction = ISetIsLoading
     | IAddShopProducts
     | IAddTagProducts
-    | IAddTagListProducts
+    | IAddShopAndTagListProducts
     | IAddDetailProduct
     | ISetPopularProductList
     | ISetProductFilterMinPrice

@@ -32,15 +32,19 @@ import {
     getShopBindedSubscriptions,
     getTagBindedSubscriptions,
     isTagListSame,
+    getTagListFromSubscription,
+    getShopOrTagSubscriptionId,
 } from './subscribe';
 import {
     isStringWithNumbers,
-    getTagListId,
+    getTagListAndShopId,
     mapProductFromResponse,
     getFilteredProductListByTagAndTagId,
     formatProductPrice,
     mapColorProductResponse,
     mapSizeProductResponse,
+    getIdListFromTagList,
+    getFilteredTagList,
 } from './product';
 import {getEachNthIndexFromZeroTillMax} from './search';
 import {navigate, goBack} from './navigation';
@@ -99,14 +103,18 @@ export {
     getShopBindedSubscriptions,
     getTagBindedSubscriptions,
     isTagListSame,
+    getTagListFromSubscription,
+    getShopOrTagSubscriptionId,
 
     isStringWithNumbers,
-    getTagListId,
+    getTagListAndShopId,
     mapProductFromResponse,
     getFilteredProductListByTagAndTagId,
     formatProductPrice,
     mapColorProductResponse,
     mapSizeProductResponse,
+    getIdListFromTagList,
+    getFilteredTagList,
 
     getEachNthIndexFromZeroTillMax,
 

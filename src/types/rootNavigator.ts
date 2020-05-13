@@ -21,12 +21,7 @@ export type IRootNavigatorParamList = {
     UserProfileShopChat: {shopId: number, shopName: string, shopLogo?: string};
 
     Subscriptions: undefined;
-    SubscriptionDetail: {
-        selectedTags: ITag[],
-        subscriptionId?: number,
-        popularTags?: ITag[],
-        productList?: IShopProduct[],
-    };
+    SubscriptionDetail: {subscription: ISubscription};
     SubscriptionPersonal: {subscription: ISubscription},
     SubscriptionLinked: {subscriptionId: number}
 

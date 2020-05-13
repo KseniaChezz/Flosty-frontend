@@ -2,7 +2,7 @@ import {IProductsState} from './types/state';
 import {
     IAddShopProducts,
     IAddTagProducts,
-    IAddTagListProducts,
+    IAddShopAndTagListProducts,
     IProductsAction,
     ISetIsLoading,
     IAddDetailProduct,
@@ -31,7 +31,7 @@ const initialState: IProductsState = {
     isLoading: false,
     shopMap: {},
     tagMap: {},
-    tagListMap: {},
+    shopTagListMap: {},
     productMap: {},
     popularProductList: [],
     filter: getInitialFilters(),
@@ -67,13 +67,14 @@ const onAddTagProducts = (state: IProductsState, action: IAddTagProducts): IProd
     }
 };
 
-const onAddTagListProducts = (state: IProductsState, action: IAddTagListProducts): IProductsState => {
-    const {tagListId, productList} = action;
+const onAddShopAndTagListProducts = (state: IProductsState, action: IAddShopAndTagListProducts): IProductsState => {
+    const {shopAndTagListId, shopAndTagListInfo} = action;
+
     return {
         ...state,
-        tagListMap: {
-            ...state.tagListMap,
-            [tagListId]: productList,
+        shopTagListMap: {
+            ...state.shopTagListMap,
+            [shopAndTagListId]: shopAndTagListInfo,
         },
     }
 };
@@ -151,8 +152,8 @@ export const productsReducer = (state: IProductsState = initialState, action: IP
             return onAddShopProducts(state, action);
         case ProductsAction.PRODUCTS_ADD_TAG_PRODUCTS:
             return onAddTagProducts(state, action);
-        case ProductsAction.PRODUCTS_ADD_TAG_LIST_PRODUCTS:
-            return onAddTagListProducts(state, action);
+        case ProductsAction.PRODUCTS_ADD_SHOP_AND_TAG_LIST_PRODUCTS:
+            return onAddShopAndTagListProducts(state, action);
         case ProductsAction.PRODUCTS_ADD_DETAIL_PRODUCT:
             return onAddDetailProduct(state, action);
         case ProductsAction.PRODUCTS_SET_POPULAR_PRODUCT_LIST:

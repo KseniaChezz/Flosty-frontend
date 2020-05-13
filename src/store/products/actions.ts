@@ -5,7 +5,7 @@ import {
     IAddShopProducts,
     IAddTagProducts,
     IAddDetailProduct,
-    IAddTagListProducts,
+    IAddShopAndTagListProducts,
     ISetPopularProductList,
     ISetProductFilterMinPrice,
     ISetProductFilterMaxPrice,
@@ -13,7 +13,7 @@ import {
     IResetProductFilters,
 } from './types/actions';
 import {IDetailProduct, IShopProduct} from '../../types/product';
-import {ITagInfoAndITagProductList} from './types/state';
+import {ITagInfoAndITagProductList, IShopTaglistInfo} from './types/state';
 import {IProductFilterKey} from '../../types/filter';
 
 export const setIsLoading = (isLoading: boolean): ISetIsLoading => {
@@ -39,11 +39,12 @@ export const addTagProducts = (tagId: number, productList: ITagInfoAndITagProduc
     };
 };
 
-export const addTagListProducts = (tagListId: string, productList: IShopProduct[]): IAddTagListProducts => {
+export const addShopAndTagListProducts = (shopAndTagListId: string, shopAndTagListInfo: IShopTaglistInfo):
+    IAddShopAndTagListProducts => {
     return {
-        type: ProductsAction.PRODUCTS_ADD_TAG_LIST_PRODUCTS,
-        tagListId,
-        productList,
+        type: ProductsAction.PRODUCTS_ADD_SHOP_AND_TAG_LIST_PRODUCTS,
+        shopAndTagListId,
+        shopAndTagListInfo,
     };
 };
 

@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
     text: {
         fontFamily: 'Montserrat',
         color: COLORS.DarkGrey,
+        zIndex: 0,
     },
     titleBold: {
         fontSize: 18,

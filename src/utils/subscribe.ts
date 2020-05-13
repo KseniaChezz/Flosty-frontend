@@ -2,10 +2,10 @@ import {useSelector} from 'react-redux';
 
 import {ISubscription, ISubscriptionResponse, ISubscriptionShop, ISubscriptionTag} from '../types/subscription';
 import {IState} from '../store';
+import {ITag} from '../types/shop';
 
 import {SubscriptionType} from '../enums';
 import {TEXT} from '../constants';
-import { ITag } from '../types/shop';
 
 export const getSubscribersValueText = (subscribers: number): string => {
     const thousand: string = 'тыс.';
@@ -106,7 +106,21 @@ export const isShopSubscribed = (shopId: number): boolean => {
 
         return type === SubscriptionType.SHOP && shops[0].id === shopId;
     }).length !==0;
-}
+};
+
+export const getShopOrTagSubscriptionId = (shopOrTagId: number, subscriptionType: SubscriptionType): number => {
+    const subscriptionList: ISubscription[] = useSelector((store: IState) => store.subscriptionList.list);
+
+    return subscriptionList.filter((item: ISubscription) => {
+        const {type, shops, tags} = item;
+
+        if (subscriptionType === SubscriptionType.SHOP) {
+            return type === subscriptionType && shops[0].id === shopOrTagId;
+        } else {
+            return type === subscriptionType && tags[0].id === shopOrTagId;
+        }
+    })[0].id;
+};
 
 export const isTagSubscribed = (tagId: number): boolean => {
     const subscriptionList: ISubscription[] = useSelector((store: IState) => store.subscriptionList.list);
@@ -116,7 +130,7 @@ export const isTagSubscribed = (tagId: number): boolean => {
 
         return type === SubscriptionType.TAG && tags[0].id === tagId;
     }).length !==0;
-}
+};
 
 export const getShopBindedSubscriptions = (shopId: number, subscriptionList: ISubscription[]): ISubscription[] => {
     return subscriptionList.filter((item: ISubscription) => {
@@ -139,7 +153,7 @@ const isTagFoundInTagList = (tagId: number, tagList: ISubscriptionTag[]): boolea
         const {id} = item;
         return id === tagId;
     });
-}
+};
 
 export const isTagListSame = (initialTagList: ITag[], selectedTagList: ITag[]): boolean => {
     if (initialTagList.length !== selectedTagList.length) return false;
@@ -151,6 +165,27 @@ export const isTagListSame = (initialTagList: ITag[], selectedTagList: ITag[]): 
             result = false;
         }
     })
+
+    return result;
+};
+
+export const getTagListFromSubscription = (subscription: ISubscription): ITag[] => {
+    const {shops, tags} = subscription;
+    const result: ITag[] = [];
+
+    if (shops && shops.length) {
+        const {id, name} = shops[0];
+
+        result.push({id: `${id}`, name});
+    }
+
+    if (tags && tags.length) {
+        tags.forEach((item: ISubscriptionTag) => {
+            const {id, name} = item;
+
+            result.push({id, name});
+        })
+    }
 
     return result;
 }

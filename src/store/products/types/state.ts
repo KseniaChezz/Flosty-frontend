@@ -6,7 +6,7 @@ export interface IProductsState {
     isLoading: boolean;
     shopMap: IShopMap;
     tagMap: ITagMap;
-    tagListMap: ITagListMap;
+    shopTagListMap: IShopTagListMap;
     productMap: IProductMap;
     popularProductList: IShopProduct[];
     filter: IProductFilter;
@@ -32,6 +32,11 @@ interface IProductMap {
     [productId: number]: any;
 }
 
-interface ITagListMap {
-    [tagListId: string]: IShopProduct[];
+export interface IShopTagListMap {
+    [shoptagListId: string]: IShopTaglistInfo;
+}
+
+export interface IShopTaglistInfo {
+    productList: IShopProduct[];
+    popularTagList: ITag[];
 }

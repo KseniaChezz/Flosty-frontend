@@ -10,18 +10,21 @@ import {styles} from './style';
 import {ScreenWrapperWithBackButton, ProductList} from '../../elements';
 import AdjustedSubscriptionCard from '../Subscriptions/AdjustedSubscriptionCard';
 
-import {getProductsByTagList} from '../../store/products/thunks/getProductsByTagList';
+import {getProductsByTagListAndShop} from '../../store/products/thunks/getProductsByTagListAndShop';
 import {deleteSubscriptionFromList} from '../../store/subscriptionList/thunks/deleteSubscription';
+import {resetProductFilters} from '../../store/products/actions';
 
 import {IRootNavigatorParamList} from '../../types/rootNavigator';
 import {IState} from '../../store';
 import {ITag} from '../../types/shop';
 import {ISubscription} from '../../types/subscription';
+import {IShopTaglistInfo} from '../../store/products/types/state';
 import {IShopProduct} from '../../types/product';
 
 import {TEXT, COLORS} from '../../constants';
 import {RootNavigatorRoutes, ShowShopProductListMode, SubscriptionType} from '../../enums';
-import {resetProductFilters} from '../../store/products/actions';
+
+import {getTagListAndShopId} from '../../utils';
 
 type ScreenNavigationProp = StackNavigationProp<IRootNavigatorParamList, RootNavigatorRoutes.SUBSCRIPTION_PERSONAL>;
 type ScreenRouteProp = RouteProp<IRootNavigatorParamList, RootNavigatorRoutes.SUBSCRIPTION_PERSONAL>;
@@ -45,13 +48,17 @@ const SubscriptionPersonal = memo((props:IProps) => {
         shops,
         tags,
     } = subscription;
-    const tagListId: string = tags.map((tag: ITag) => tag.id).join('_');
-    const isProductListLoading: boolean = useSelector((stor: IState) => stor.products.isLoading);
-    const productList: IShopProduct[] = useSelector((stor: IState) => stor.products.tagListMap[tagListId]);
+    const tagIdList: number[] = tags.map((tag: ITag) => +tag.id);
+    const shopId: number[] | undefined = shops && shops[0] && [shops[0].id];
+    const tagListId: string = getTagListAndShopId(tagIdList, shopId);
+    const isProductListLoading: boolean = useSelector((store: IState) => store.products.isLoading);
+    const shopTaglistInfo: IShopTaglistInfo = useSelector(
+        (store: IState) => store.products.shopTagListMap[tagListId]);
+    const productList: IShopProduct[] | undefined = shopTaglistInfo?.productList;
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getProductsByTagList(tags.map((tag: ITag) => +tag.id), shops[0]?.id));
+        dispatch(getProductsByTagListAndShop(tagIdList, shopId));
     }, []);
 
     const onBackPress = () => {
@@ -71,13 +78,7 @@ const SubscriptionPersonal = memo((props:IProps) => {
                 tags,
             } = subscription;
 
-            navigation.navigate(
-                RootNavigatorRoutes.SUBSCRIPTION_DETAIL,
-                {
-                    subscriptionId,
-                    selectedTags: shops[0] ? [{name: shops[0].name, id: `${shops[0].id}`}, ...tags] : [...tags],
-                },
-            );
+            navigation.navigate(RootNavigatorRoutes.SUBSCRIPTION_DETAIL, {subscription});
         }
     };
 

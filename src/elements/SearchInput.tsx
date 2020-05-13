@@ -1,5 +1,12 @@
 import React, {memo, useState} from 'react';
-import {View, TextInput, TouchableOpacity, Image, ViewStyle, StyleSheet} from 'react-native';
+import {
+    View,
+    TextInput,
+    TouchableOpacity,
+    Image,
+    ViewStyle,
+    StyleSheet,
+} from 'react-native';
 
 import {TEXT, COLORS} from '../constants';
 
@@ -11,7 +18,12 @@ interface IProps {
 }
 
 const SearchInput = memo((props:IProps) => {
-    const {text, onTextChange, onPress, style} = props;
+    const {
+        text,
+        onTextChange,
+        onPress,
+        style,
+    } = props;
 
     const onCleanPress = () => {
         onTextChange('');
@@ -37,12 +49,12 @@ const SearchInput = memo((props:IProps) => {
             />
 
             {text.length !== 0 &&
-                <TouchableOpacity onPress={onCleanPress}>
-                    <Image
-                        source={require('../../assets/images/cross_grey.png')}
-                        style={styles.imgCross}
-                    />
-                </TouchableOpacity>
+            <TouchableOpacity onPress={onCleanPress}>
+                <Image
+                    source={require('../../assets/images/cross_grey.png')}
+                    style={styles.imgCross}
+                />
+            </TouchableOpacity>
             }
         </View>
     );

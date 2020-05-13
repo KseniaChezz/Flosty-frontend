@@ -2,7 +2,7 @@ export enum ProductsAction {
     PRODUCTS_SET_IS_LOADING = 'ProductsSetIsLoading',
     PRODUCTS_ADD_SHOP_PRODUCTS = 'ProductsAddShopProducts',
     PRODUCTS_ADD_TAG_PRODUCTS = 'ProductsAddTagProducts',
-    PRODUCTS_ADD_TAG_LIST_PRODUCTS = 'ProductsAddTagListProducts',
+    PRODUCTS_ADD_SHOP_AND_TAG_LIST_PRODUCTS = 'ProductsAddShopAndTagListProducts',
     PRODUCTS_ADD_DETAIL_PRODUCT = 'ProductsAddDetailProduct',
     PRODUCTS_SET_POPULAR_PRODUCT_LIST = 'ProductsSetPopularProductList',
 

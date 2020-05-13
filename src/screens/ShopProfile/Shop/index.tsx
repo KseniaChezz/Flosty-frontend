@@ -23,7 +23,7 @@ import {IShop, ITag} from '../../../types/shop';
 import {IShopProduct} from '../../../types/product';
 import {ISubscription} from '../../../types/subscription';
 
-import {RootNavigatorRoutes} from '../../../enums';
+import {RootNavigatorRoutes, SubscriptionType} from '../../../enums';
 
 import {
     getSubscribersValueText,
@@ -31,6 +31,7 @@ import {
     navigate,
     getShopBindedSubscriptions,
     getFilteredProductListByTagAndTagId,
+    getShopOrTagSubscriptionId,
 } from '../../../utils';
 
 interface IProps {
@@ -53,7 +54,8 @@ const Shop = memo((props:IProps) => {
     } = shop;
     const [searchText, setSearchText] = useState<string>('');
     const [isSubscribed, setIsSubscribed] = useState<boolean>(isShopSubscribed(id));
-    const [subscriptionId, setSubscriptionId] = useState<number | undefined>();
+    const [subscriptionId, setSubscriptionId] =
+        useState<number | undefined>(getShopOrTagSubscriptionId(id, SubscriptionType.SHOP));
     const productList: IShopProduct[] = useSelector((stor: IState) => stor.products.shopMap[id]);
     const [productListToRender, setProductListToRender] = useState<IShopProduct[]>(productList);
     const subscriptionList: ISubscription[] = useSelector((store: IState) => store.subscriptionList.list);
@@ -70,9 +72,7 @@ const Shop = memo((props:IProps) => {
         navigate(
             RootNavigatorRoutes.SUBSCRIPTION_DETAIL,
             {
-                productList,
-                selectedTags: [{name, id: `${id}`}],
-                popularTags: tagList,
+                subscription: subscriptionList.find((item: ISubscription) => item.id === subscriptionId),
             },
         );
     };

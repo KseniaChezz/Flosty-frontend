@@ -1,55 +1,58 @@
 import {Dispatch} from 'react';
 
-import {setIsLoading, addTagProducts} from '../actions';
+import {setIsLoading, addShopAndTagListProducts} from '../actions';
 
 import {IProductsAction} from '../types/actions';
 import {IShopProduct, IProductResponse} from '../../../types/product';
 import {ITag} from '../../../types/shop';
 
 import {get} from '../../../utils/network';
-import {mapProductFromResponse} from '../../../utils';
+import {mapProductFromResponse, getTagListAndShopId} from '../../../utils';
 
 interface IResponse {
     data: {
-        id: number;
-        name: string;
-        image: string;
-        subscribers: number;
-        top_tags: ITag[];
         products: IProductResponse[];
+        top_tags: ITag[];
     };
 }
 
-export const getTagProducts = (tagId: number) => {
+export const getProductsByTagListAndShop = (
+    tagIdList: number[],
+    shopId: number[] | undefined,
+    cb?: (productList: IShopProduct[], popularTagList: ITag[]) => void) => {
     return (dispatch: Dispatch<IProductsAction>) => {
         dispatch(setIsLoading(true));
 
-        return get(`/tags/${tagId}/products`)
+        const params: {tags: number[]; shops?: number[];} = {
+            tags: tagIdList,
+        };
+
+        if (shopId) {
+            params.shops = shopId;
+        }
+
+        return get('/products/by_params', params)
             .then((res: IResponse) => {
                 const {
                     data: {
-                        name,
-                        subscribers,
-                        image,
-                        top_tags,
                         products,
+                        top_tags,
                     },
                 } = res;
 
                 if (products.length !== 0) {
-                    const tagProductList: IShopProduct[] = products.map((item: IProductResponse) => {
+                    const productList: IShopProduct[] = products.map((item: IProductResponse) => {
                         return mapProductFromResponse(item);
                     });
-                    dispatch(addTagProducts(
-                        tagId,
+
+                    dispatch(addShopAndTagListProducts(
+                        getTagListAndShopId(tagIdList, shopId),
                         {
-                            name,
-                            subscribers,
-                            logo: image,
+                            productList,
                             popularTagList: top_tags,
-                            productList: tagProductList,
-                        },
-                    ));
+                        }));
+
+                    cb && cb(productList, top_tags);
                 }
 
                 dispatch(setIsLoading(false));
