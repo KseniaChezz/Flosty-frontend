@@ -105,9 +105,7 @@ const ProductProfile = memo((props: IProps) => {
                             product={product}
                         />
 
-                        <TagListSection
-                            tagList={tagList}
-                        />
+                        {tagList && <TagListSection tagList={tagList} />}
 
                         <ProductPropertyPicker
                             colorList={colorList}

@@ -16,8 +16,8 @@ export interface IShopProduct {
 export interface IDetailProduct extends Omit<IShopProduct, 'img'> {
     description: string;
     characteristic: string;
-    colorList: IColor[];
-    sizeList: ISize[];
+    colorList?: IColor[];
+    sizeList?: ISize[];
     oldPrice?: number;
     boughtNumber: number;
     savedNumber: number;
@@ -78,8 +78,8 @@ export interface IDetailedProductResponse extends IProductResponse {
     number_of_saves: number;
     characteristic: string;
     images: string[];
-    colors: IColorResponse[];
-    sizes: ISizeResponse[];
+    colors?: IColorResponse[];
+    sizes?: ISizeResponse[];
 }
 
 export interface IColorResponse {

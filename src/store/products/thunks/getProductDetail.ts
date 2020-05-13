@@ -1,12 +1,13 @@
 import {Dispatch} from 'react';
 
-import {setIsLoading, addShopProducts, addDetailProduct} from '../actions';
+import {setIsLoading, addDetailProduct} from '../actions';
 
 import {IProductsAction} from '../types/actions';
 import {
     IDetailedProductResponse,
     IColorResponse,
     ISizeResponse,
+    IDetailProduct,
 } from '../../../types/product';
 
 import {get} from '../../../utils/network';
@@ -42,7 +43,7 @@ export const getDetailProduct = (shopId: number, productId: number) => {
                     colors,
                     sizes,
                 } = data;
-                const detailProduct = {
+                const detailProduct: IDetailProduct = {
                     id,
                     name,
                     description,
@@ -56,8 +57,14 @@ export const getDetailProduct = (shopId: number, productId: number) => {
                     oldPrice: price_with_sale ? price: undefined,
                     boughtNumber: number_of_sales,
                     savedNumber: number_of_saves,
-                    colorList: colors.map((item: IColorResponse) => mapColorProductResponse(item)),
-                    sizeList: sizes.map((item: ISizeResponse) => mapSizeProductResponse(item)),
+                }
+
+                if (colors) {
+                    detailProduct.colorList = colors.map((item: IColorResponse) => mapColorProductResponse(item));
+                }
+
+                if (sizes) {
+                    detailProduct.sizeList = sizes.map((item: ISizeResponse) => mapSizeProductResponse(item));
                 }
 
                 dispatch(addDetailProduct(detailProduct))

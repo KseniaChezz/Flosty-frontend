@@ -56,7 +56,7 @@ const Shop = memo((props:IProps) => {
     const [isSubscribed, setIsSubscribed] = useState<boolean>(isShopSubscribed(id));
     const [subscriptionId, setSubscriptionId] =
         useState<number | undefined>(getShopOrTagSubscriptionId(id, SubscriptionType.SHOP));
-    const productList: IShopProduct[] = useSelector((stor: IState) => stor.products.shopMap[id]);
+    const productList: IShopProduct[] = useSelector((store: IState) => store.products.shopMap[id]);
     const [productListToRender, setProductListToRender] = useState<IShopProduct[]>(productList);
     const subscriptionList: ISubscription[] = useSelector((store: IState) => store.subscriptionList.list);
     const dispatch = useDispatch();
@@ -114,7 +114,7 @@ const Shop = memo((props:IProps) => {
         navigate(
             RootNavigatorRoutes.SUBSCRIPTION_LINKED,
             {
-                subscriptionId,
+                subscriptionId: id,
             },
         );
     };

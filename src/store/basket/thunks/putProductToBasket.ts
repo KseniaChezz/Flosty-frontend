@@ -18,7 +18,6 @@ export const putProductToBasket = (productId: number, color: string | undefined,
         return post(`/baskets/add/${productId}`, {color, size})
             .then((res: IResponse) => {
                 const {data} = res;
-                debugger;
 
                 dispatch(setIsBasketDataProcessing(false));
             })

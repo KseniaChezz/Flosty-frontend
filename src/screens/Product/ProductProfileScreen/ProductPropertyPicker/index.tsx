@@ -16,10 +16,10 @@ import {IProductProperty, IColor} from '../../../../types/product';
 import {TEXT} from '../../../../constants';
 
 interface IProps {
-    colorList: IColor[];
+    colorList: IColor[] | undefined;
     selectedColor: IProductProperty | undefined;
     setSelectedColor: (value: IProductProperty) => void;
-    sizeList: IProductProperty[];
+    sizeList: IProductProperty[] | undefined;
     selectedSize: IProductProperty | undefined;
     setSelectedSize: (value: IProductProperty) => void;
     characteristic: string;
@@ -69,7 +69,7 @@ const ProductPropertyPicker = memo((props: IProps) => {
 
     return (
         <View style={styles.container}>
-            {colorList.length !== 0 &&
+            {colorList && colorList.length !== 0 &&
                 <PropertyPicker
                     propertyList={colorList}
                     defaultTitle={TEXT.pickColor}
@@ -80,7 +80,7 @@ const ProductPropertyPicker = memo((props: IProps) => {
                 />
             }
 
-            {sizeList.length !== 0 &&
+            {sizeList && sizeList.length !== 0 &&
                 <PropertyPicker
                     propertyList={sizeList}
                     defaultTitle={TEXT.pickSize}

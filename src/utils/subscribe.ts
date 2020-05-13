@@ -108,7 +108,10 @@ export const isShopSubscribed = (shopId: number): boolean => {
     }).length !==0;
 };
 
-export const getShopOrTagSubscriptionId = (shopOrTagId: number, subscriptionType: SubscriptionType): number => {
+export const getShopOrTagSubscriptionId = (
+    shopOrTagId: number,
+    subscriptionType: SubscriptionType,
+): number | undefined => {
     const subscriptionList: ISubscription[] = useSelector((store: IState) => store.subscriptionList.list);
 
     return subscriptionList.filter((item: ISubscription) => {
@@ -119,7 +122,7 @@ export const getShopOrTagSubscriptionId = (shopOrTagId: number, subscriptionType
         } else {
             return type === subscriptionType && tags[0].id === shopOrTagId;
         }
-    })[0].id;
+    })[0]?.id;
 };
 
 export const isTagSubscribed = (tagId: number): boolean => {
