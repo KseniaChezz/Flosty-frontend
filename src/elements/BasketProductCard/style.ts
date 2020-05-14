@@ -7,6 +7,7 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingHorizontal: 8,
         paddingBottom: 20,
+        marginTop: 10,
     },
     productImage: {
         height: 60,

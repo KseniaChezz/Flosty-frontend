@@ -22,6 +22,7 @@ interface IProps {
     onProductPress: () => void;
     onIncreaseProductQuantityPress: () => void;
     onDecreaseProductQuantityPress: () => void;
+    onDeleteProductPress: () => void;
 }
 
 const BasketProductCard = memo((props: IProps) => {
@@ -32,6 +33,7 @@ const BasketProductCard = memo((props: IProps) => {
         onProductPress,
         onIncreaseProductQuantityPress,
         onDecreaseProductQuantityPress,
+        onDeleteProductPress,
     } = props;
     const {
         id,
@@ -78,6 +80,7 @@ const BasketProductCard = memo((props: IProps) => {
                 price={price}
                 onIncreaseProductQuantityPress={onIncreaseProductQuantityPress}
                 onDecreaseProductQuantityPress={onDecreaseProductQuantityPress}
+                onDeleteProductPress={onDeleteProductPress}
             />
         </View>
     );

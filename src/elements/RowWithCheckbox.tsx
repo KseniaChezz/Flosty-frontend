@@ -55,7 +55,6 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: COLORS.White,
         paddingHorizontal: 8,
-        marginBottom: 10,
     },
     innerContainer: {
         flexDirection: 'row',

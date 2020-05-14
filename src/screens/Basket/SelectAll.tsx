@@ -4,9 +4,11 @@ import {
     TouchableOpacity,
     StyleSheet,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
 import {RowWithCheckbox} from '../../elements';
+
+import {deleteAllProducts, deleteProducts} from '../../store/basket/thunks/deleteProducts';
 
 import {IShopInfoAndBasketProduct} from '../../store/basket/types/state';
 import {IState} from '../../store';
@@ -24,6 +26,7 @@ const SelectAll = memo((props: IProps) => {
     const {selectedProductIdListMap, setSelectedProductIdListMap} = props;
     const basketProductList: IShopInfoAndBasketProduct[] = useSelector((stor: IState) => stor.basket.list);
     const [isAllSelected, setIsAllSelected] = useState<boolean>(false);
+    const dispatch = useDispatch();
 
     const onUnselectAllProductsPress = () => {
         setSelectedProductIdListMap({});
@@ -35,13 +38,24 @@ const SelectAll = memo((props: IProps) => {
         setIsAllSelected(true);
     };
 
+    const onDeleteSelectedPress = () => {
+        if (isAllSelected) {
+            dispatch(deleteAllProducts());
+        } else {
+            dispatch(deleteProducts(selectedProductIdListMap));
+        }
+    };
+
     const renderDeleteSelected = () => {
         const count: number = getSelectedBasketProductsCount(selectedProductIdListMap);
 
         if (!count) return null;
 
         return (
-            <TouchableOpacity style={styles.rightContainer}>
+            <TouchableOpacity
+                style={styles.rightContainer}
+                onPress={onDeleteSelectedPress}
+            >
                 <Text style={[styles.text, styles.redText]}>
                     {TEXT.deleteSelected} {count}
                 </Text>

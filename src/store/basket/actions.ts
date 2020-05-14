@@ -6,6 +6,9 @@ import {
     ISetListIsLoading,
     IAddProduct,
     IDeleteProduct,
+    IDeleteAllProducts,
+    IDeleteAllShopProducts,
+    IDeleteShopProducts,
     IUpdateProductQuantity,
 } from './types/actions';
 import {IShopInfoAndBasketProduct} from './types/state';
@@ -49,5 +52,26 @@ export const deleteProductFromBasketList = (shopId: number, productId: number): 
         type: basketAction.BASKET_DELETE_PRODUCT,
         shopId,
         productId,
+    }
+}
+
+export const deleteAllProductFromBasketList = (): IDeleteAllProducts => {
+    return {
+        type: basketAction.BASKET_DELETE_ALL_PRODUCTS,
+    }
+}
+
+export const deleteAllShopProductsFromBasketList = (shopId: number): IDeleteAllShopProducts => {
+    return {
+        type: basketAction.BASKET_DELETE_ALL_SHOP_PRODUCTS,
+        shopId,
+    }
+}
+
+export const deleteShopProductsFromBasketList = (shopId: number, productIdList: number[]): IDeleteShopProducts => {
+    return {
+        type: basketAction.BASKET_DELETE_SHOP_PRODUCTS,
+        shopId,
+        productIdList,
     }
 }

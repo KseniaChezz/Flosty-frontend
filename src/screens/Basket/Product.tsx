@@ -4,6 +4,7 @@ import {useDispatch} from 'react-redux';
 import {BasketProductCard} from '../../elements';
 
 import {updateProductQuantity} from '../../store/basket/thunks/updateProductQuantity';
+import {deleteProduct} from '../../store/basket/thunks/deleteProduct';
 
 import {IBasketProduct} from '../../types/basket';
 
@@ -46,7 +47,11 @@ const Product = memo((props: IProps) => {
         if (quantity === 1) return;
 
         dispatch(updateProductQuantity(shopId, productId, quantity - 1));
-    }
+    };
+
+    const onDeleteProductPress = () => {
+        dispatch(deleteProduct(shopId, productId));
+    };
 
     return (
         <BasketProductCard
@@ -56,6 +61,7 @@ const Product = memo((props: IProps) => {
             onProductPress={isSelected ? onUnselectProductPress : onSelectProductPress}
             onIncreaseProductQuantityPress={onIncreaseProductQuantityPress}
             onDecreaseProductQuantityPress={onDecreaseProductQuantityPress}
+            onDeleteProductPress={onDeleteProductPress}
         />
     );
 });

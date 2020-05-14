@@ -2,7 +2,10 @@ import {basketAction} from './basketActionEnum';
 
 import {
     IBasketAction,
+    IDeleteAllProducts,
+    IDeleteAllShopProducts,
     IDeleteProduct,
+    IDeleteShopProducts,
     ISetDataIsProcessing,
     ISetList,
     ISetListIsLoading,
@@ -64,6 +67,47 @@ const onDeleteProduct = (state: IBasketState, action: IDeleteProduct): IBasketSt
     }
 }
 
+const onDeleteAllProducts = (state: IBasketState, action: IDeleteAllProducts): IBasketState => {
+    return {
+        ...state,
+        list: [],
+    }
+}
+
+const onDeleteAllShopProducts = (state: IBasketState, action: IDeleteAllShopProducts): IBasketState => {
+    const {shopId} = action;
+    const {list} = state;
+    const filteredList: IShopInfoAndBasketProduct[] = list.filter((item: IShopInfoAndBasketProduct) => {
+        return item.id !== shopId;
+    });
+
+    return {
+        ...state,
+        list: filteredList,
+    }
+}
+
+const onDeleteShopProducts = (state: IBasketState, action: IDeleteShopProducts): IBasketState => {
+    const {shopId, productIdList} = action;
+    const {list} = state;
+    const updatedList: IShopInfoAndBasketProduct[] = list.slice();
+    const shop: IShopInfoAndBasketProduct | undefined = updatedList.find((item: IShopInfoAndBasketProduct) => {
+        return item.id === shopId;
+    });
+    let productList: IBasketProduct[] | undefined = shop?.productList;
+
+    if (productList) {
+        productList = productList.filter((item: IBasketProduct) => {
+            return !productIdList.some((productId: number) => productId === item.id);
+        });
+    }
+
+    return {
+        ...state,
+        list: updatedList,
+    }
+}
+
 const onUpdateProductQuantity = (state: IBasketState, action: IUpdateProductQuantity): IBasketState => {
     const {shopId, productId, productQuantity} = action;
     const {list} = state;
@@ -100,6 +144,12 @@ export const basketReducer = (state: IBasketState = initialState, action: IBaske
             return onSetList(state, action);
         case basketAction.BASKET_DELETE_PRODUCT:
             return onDeleteProduct(state, action);
+        case basketAction.BASKET_DELETE_ALL_PRODUCTS:
+            return onDeleteAllProducts(state, action);
+        case basketAction.BASKET_DELETE_ALL_SHOP_PRODUCTS:
+            return onDeleteAllShopProducts(state, action);
+        case basketAction.BASKET_DELETE_SHOP_PRODUCTS:
+            return onDeleteShopProducts(state, action);
         case basketAction.BASKET_UPDATE_PRODUCT_QUANTITY:
             return onUpdateProductQuantity(state, action);
         default:

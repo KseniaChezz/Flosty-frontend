@@ -16,8 +16,8 @@ import {IShopInfoAndBasketProduct} from '../../store/basket/types/state';
 interface IProps {}
 
 const Basket = memo((props:IProps) => {
-    const basketProductList: IShopInfoAndBasketProduct[] = useSelector((stor: IState) => stor.basket.list);
-    const isLoading: boolean = useSelector((stor: IState) => stor.basket.isListLoading);
+    const basketProductList: IShopInfoAndBasketProduct[] = useSelector((store: IState) => store.basket.list);
+    const isLoading: boolean = useSelector((store: IState) => store.basket.isListLoading);
     const [selectedProductIdListMap, setSelectedProductIdListMap] = useState<Record<number, number[]>>({});
     const dispatch = useDispatch();
 

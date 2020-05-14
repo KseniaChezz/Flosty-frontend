@@ -33,10 +33,7 @@ interface IProps {
 
 const ProductList = memo((props: IProps) => {
     const {selectedProductIdListMap, setSelectedProductIdListMap} = props;
-    const basketProductList: IShopInfoAndBasketProduct[] = useSelector((store: IState) => {
-        console.log('basketProductList', basketProductList);
-        return store.basket.list
-    });
+    const basketProductList: IShopInfoAndBasketProduct[] = useSelector((store: IState) => store.basket.list);
 
     const onUnselectProductPress = (shopId: number) => {
         return () => {
@@ -119,6 +116,7 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: COLORS.White,
         marginBottom: 10,
+        marginTop: 10,
     },
     productList: {
         flex: 1,

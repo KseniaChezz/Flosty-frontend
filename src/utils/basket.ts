@@ -157,10 +157,11 @@ export const getSelectedBasketProductsPrice = (
                     (item: IBasketProduct) => item.id === id);
 
                 if (product) {
-                    result += product.price;
+                    const {price, quantity} = product;
+
+                    result += price * quantity;
                 }
             }
-
         })
     });
 

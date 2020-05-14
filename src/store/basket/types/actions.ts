@@ -28,6 +28,21 @@ export interface IDeleteProduct {
     productId: number;
 }
 
+export interface IDeleteAllProducts {
+    type: basketAction.BASKET_DELETE_ALL_PRODUCTS;
+}
+
+export interface IDeleteAllShopProducts {
+    type: basketAction.BASKET_DELETE_ALL_SHOP_PRODUCTS;
+    shopId: number;
+}
+
+export interface IDeleteShopProducts {
+    type: basketAction.BASKET_DELETE_SHOP_PRODUCTS;
+    shopId: number;
+    productIdList: number[];
+}
+
 export interface IUpdateProductQuantity {
     type: basketAction.BASKET_UPDATE_PRODUCT_QUANTITY;
     shopId: number;
@@ -40,4 +55,7 @@ export type IBasketAction = ISetListIsLoading
     | ISetList
     | IAddProduct
     | IDeleteProduct
+    | IDeleteAllShopProducts
+    | IDeleteShopProducts
+    | IDeleteAllProducts
     | IUpdateProductQuantity

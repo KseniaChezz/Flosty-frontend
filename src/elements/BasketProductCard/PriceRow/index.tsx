@@ -15,6 +15,7 @@ interface IProps {
     quantity: number;
     onIncreaseProductQuantityPress: () => void;
     onDecreaseProductQuantityPress: () => void;
+    onDeleteProductPress: () => void;
 }
 
 const PriceRow = memo((props: IProps) => {
@@ -23,6 +24,7 @@ const PriceRow = memo((props: IProps) => {
         quantity,
         onIncreaseProductQuantityPress,
         onDecreaseProductQuantityPress,
+        onDeleteProductPress,
     } = props;
 
     return (
@@ -45,7 +47,7 @@ const PriceRow = memo((props: IProps) => {
                         </Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={onDeleteProductPress}>
                         <Image
                             source={require('../../../../assets/images/delete.png')}
                             style={styles.delete}

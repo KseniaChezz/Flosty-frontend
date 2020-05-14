@@ -34,7 +34,7 @@ export const getBasketProducts = () => {
                     },
                 } = res;
 
-                if (shops.length) {
+                if (shops && shops.length) {
                     const list: IShopInfoAndBasketProduct[] = shops.map((item: IBasketItemResponse) => {
                         const {
                             id,
