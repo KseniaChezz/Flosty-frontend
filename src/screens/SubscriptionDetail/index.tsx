@@ -1,4 +1,4 @@
-import React, {memo, useState, useEffect, Fragment} from 'react';
+import React, {memo, useState, useEffect} from 'react';
 import {View, Text, ScrollView} from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {useSelector, useDispatch} from 'react-redux';
@@ -12,7 +12,6 @@ import SubscriptionDetalCard from './SubscriptionDetailCard';
 import TwoProductsInRowList from '../../elements/ProductList/TwoProductsInRowList';
 
 import {updateSubscriptionInList} from '../../store/subscriptionList/thunks/updateSubscription';
-import {postSubscription} from '../../store/subscriptionList/thunks/addSubscription';
 import {resetProductFilters} from '../../store/products/actions';
 import {getProductsByTagListAndShop} from '../../store/products/thunks/getProductsByTagListAndShop';
 
@@ -157,7 +156,7 @@ const SubscsriptionDetail = memo((props:IProps) => {
                     searchText={searchText}
                     setSearchText={setSearchText}
                     onSavePress={onSavePress}
-                    isSelectedTagListSame={isTagListSame(getTagListFromSubscription(subscription), selectedTagList) || !!tagIdFromSearch}
+                    isSelectedTagListSame={isTagListSame(getTagListFromSubscription(subscription), selectedTagList)}
                 />
 
                 <View style={styles.productListContainer}>

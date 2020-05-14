@@ -22,7 +22,22 @@ export interface IAddProduct {
     product: IShopInfoAndBasketProduct;
 }
 
+export interface IDeleteProduct {
+    type: basketAction.BASKET_DELETE_PRODUCT;
+    shopId: number;
+    productId: number;
+}
+
+export interface IUpdateProductQuantity {
+    type: basketAction.BASKET_UPDATE_PRODUCT_QUANTITY;
+    shopId: number;
+    productId: number;
+    productQuantity: number;
+}
+
 export type IBasketAction = ISetListIsLoading
     | ISetDataIsProcessing
     | ISetList
     | IAddProduct
+    | IDeleteProduct
+    | IUpdateProductQuantity

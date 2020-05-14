@@ -17,15 +17,21 @@ import {TEXT} from '../../constants';
 
 interface IProps {
     product: IBasketProduct;
+    quantity: number;
     isSelected: boolean;
     onProductPress: () => void;
+    onIncreaseProductQuantityPress: () => void;
+    onDecreaseProductQuantityPress: () => void;
 }
 
 const BasketProductCard = memo((props: IProps) => {
     const {
         product,
+        quantity,
         isSelected,
         onProductPress,
+        onIncreaseProductQuantityPress,
+        onDecreaseProductQuantityPress,
     } = props;
     const {
         id,
@@ -34,7 +40,6 @@ const BasketProductCard = memo((props: IProps) => {
         color,
         size,
         price,
-        quantity,
     } = product;
     const checkboxImage: ImageSourcePropType = isSelected
         ? require('../../../assets/images/checkbox_select.png')
@@ -71,6 +76,8 @@ const BasketProductCard = memo((props: IProps) => {
             <PriceRow
                 quantity={quantity}
                 price={price}
+                onIncreaseProductQuantityPress={onIncreaseProductQuantityPress}
+                onDecreaseProductQuantityPress={onDecreaseProductQuantityPress}
             />
         </View>
     );

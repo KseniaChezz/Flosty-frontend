@@ -13,19 +13,23 @@ import {styles} from './style';
 interface IProps {
     price: number;
     quantity: number;
+    onIncreaseProductQuantityPress: () => void;
+    onDecreaseProductQuantityPress: () => void;
 }
 
 const PriceRow = memo((props: IProps) => {
     const {
         price,
         quantity,
+        onIncreaseProductQuantityPress,
+        onDecreaseProductQuantityPress,
     } = props;
 
     return (
         <View style={styles.priceContainer}>
             <View style={styles.priceInnerContainer}>
                 <View style={styles.addDeleteContainer}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={onDecreaseProductQuantityPress}>
                         <Text style={styles.text}>
                             –
                         </Text>
@@ -35,7 +39,7 @@ const PriceRow = memo((props: IProps) => {
                         {quantity}
                     </Text>
 
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={onIncreaseProductQuantityPress}>
                         <Text style={styles.text}>
                             +
                         </Text>
@@ -49,7 +53,7 @@ const PriceRow = memo((props: IProps) => {
                     </TouchableOpacity>
                 </View>
 
-                <Price price={price}/>
+                <Price price={price * quantity}/>
             </View>
         </View>
     );

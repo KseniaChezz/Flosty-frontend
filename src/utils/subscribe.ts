@@ -135,6 +135,14 @@ export const isTagSubscribed = (tagId: number): boolean => {
     }).length !==0;
 };
 
+export const getBindedSubscriptions = (id: number, subscriptionList: ISubscription[], type: SubscriptionType): ISubscription[] => {
+    if (type === SubscriptionType.SHOP) {
+        return getShopBindedSubscriptions(id, subscriptionList);
+    } else {
+        return getTagBindedSubscriptions(id, subscriptionList);
+    }
+};
+
 export const getShopBindedSubscriptions = (shopId: number, subscriptionList: ISubscription[]): ISubscription[] => {
     return subscriptionList.filter((item: ISubscription) => {
         const {type, shops} = item;

@@ -115,6 +115,7 @@ const Shop = memo((props:IProps) => {
             RootNavigatorRoutes.SUBSCRIPTION_LINKED,
             {
                 subscriptionId: id,
+                type: SubscriptionType.SHOP,
             },
         );
     };

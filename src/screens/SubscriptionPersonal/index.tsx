@@ -72,12 +72,6 @@ const SubscriptionPersonal = memo((props:IProps) => {
 
     const onEditAdjustableSubscriptionPress = (subscription: ISubscription) => {
         return () => {
-            const {
-                id: subscriptionId,
-                shops,
-                tags,
-            } = subscription;
-
             navigation.navigate(RootNavigatorRoutes.SUBSCRIPTION_DETAIL, {subscription});
         }
     };

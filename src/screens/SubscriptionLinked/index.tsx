@@ -22,7 +22,7 @@ import {IState} from '../../store';
 import {TEXT, COLORS} from '../../constants';
 import {RootNavigatorRoutes, ShowShopProductListMode, SubscriptionType} from '../../enums';
 
-import {getTagBindedSubscriptions, navigate} from '../../utils';
+import {getBindedSubscriptions, navigate} from '../../utils';
 
 type ScreenNavigationProp = StackNavigationProp<IRootNavigatorParamList, RootNavigatorRoutes.SUBSCRIPTION_LINKED>;
 type ScreenRouteProp = RouteProp<IRootNavigatorParamList, RootNavigatorRoutes.SUBSCRIPTION_LINKED>;
@@ -38,6 +38,7 @@ const SubscsriptionLinked = memo((props:IProps) => {
         route: {
             params: {
                 subscriptionId,
+                type,
             },
         },
     } = props;
@@ -45,11 +46,11 @@ const SubscsriptionLinked = memo((props:IProps) => {
     const isSubscriptionDataProcessing: boolean = useSelector(
         (store: IState) => store.subscriptionList.dataIsProcessing);
     const [linkedSubscriptionList, setLinkedSubscriptionList] = useState<ISubscription[]>(
-        getTagBindedSubscriptions(subscriptionId, subscriptionList));
+        getBindedSubscriptions(subscriptionId, subscriptionList, type));
     const dispatch = useDispatch();
 
     useEffect(() => {
-        setLinkedSubscriptionList(getTagBindedSubscriptions(subscriptionId, subscriptionList));
+        setLinkedSubscriptionList(getBindedSubscriptions(subscriptionId, subscriptionList, type));
     }, [subscriptionList])
 
     const onBackPress = () => {
@@ -62,19 +63,7 @@ const SubscsriptionLinked = memo((props:IProps) => {
 
     const onEditAdjustableSubscriptionPress = (subscription: ISubscription) => {
         return () => {
-            const {
-                id: subscriptionId,
-                shops,
-                tags,
-            } = subscription;
-
-            navigate(
-                RootNavigatorRoutes.SUBSCRIPTION_DETAIL,
-                {
-                    subscriptionId,
-                    selectedTags: shops[0] ? [{name: shops[0].name, id: `${shops[0].id}`}, ...tags] : [...tags],
-                },
-            );
+            navigate(RootNavigatorRoutes.SUBSCRIPTION_DETAIL, {subscription});
         }
     };
 

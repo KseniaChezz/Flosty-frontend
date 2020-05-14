@@ -1,7 +1,7 @@
 import {IUserAddressFieldList, IUserCardFieldList, IMessage} from './user';
-import {ITag} from './shop';
-import {IShopProduct} from './product';
 import {ISubscription} from './subscription';
+
+import {SubscriptionType} from '../enums';
 
 export type IRootNavigatorParamList = {
     Login: undefined;
@@ -23,7 +23,7 @@ export type IRootNavigatorParamList = {
     Subscriptions: undefined;
     SubscriptionDetail: {subscription: ISubscription};
     SubscriptionPersonal: {subscription: ISubscription},
-    SubscriptionLinked: {subscriptionId: number}
+    SubscriptionLinked: {subscriptionId: number, type: SubscriptionType}
 
     ShopProfile: {id: number};
 

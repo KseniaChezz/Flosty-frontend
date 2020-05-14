@@ -68,19 +68,7 @@ const HistoryList = memo((props: IProps) => {
 
     const onEditAdjustableSubscriptionPress = (subscription: ISubscription) => {
         return () => {
-            const {
-                id: subscriptionId,
-                shops,
-                tags,
-            } = subscription;
-
-            navigate(
-                RootNavigatorRoutes.SUBSCRIPTION_DETAIL,
-                {
-                    subscriptionId,
-                    selectedTags: shops[0] ? [{name: shops[0].name, id: `${shops[0].id}`}, ...tags] : [...tags],
-                },
-            );
+            navigate(RootNavigatorRoutes.SUBSCRIPTION_DETAIL, {subscription});
         }
     };
 

@@ -101,6 +101,7 @@ const Tag = memo((props:IProps) => {
             RootNavigatorRoutes.SUBSCRIPTION_LINKED,
             {
                 subscriptionId: tagId,
+                type: SubscriptionType.TAG,
             },
         );
     };

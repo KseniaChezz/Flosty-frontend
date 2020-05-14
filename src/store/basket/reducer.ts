@@ -1,7 +1,15 @@
 import {basketAction} from './basketActionEnum';
 
-import {IBasketAction, ISetDataIsProcessing, ISetList, ISetListIsLoading} from './types/actions';
-import {IBasketState} from './types/state';
+import {
+    IBasketAction,
+    IDeleteProduct,
+    ISetDataIsProcessing,
+    ISetList,
+    ISetListIsLoading,
+    IUpdateProductQuantity,
+} from './types/actions';
+import {IBasketState, IShopInfoAndBasketProduct} from './types/state';
+import {IBasketProduct} from '../../types/basket';
 
 const initialState: IBasketState = {
     list: [],
@@ -36,6 +44,52 @@ const onSetList = (state: IBasketState, action: ISetList): IBasketState => {
     }
 }
 
+const onDeleteProduct = (state: IBasketState, action: IDeleteProduct): IBasketState => {
+    const {shopId, productId} = action;
+    const {list} = state;
+    const filteredList: IShopInfoAndBasketProduct[] = list.filter((item: IShopInfoAndBasketProduct) => {
+        if (item.id !== shopId) {
+            return true;
+        } else if (item.productList.length === 1 && item.productList[0].id === productId) {
+            return false;
+        } else {
+            item.productList = item.productList.filter((item: IBasketProduct) => item.id !== productId);
+            return true;
+        }
+    })
+
+    return {
+        ...state,
+        list: filteredList,
+    }
+}
+
+const onUpdateProductQuantity = (state: IBasketState, action: IUpdateProductQuantity): IBasketState => {
+    const {shopId, productId, productQuantity} = action;
+    const {list} = state;
+    const updatedList: IShopInfoAndBasketProduct[] = list.slice();
+    const shop: IShopInfoAndBasketProduct | undefined = updatedList.find((item: IShopInfoAndBasketProduct) => {
+        return item.id === shopId;
+    });
+    let productList: IBasketProduct[] | undefined = shop?.productList;
+
+    if (productList) {
+        productList = productList.map((item: IBasketProduct) => {
+            if (item.id === productId) {
+                item.quantity = productQuantity;
+                return item;
+            } else {
+                return item;
+            }
+        });
+    }
+
+    return {
+        ...state,
+        list: updatedList,
+    }
+}
+
 export const basketReducer = (state: IBasketState = initialState, action: IBasketAction): IBasketState => {
     switch (action.type) {
         case basketAction.BASKET_SET_DATA_IS_PROCESSING:
@@ -44,6 +98,10 @@ export const basketReducer = (state: IBasketState = initialState, action: IBaske
             return onSetListIsLoading(state, action);
         case basketAction.BASKET_SET_LIST:
             return onSetList(state, action);
+        case basketAction.BASKET_DELETE_PRODUCT:
+            return onDeleteProduct(state, action);
+        case basketAction.BASKET_UPDATE_PRODUCT_QUANTITY:
+            return onUpdateProductQuantity(state, action);
         default:
             return state;
     }

@@ -34,6 +34,7 @@ import {
     isTagListSame,
     getTagListFromSubscription,
     getShopOrTagSubscriptionId,
+    getBindedSubscriptions,
 } from './subscribe';
 import {
     isStringWithNumbers,
@@ -105,6 +106,7 @@ export {
     isTagListSame,
     getTagListFromSubscription,
     getShopOrTagSubscriptionId,
+    getBindedSubscriptions,
 
     isStringWithNumbers,
     getTagListAndShopId,
