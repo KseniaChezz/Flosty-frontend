@@ -12,6 +12,7 @@ import {
     INotification,
     IShopMessageMap,
     IMessage,
+    ICardResponse,
 } from '../types/user';
 
 import {
@@ -143,11 +144,11 @@ export const getCardObjectForRender = (): IUserCardFieldList => {
             value: '',
             validate: isNotEmptyString,
         },
-        [TEXT.cvc]: {
-            title: TEXT.cvc,
-            value: '',
-            validate: isNotEmptyString,
-        },
+        // [TEXT.cvc]: {
+        //     title: TEXT.cvc,
+        //     value: '',
+        //     validate: isNotEmptyString,
+        // },
     };
 }
 
@@ -210,15 +211,49 @@ export const getAddressObjectForSave = (addressObjectFieldList: IUserAddressFiel
     }
 };
 
-export const getCardObjectForSave = (cardObjectFieldList: IUserCardFieldList): ICard => {
+export const getCardObjectForSave = (cardObjectFieldList: IUserCardFieldList): Omit<ICard, 'id' |'type'> => {
     return {
-        cardNumber: +cardObjectFieldList[TEXT.cardNumber].value,
+        cardNumber: cardObjectFieldList[TEXT.cardNumber].value,
         cardHolderName: cardObjectFieldList[TEXT.cardHolderName].value,
         expiryMonth: +cardObjectFieldList[TEXT.month].value,
         expiryYear: +cardObjectFieldList[TEXT.year].value,
-        code: +cardObjectFieldList[TEXT.cvc].value,
-        type: getRandomCardType(),
-        id: `cardId${Math.random()}`,
+    }
+}
+
+export const mapCardFromResponse = (cardResponse: ICardResponse): ICard => {
+    const {
+        id,
+        expiry_month,
+        expiry_year,
+        holder,
+        number,
+        payment_system_name,
+    } = cardResponse;
+
+    return {
+        id,
+        cardNumber: number,
+        type: payment_system_name,
+        cardHolderName: holder,
+        expiryMonth: expiry_month,
+        expiryYear: expiry_year,
+        // code: card.code,
+    }
+}
+
+export const getCardObjectForSend = (card: Omit<ICard, 'id' |'type'>) => {
+    const {
+        cardNumber,
+        cardHolderName,
+        expiryMonth,
+        expiryYear,
+    } = card;
+
+    return {
+        number: `${cardNumber}`,
+        holder: cardHolderName,
+        expiry_month: expiryMonth,
+        expiry_year: expiryYear,
     }
 }
 
@@ -290,7 +325,7 @@ export const getNotificationSectionList = (notificationList: INotification[]) =>
 export const getUserCommunicationShopList = (shopMessageMap: IShopMessageMap) => {
     const keyList: string[] = Object.keys(shopMessageMap);
 
-    return keyList.map((key: string) => shopMessageMap[key]);
+    return keyList.map((key: string) => shopMessageMap[+key]);
 }
 
 export const getMessageCut = (message: IMessage, shopName: string): string => {

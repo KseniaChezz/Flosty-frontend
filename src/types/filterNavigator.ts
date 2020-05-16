@@ -1,4 +1,4 @@
-import {IFilterCheckBoxItem} from '../types/product';
+import {IFilterCheckBoxItem} from '../types/filter';
 import {IProductFilterKey} from './filter';
 
 export type IFilterNavigatorParamList = {

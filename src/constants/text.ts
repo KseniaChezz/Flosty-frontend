@@ -359,4 +359,19 @@ export const TEXT = {
     sendMessage: 'Связаться',
     deleteSelected: 'Удалить выбранное',
     selectProduct: 'Выберите товар',
+
+    pressOrder: 'Нажимая «Подтвердить заказ», вы соглашаетесь с ',
+    userAgreement: 'Пользовательским соглашением',
+    agreeOrder: 'Подтвердить заказ',
+    orderProcessing: 'Оформление заказа',
+
+    doAddAddress: 'Добавьте адрес',
+    paymentWay: 'Способ оплаты',
+    choosePaymentWay: 'Выберите способ оплаты',
+    orderSum: 'Стоимость заказа',
+    deliverySum: 'Стоимость доставки',
+    discount: 'Скидка',
+    totalSum: 'Итог',
+    yandexMoney: 'Яндекс Деньги',
+    bankCard: ' Банковская карта',
 };

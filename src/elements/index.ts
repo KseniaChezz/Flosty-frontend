@@ -30,6 +30,9 @@ import ChatMessage from './ChatMesage';
 
 import TagList from './TagList';
 import FilterListRow from './FilterListRow';
+import InfoRow from './InfoRow';
+import PlainRadioButtonRowItem from './PlainRadioButtonRowItem';
+import RadioButtonRowItem from './RadioButtonRowItem';
 
 import ProductCardBig from './ProductCardBig';
 import ProductCardSmall from './ProductCardSmall';
@@ -79,6 +82,9 @@ export {
 
     TagList,
     FilterListRow,
+    InfoRow,
+    PlainRadioButtonRowItem,
+    RadioButtonRowItem,
 
     ProductCardBig,
     ProductCardSmall,

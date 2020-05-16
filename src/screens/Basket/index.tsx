@@ -7,11 +7,13 @@ import EmptyList from './EmptyList';
 import BuyOrSelectButton from './BuyOrSelectButton';
 import SelectAll from './SelectAll';
 import ProductList from './ProductList';
+import OrderWindow from './OrderWindow';
 
 import {getBasketProducts} from '../../store/basket/thunks/getBasketProducts';
 
 import {IState} from '../../store';
 import {IShopInfoAndBasketProduct} from '../../store/basket/types/state';
+import { getSelectedBasketProductsPrice } from '../../utils';
 
 interface IProps {}
 
@@ -19,11 +21,21 @@ const Basket = memo((props:IProps) => {
     const basketProductList: IShopInfoAndBasketProduct[] = useSelector((store: IState) => store.basket.list);
     const isLoading: boolean = useSelector((store: IState) => store.basket.isListLoading);
     const [selectedProductIdListMap, setSelectedProductIdListMap] = useState<Record<number, number[]>>({});
+    const [isOrderWindowVisible, setIsOrderWindowVisible] = useState<boolean>(false);
+    const selectedProductsPrice: number = getSelectedBasketProductsPrice(selectedProductIdListMap, basketProductList);
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getBasketProducts());
     }, []);
+
+    const onBuyPress = () => {
+        setIsOrderWindowVisible(true);
+    };
+
+    const hide = () => {
+        setIsOrderWindowVisible(false);
+    };
 
     const renderEmptyList = () => {
         return (
@@ -44,7 +56,16 @@ const Basket = memo((props:IProps) => {
                     setSelectedProductIdListMap={setSelectedProductIdListMap}
                 />
 
-                <BuyOrSelectButton selectedProductIdListMap={selectedProductIdListMap}/>
+                <BuyOrSelectButton
+                    selectedProductIdListMap={selectedProductIdListMap}
+                    onPress={onBuyPress}
+                />
+
+                <OrderWindow
+                    isWindowVisible={isOrderWindowVisible}
+                    selectedProductsPrice={selectedProductsPrice}
+                    hide={hide}
+                />
             </Fragment>
         );
     };

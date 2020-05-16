@@ -45,20 +45,6 @@ const initialState: IUserState = {
         },
     ],
     messageList: {},
-    // messageList: {
-    //     3:
-    //         {
-    //             logo: '',
-    //             name: 'INCITY',
-    //             messageList: [
-    //                 {
-    //                     text: TEXT.supportMessage,
-    //                     date: Date.now(),
-    //                     author: MessageAuthor.SHOP,
-    //                 },
-    //             ]
-    //         },
-    // },
 }
 
 const onSetUser = (state: IUserState, action: ISetUser): IUserState => {

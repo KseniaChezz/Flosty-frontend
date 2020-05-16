@@ -56,6 +56,7 @@ const DetailFilterItemScreen = memo((props: IProps) => {
                 text={title}
                 noShadow={true}
                 onBackPress={onBackPress}
+                center={true}
             />
 
             {filterCheckBoxItemList.map((item: IFilterCheckBoxItem) => {

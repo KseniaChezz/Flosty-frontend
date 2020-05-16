@@ -42,13 +42,22 @@ export interface IUserCardFieldList extends IFieldList {}
 export interface IUserCardField extends IField {}
 
 export interface ICard {
-    id: string;
-    cardNumber: number;
+    id: number;
+    cardNumber: string;
     type: string;
     cardHolderName: string;
     expiryMonth: number;
     expiryYear: number;
-    code: number;
+    // code: number;
+}
+
+export interface ICardResponse {
+    id: number;
+    expiry_month: number;
+    expiry_year: number;
+    holder: string;
+    number: string;
+    payment_system_name: string;
 }
 
 export interface IUserFieldList extends IFieldList {}

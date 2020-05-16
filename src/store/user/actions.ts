@@ -59,7 +59,7 @@ export const addCard = (card: ICard): IAddCard => {
     };
 }
 
-export const deleteCard = (cardId: string): IDeleteCard => {
+export const deleteCard = (cardId: number): IDeleteCard => {
     return {
         type: UserAction.USER_DELETE_CARD,
         cardId,

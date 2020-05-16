@@ -5,5 +5,5 @@ export const userCardKeyList: string[] = [
     TEXT.cardHolderName,
     TEXT.month,
     TEXT.year,
-    TEXT.cvc,
+    // TEXT.cvc,
 ];

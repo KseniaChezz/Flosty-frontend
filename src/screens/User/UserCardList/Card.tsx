@@ -36,7 +36,7 @@ const Card = memo((props: IProps) => {
                 <View style={styles.textContainer}>
 
                     <Text style={styles.text}>
-                        {`${type}, **** ${cardNumber.toString().slice(-4)}`}
+                        {`${type}, **** ${cardNumber.slice(-4)}`}
                     </Text>
 
                 </View>

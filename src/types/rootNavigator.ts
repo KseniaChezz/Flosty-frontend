@@ -12,7 +12,13 @@ export type IRootNavigatorParamList = {
     UserProfileAddressList: undefined;
     UserProfileAddress: {title: string, fieldList: IUserAddressFieldList, id?: string}
     UserProfileCardList: undefined;
-    UserProfileCard: {title: string, fieldList: IUserCardFieldList, id?: string}
+    UserProfileCard: {
+        title: string,
+        fieldList: IUserCardFieldList,
+        id?: string,
+        isModalMode?: boolean,
+        onAddCardSuccess: (id: number) => void,
+    }
     UserProfileOrderList: undefined;
     UserProfileSettings: undefined;
     UserProfileNotifications: undefined;

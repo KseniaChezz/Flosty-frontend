@@ -34,7 +34,7 @@ export interface IAddCard {
 
 export interface IDeleteCard {
     type: UserAction.USER_DELETE_CARD;
-    cardId: string;
+    cardId: number;
 }
 
 export interface ISetProcessingData {

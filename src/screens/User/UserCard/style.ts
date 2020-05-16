@@ -52,4 +52,8 @@ export const styles = StyleSheet.create({
         paddingTop: 20,
         paddingHorizontal: 12,
     },
+    modalContainer: {
+        flex: 1,
+        backgroundColor: COLORS.White,
+    },
 });

@@ -1,12 +1,12 @@
-import React, {useState, memo} from 'react';
+import React, {useState, memo, Fragment} from 'react';
 import {
     View,
     Text,
-    TextInput,
     ViewStyle,
 } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RouteProp} from '@react-navigation/native';
+import Spinner from 'react-native-loading-spinner-overlay';
 import {useSelector, useDispatch} from 'react-redux';
 
 import {styles} from './style';
@@ -15,12 +15,14 @@ import {
     ScreenWrapperWithBackButton,
     TextInputWithTitleAndValidation,
     ColoredButton,
+    HeaderWithBackButton,
 } from '../../../elements';
 
-import {addCard} from '../../../store/user/actions';
+import {addUserCard} from '../../../store/user/thunks/addUserCard';
 
 import {IRootNavigatorParamList} from '../../../types/rootNavigator';
 import {IUserCardField, IUserCardFieldList} from '../../../types/user';
+import {IState} from '../../../store';
 
 import {
     TEXT,
@@ -45,11 +47,14 @@ const UserCard = memo((props: IProps) => {
             params: {
                 title,
                 fieldList: cardFieldList,
+                isModalMode,
+                onAddCardSuccess,
             },
         },
     } = props;
     const [fieldList, setFieldList] = useState<IUserCardFieldList>(cardFieldList);
     const [errorField, setErrorField] = useState<string>('');
+    const isDataProcessing: boolean = useSelector((store: IState) => store.user.isProcessingData);
     const dispatch = useDispatch();
 
     const onBackPress = () => {
@@ -69,7 +74,12 @@ const UserCard = memo((props: IProps) => {
             return;
         }
 
-        dispatch(addCard(getCardObjectForSave(fieldList)));
+        if (isModalMode) {
+            dispatch(addUserCard(getCardObjectForSave(fieldList), onAddCardSuccess));
+        } else {
+            dispatch(addUserCard(getCardObjectForSave(fieldList)));
+        }
+
         onBackPress();
     }
 
@@ -100,34 +110,63 @@ const UserCard = memo((props: IProps) => {
         })
     };
 
+    const renderContent = () => {
+        return (
+            <Fragment>
+                {renderItems(0, 2)}
+
+                <View style={styles.fieldsContainer}>
+                    {renderItems(2, 4, styles.flex1)}
+                </View>
+
+                <View style={[styles.flex1, styles.textContainer]}>
+                    <Text style={styles.text}>
+                        {TEXT.cardListToPay}
+                    </Text>
+                    <Text style={styles.text}>
+                        {TEXT.paymentProtection}
+                    </Text>
+                </View>
+
+                <View style={styles.saveButtonContainer}>
+                    <ColoredButton
+                        text={TEXT.save}
+                        onPress={onSavePress}
+                    />
+                </View>
+            </Fragment>
+        );
+    };
+
+    if (isModalMode) {
+        return (
+            <View style={styles.modalContainer}>
+
+                <HeaderWithBackButton
+                    text={TEXT.bankCard}
+                    noShadow={true}
+                    onBackPress={onBackPress}
+                    center={true}
+                />
+
+                <View style={styles.flex1}>
+                    {renderContent()}
+                </View>
+
+                <Spinner visible={isDataProcessing} />
+
+            </View>
+        );
+    }
+
     return (
         <ScreenWrapperWithBackButton
             text={title}
             onBackPress={onBackPress}
             style={styles.container}
         >
-            {renderItems(0, 2)}
-
-            <View style={styles.fieldsContainer}>
-                {renderItems(2, 5, styles.flex1)}
-            </View>
-
-            <View style={[styles.flex1, styles.textContainer]}>
-                <Text style={styles.text}>
-                    {TEXT.cardListToPay}
-                </Text>
-                <Text style={styles.text}>
-                    {TEXT.paymentProtection}
-                </Text>
-            </View>
-
-            <View style={styles.saveButtonContainer}>
-                <ColoredButton
-                    text={TEXT.save}
-                    onPress={onSavePress}
-                />
-            </View>
-
+            {renderContent()}
+            <Spinner visible={isDataProcessing} />
         </ScreenWrapperWithBackButton>
     );
 });

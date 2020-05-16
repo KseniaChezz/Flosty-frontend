@@ -16,19 +16,23 @@ import {IShopInfoAndBasketProduct} from '../../store/basket/types/state';
 
 interface IProps {
     selectedProductIdListMap: Record<number, number[]>;
+    onPress: () => void;
 }
 
 const BuyOrSelectButton = memo((props: IProps) => {
-    const {selectedProductIdListMap} = props;
+    const {selectedProductIdListMap, onPress} = props;
     const basketProductList: IShopInfoAndBasketProduct[] = useSelector((stor: IState) => stor.basket.list);
     const isProductSelected: boolean = !!getSelectedBasketProductsCount(selectedProductIdListMap);
     const selectedProductsPrice: number = getSelectedBasketProductsPrice(selectedProductIdListMap, basketProductList);
+    const buttonText: string = isProductSelected
+        ? `${TEXT.buyFor}${formatProductPrice(selectedProductsPrice)}`
+        : TEXT.selectProduct;
 
     return (
         <View style={styles.buttonContainer}>
             <ColoredButton
-                text={isProductSelected ? formatProductPrice(selectedProductsPrice) : TEXT.selectProduct}
-                onPress={()=>{}}
+                text={buttonText}
+                onPress={onPress}
                 buttonStyle={isProductSelected ? styles.buttonSelected : styles.button}
                 isDisabled={!isProductSelected}
             />

@@ -2,9 +2,6 @@ import 'react-native-gesture-handler';
 import React, {useState, memo} from 'react';
 import {
     View,
-    Text,
-    Image,
-    TouchableOpacity,
     StyleSheet,
 } from 'react-native';
 import Modal from 'react-native-modal';

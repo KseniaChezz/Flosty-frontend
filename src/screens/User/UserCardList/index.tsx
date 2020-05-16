@@ -13,7 +13,7 @@ import {styles} from './style';
 import {ScreenWrapperWithBackButton, ModalWindow} from '../../../elements';
 import Card from './Card';
 
-import {deleteCard} from '../../../store/user/actions';
+import {deleteUserCard} from '../../../store/user/thunks/deleteUserCard';
 
 import {IRootNavigatorParamList} from '../../../types/rootNavigator';
 import {ICard} from '../../../types/user';
@@ -34,7 +34,7 @@ const UserAddressList = memo((props: IProps) => {
     const {navigation} = props;
     const cardList: ICard[] = useSelector((state: IState) => state.user.cardList);
     const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-    const [selectedCardId, setSelectedCardId] = useState<string>('');
+    const [selectedCardId, setSelectedCardId] = useState<number | undefined>();
     const dispatch = useDispatch();
 
     const onBackPress = () => {
@@ -48,7 +48,7 @@ const UserAddressList = memo((props: IProps) => {
         );
     };
 
-    const onCardPress = (cardId: string) => {
+    const onCardPress = (cardId: number) => {
         return () => {
             setSelectedCardId(cardId);
             setIsModalVisible(true);
@@ -60,7 +60,9 @@ const UserAddressList = memo((props: IProps) => {
     }
 
     const onDeletePress = () => {
-        dispatch(deleteCard(selectedCardId));
+        if (!selectedCardId) return;
+
+        dispatch(deleteUserCard(selectedCardId));
         setIsModalVisible(false);
     }
 

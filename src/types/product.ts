@@ -1,4 +1,3 @@
-import {ImageSourcePropType} from 'react-native';
 import {ISubscription} from './subscription';
 import { ITag } from './shop';
 
@@ -41,13 +40,6 @@ export interface IProductProperty {
     value: string;
     code?: string;
 }
-
-// export interface IShopShort {
-//     id: string;
-//     name: string;
-//     rating: string;
-//     img: ImageSourcePropType;
-// }
 
 export interface IFeedProduct {
     id: number;

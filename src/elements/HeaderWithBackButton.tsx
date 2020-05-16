@@ -18,6 +18,7 @@ interface IProps {
     noShadow?: boolean;
     onBackPress: () => void;
     onImgPress?: () => void;
+    center?: boolean;
 }
 
 const HeaderWithBackButton = memo((props: IProps) => {
@@ -27,6 +28,7 @@ const HeaderWithBackButton = memo((props: IProps) => {
         noShadow,
         onImgPress,
         onBackPress,
+        center,
     } = props;
 
     const renderRightImageButton = () => {
@@ -55,7 +57,7 @@ const HeaderWithBackButton = memo((props: IProps) => {
                 onPress={onBackPress}
             />
 
-            <View style={styles.textContainer}>
+            <View style={[styles.textContainer, center ? styles.textCenter : null]}>
 
                 <Text style={styles.text}>
                     {text}
@@ -78,6 +80,10 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
         paddingLeft: 10,
+    },
+    textCenter: {
+        alignItems: 'center',
+        marginRight: 26,
     },
     text: {
         fontFamily: 'Montserrat',
