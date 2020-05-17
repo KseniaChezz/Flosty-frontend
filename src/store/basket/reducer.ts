@@ -1,4 +1,5 @@
 import {basketAction} from './basketActionEnum';
+import {AppAction} from '../app/appActionEnum';
 
 import {
     IBasketAction,
@@ -13,6 +14,7 @@ import {
 } from './types/actions';
 import {IBasketState, IShopInfoAndBasketProduct} from './types/state';
 import {IBasketProduct} from '../../types/basket';
+import {IAppAction} from '../app/types/actions';
 
 const initialState: IBasketState = {
     list: [],
@@ -134,7 +136,7 @@ const onUpdateProductQuantity = (state: IBasketState, action: IUpdateProductQuan
     }
 }
 
-export const basketReducer = (state: IBasketState = initialState, action: IBasketAction): IBasketState => {
+export const basketReducer = (state: IBasketState = initialState, action: IBasketAction | IAppAction): IBasketState => {
     switch (action.type) {
         case basketAction.BASKET_SET_DATA_IS_PROCESSING:
             return onSetDataIsProcessing(state, action);
@@ -152,6 +154,8 @@ export const basketReducer = (state: IBasketState = initialState, action: IBaske
             return onDeleteShopProducts(state, action);
         case basketAction.BASKET_UPDATE_PRODUCT_QUANTITY:
             return onUpdateProductQuantity(state, action);
+        case AppAction.APP_SET_DEFAULT:
+            return initialState;
         default:
             return state;
     }

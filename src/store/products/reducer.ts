@@ -1,4 +1,5 @@
 import {IProductsState} from './types/state';
+import {IAppAction} from '../app/types/actions';
 import {
     IAddShopProducts,
     IAddTagProducts,
@@ -15,6 +16,7 @@ import {
 import {IProductFilter} from '../../types/filter';
 
 import {ProductsAction} from './productsActionEnum';
+import {AppAction} from '../app/appActionEnum';
 import {TEXT} from '../../constants';
 
 const getInitialFilters = (): IProductFilter => {
@@ -144,7 +146,10 @@ const onResetProductFilters = (state: IProductsState, action: IResetProductFilte
     }
 };
 
-export const productsReducer = (state: IProductsState = initialState, action: IProductsAction): IProductsState => {
+export const productsReducer = (
+    state: IProductsState = initialState,
+    action: IProductsAction | IAppAction,
+): IProductsState => {
     switch (action.type) {
         case ProductsAction.PRODUCTS_SET_IS_LOADING:
             return onSetIsLoading(state, action);
@@ -166,6 +171,8 @@ export const productsReducer = (state: IProductsState = initialState, action: IP
             return onSetProductFilterCheckBox(state, action);
         case ProductsAction.PRODUCTS_FILTER_RESET:
             return onResetProductFilters(state, action);
+        case AppAction.APP_SET_DEFAULT:
+            return initialState;
         default:
             return state;
     }

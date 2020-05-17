@@ -1,5 +1,4 @@
 import {ISubscriptionListState} from './types/state';
-
 import {
     IAddSubscription,
     IDeleteSubscription,
@@ -9,9 +8,11 @@ import {
     ISubscriptionListAction,
     IUpdateSubscription,
 } from './types/actions';
+import {ISubscription} from '../../types/subscription';
+import {IAppAction} from '../app/types/actions';
 
 import {SubscriptionListAction} from './subscriptionListActionEnum';
-import {ISubscription} from '../../types/subscription';
+import {AppAction} from '../app/appActionEnum';
 
 const initialState: ISubscriptionListState = {
     list: [],
@@ -87,7 +88,7 @@ const onUpdateSubscription = (state: ISubscriptionListState, action: IUpdateSubs
 
 export const subscriptionListReducer = (
     state: ISubscriptionListState = initialState,
-    action: ISubscriptionListAction,
+    action: ISubscriptionListAction | IAppAction,
 ): ISubscriptionListState => {
     switch (action.type) {
         case SubscriptionListAction.SUBSCRIPTION_LIST_SET:
@@ -102,6 +103,8 @@ export const subscriptionListReducer = (
             return onDeleteSubscription(state, action);
         case SubscriptionListAction.SUBSCRIPTION_LIST_UPDATE:
             return onUpdateSubscription(state, action);
+        case AppAction.APP_SET_DEFAULT:
+            return initialState;
         default:
             return state;
     }

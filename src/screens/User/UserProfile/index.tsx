@@ -2,7 +2,7 @@ import React from 'react';
 import {memo, useState} from 'react';
 import {View, Text} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
 import {styles} from './style';
 
@@ -12,9 +12,11 @@ import {
     ModalWindow,
 } from '../../../elements';
 
+import {logoutUser} from '../../../store/user/thunks/logout';
+
 import {IRootNavigatorParamList} from '../../../types/rootNavigator';
 import {IUserProfileItem} from '../../../types/user';
-import { IState } from '../../../store';
+import {IState} from '../../../store';
 
 import {
     TEXT,
@@ -33,8 +35,8 @@ const UserProfile = memo((props: IProps) => {
     const {navigation} = props;
     const userName: string = useSelector((state: IState) => state.user.main.name);
     const state = useSelector((state: IState) => state);
-    console.log('state', state);
     const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+    const dispatch = useDispatch();
 
     const onItemPress = (name: RootNavigatorRoutes) => {
         return () => navigation.navigate(name);
@@ -42,16 +44,20 @@ const UserProfile = memo((props: IProps) => {
 
     const onExitPress = () => {
         setIsModalVisible(true);
-    }
+    };
 
     const onCancelPress = () => {
         setIsModalVisible(false);
-    }
+    };
+
+    const onLogoutSuccessCallback = () => {
+        navigation.navigate(RootNavigatorRoutes.LOGIN);
+    };
 
     const onExitSubmitPress = () => {
         onCancelPress();
-        navigation.navigate(RootNavigatorRoutes.LOGIN);
-    }
+        dispatch(logoutUser(onLogoutSuccessCallback));
+    };
 
     return (
         <CommonScreenWrapper>

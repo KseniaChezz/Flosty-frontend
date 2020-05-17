@@ -15,10 +15,12 @@ import {
     IAddFirstMessageInShopChat,
 } from './types/actions';
 import {IAddress, ICard} from '../../types/user';
+import {IAppAction} from '../app/types/actions';
 
 import {TEXT} from '../../constants';
 import {UserAction} from './userActionEnum';
-import { MessageAuthor } from '../../enums';
+import {MessageAuthor} from '../../enums';
+import {AppAction} from '../app/appActionEnum';
 
 const initialState: IUserState = {
     isProcessingData: false,
@@ -177,7 +179,7 @@ const onAddFirstMessageInShopChat = (state: IUserState, action: IAddFirstMessage
     };
 }
 
-export const userReducer = (state: IUserState = initialState, action: IUserAction): IUserState => {
+export const userReducer = (state: IUserState = initialState, action: IUserAction | IAppAction): IUserState => {
     switch (action.type) {
         case UserAction.USER_SET_USER:
             return onSetUser(state, action);
@@ -201,6 +203,8 @@ export const userReducer = (state: IUserState = initialState, action: IUserActio
             return onAddMessageInShopChat(state, action);
         case UserAction.USER_SHOP_CHAT_ADD_FIRST_MESSAGE:
             return onAddFirstMessageInShopChat(state, action);
+        case AppAction.APP_SET_DEFAULT:
+            return initialState;
         default:
             return state;
     }

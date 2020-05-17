@@ -4,8 +4,10 @@ import {
     ISetIsFeedListLoading,
 } from './types/actions';
 import {IFeedState} from './types/state';
+import {IAppAction} from '../app/types/actions';
 
-import {FeedAction} from "./feedActionEnum";
+import {FeedAction} from './feedActionEnum';
+import {AppAction} from '../app/appActionEnum';
 
 const initialState: IFeedState = {
     list: [],
@@ -30,12 +32,14 @@ const onSetIsFeedListLoading = (state: IFeedState = initialState, action: ISetIs
     }
 }
 
-export const feedReducer = (state: IFeedState = initialState, action: IFeedAction): IFeedState => {
+export const feedReducer = (state: IFeedState = initialState, action: IFeedAction | IAppAction): IFeedState => {
     switch (action.type) {
         case FeedAction.FEED_SET_LIST:
             return onSetFeedList(state, action);
         case FeedAction.FEED_SET_IS_LIST_LOADING:
             return onSetIsFeedListLoading(state, action);
+        case AppAction.APP_SET_DEFAULT:
+            return initialState;
         default:
             return state;
     }

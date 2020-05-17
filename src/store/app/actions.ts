@@ -3,6 +3,7 @@ import {AppTab} from '../../enums';
 import {
     ISetAppTabAction,
     ISetIsDataProcessingAction,
+    ISetDefaultAction,
 } from './types/actions';
 
 export const setAppTab = (tab: AppTab): ISetAppTabAction => {
@@ -16,5 +17,11 @@ export const setIsDataProcessing = (isProcessing: boolean): ISetIsDataProcessing
     return {
         type: AppAction.APP_SET_IS_DATA_PROCESSING,
         isProcessing,
+    };
+};
+
+export const setDefault = (): ISetDefaultAction => {
+    return {
+        type: AppAction.APP_SET_DEFAULT,
     };
 };

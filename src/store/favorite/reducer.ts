@@ -1,4 +1,5 @@
 import {FavoriteAction} from './favoriteActionEnum';
+import {AppAction} from '../app/appActionEnum';
 
 import {
     IAddProductToFavoriteList,
@@ -10,6 +11,7 @@ import {
 } from './types/actions';
 import {IFavoriteState} from './types/state';
 import {IShopProduct} from '../../types/product';
+import {IAppAction} from '../app/types/actions';
 
 const initialState: IFavoriteState = {
     list: [],
@@ -65,7 +67,10 @@ const onDeleteProductFromFavoriteList = (
     };
 };
 
-export const favoriteReducer = (state: IFavoriteState = initialState, action: IFavoriteAction): IFavoriteState => {
+export const favoriteReducer = (
+    state: IFavoriteState = initialState,
+    action: IFavoriteAction | IAppAction,
+): IFavoriteState => {
     switch (action.type) {
         case FavoriteAction.FAVORITE_SET_IS_DATA_PROCESSING:
             return onSetIsFavoriteDataProcessing(state, action);
@@ -77,6 +82,8 @@ export const favoriteReducer = (state: IFavoriteState = initialState, action: IF
             return onAddProductToFavoriteList(state, action);
         case FavoriteAction.FAVORITE_DELETE_PRODUCT:
             return onDeleteProductFromFavoriteList(state, action);
+        case AppAction.APP_SET_DEFAULT:
+            return initialState;
         default:
             return state;
     }

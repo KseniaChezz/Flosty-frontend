@@ -11,4 +11,8 @@ export interface ISetIsDataProcessingAction {
     isProcessing: boolean;
 }
 
-export type IAppAction = ISetAppTabAction | ISetIsDataProcessingAction;
+export interface ISetDefaultAction {
+    type: AppAction.APP_SET_DEFAULT;
+}
+
+export type IAppAction = ISetAppTabAction | ISetIsDataProcessingAction | ISetDefaultAction;

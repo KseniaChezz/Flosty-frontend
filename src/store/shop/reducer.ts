@@ -1,7 +1,5 @@
-import {IShopState} from './types/state';
-
-import {TEXT} from '../../constants';
 import {ShopAction} from './shopActionEnum';
+import {AppAction} from '../app/appActionEnum';
 
 import {
     IAddShop,
@@ -9,6 +7,8 @@ import {
     ISetShopList,
     IShopAction,
 } from './types/actions';
+import {IAppAction} from '../app/types/actions';
+import {IShopState} from './types/state';
 
 const initialState: IShopState = {
     map: {},
@@ -47,7 +47,7 @@ const onSetIsLoading = (state: IShopState, action: ISetIsLoading): IShopState =>
     }
 };
 
-export const shopReducer = (state: IShopState = initialState, action: IShopAction): IShopState => {
+export const shopReducer = (state: IShopState = initialState, action: IShopAction | IAppAction): IShopState => {
     switch (action.type) {
         case ShopAction.SHOP_ADD:
             return onAddShop(state, action);
@@ -55,6 +55,8 @@ export const shopReducer = (state: IShopState = initialState, action: IShopActio
             return onSetIsLoading(state, action);
         case ShopAction.SHOP_SET_LIST:
             return onSetShopList(state, action);
+        case AppAction.APP_SET_DEFAULT:
+            return initialState;
         default:
             return state;
     }
