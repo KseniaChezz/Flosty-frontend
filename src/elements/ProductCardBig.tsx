@@ -33,7 +33,6 @@ import {RootNavigatorRoutes} from '../enums';
 interface IProps {
     product: IFeedProduct | IShopProduct;
     onProductPress: () => void;
-    onBasketPress: () => void;
     isShopShown?: boolean;
 }
 
@@ -45,7 +44,6 @@ const ProductCardBig = memo((props: IProps) => {
     const {
         product,
         onProductPress,
-        onBasketPress,
         isShopShown,
     }= props;
     const {
@@ -142,13 +140,6 @@ const ProductCardBig = memo((props: IProps) => {
                     <TouchableOpacity onPress={isFavorite ? onDeleteFavoritePress : onAddFavoritePress}>
                         <Image
                             source={favoriteIcon}
-                            style={styles.icon}
-                        />
-                    </TouchableOpacity>
-
-                    <TouchableOpacity onPress={onBasketPress}>
-                        <Image
-                            source={require('../../assets/images/basket_default.png')}
                             style={styles.icon}
                         />
                     </TouchableOpacity>

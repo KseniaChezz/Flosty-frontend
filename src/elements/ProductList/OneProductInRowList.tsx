@@ -35,7 +35,6 @@ const OneProductInRowList = memo((props: IProps) => {
                         key={index}
                         product={product}
                         onProductPress={onProductPress(shopId, id)}
-                        onBasketPress={() => {}}
                     />
                 )
             })}
