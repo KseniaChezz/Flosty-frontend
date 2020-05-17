@@ -14,6 +14,7 @@ interface IProps {
     text: string;
     onTextChange: (text: string) => void;
     onPress: () => void;
+    onCleanPress?: () => void;
     style?: ViewStyle;
 }
 
@@ -22,11 +23,13 @@ const SearchInput = memo((props:IProps) => {
         text,
         onTextChange,
         onPress,
+        onCleanPress,
         style,
     } = props;
 
-    const onCleanPress = () => {
+    const onClean = () => {
         onTextChange('');
+        onCleanPress && onCleanPress();
     };
 
     return (
@@ -49,7 +52,7 @@ const SearchInput = memo((props:IProps) => {
             />
 
             {text.length !== 0 &&
-            <TouchableOpacity onPress={onCleanPress}>
+            <TouchableOpacity onPress={onClean}>
                 <Image
                     source={require('../../assets/images/cross_grey.png')}
                     style={styles.imgCross}

@@ -5,6 +5,6 @@ export type ISearchNavigatorParamList = {
     SearchMenuScreen: {
         title: string,
         menuList: ISearchClarificationItem[],
-        setSearchText: (text: string) => void,
+        search: (text: string) => void,
     };
 };

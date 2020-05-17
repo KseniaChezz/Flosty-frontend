@@ -1,7 +1,8 @@
 import React, {memo, useState} from 'react';
 import {View, Text, Image, ScrollView} from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
 import {styles} from './style';
 
@@ -12,12 +13,15 @@ import {
 import SearchCardList from './SearchCardList';
 import TwoProductsInRowList from '../../../elements/ProductList/TwoProductsInRowList';
 
+import {searchProducts} from '../../../store/products/thunks/searchProducts';
+
 import {ISearchNavigatorParamList} from '../../../types/searchNavigator';
 import {ISearchCard} from '../../../types/search';
 import {IShopProduct} from '../../../types/product';
+import {IState} from '../../../store';
 
 import {SearchNavigatorRoutes} from '../../../enums';
-import { IState } from '../../../store';
+import {TEXT} from '../../../constants';
 
 type ScreenNavigationProp = StackNavigationProp<ISearchNavigatorParamList, SearchNavigatorRoutes.SEARCH_ROOT_SCREEN>;
 
@@ -29,6 +33,24 @@ const SearchRootScreen = memo((props:IProps) => {
     const {navigation} = props;
     const [searchText, setSearchText] = useState<string>('');
     const productList: IShopProduct[] = useSelector((store: IState) => store.products.popularProductList);
+    const isLoading: boolean = useSelector((store: IState) => store.products.isLoading);
+    const [productListToRender, setProductListToRender] = useState<IShopProduct[]>(productList);
+    const dispatch = useDispatch();
+
+    const onSearchPress = () => {
+        if (!searchText) return;
+
+        dispatch(searchProducts(searchText, setProductListToRender));
+    };
+
+    const search = (text: string) => {
+        setSearchText(text);
+        dispatch(searchProducts(text, setProductListToRender));
+    };
+
+    const onCleanPress = () => {
+        setProductListToRender(productList);
+    };
 
     const onCardPress = (card: ISearchCard) => {
         const {title, additionalMenu} = card;
@@ -37,14 +59,32 @@ const SearchRootScreen = memo((props:IProps) => {
             return () => {
                 navigation.navigate(
                     SearchNavigatorRoutes.SEARCH_MENU_SCREEN,
-                    {title, setSearchText, menuList: additionalMenu},
+                    {title, search, menuList: additionalMenu},
                 );
             }
         }
 
         return () => {
-            setSearchText(title);
+            search(title);
         };
+    };
+
+    const renderEmptyList = () => {
+        return (
+            <View>
+                <Text style={styles.emptyText}>
+                    {TEXT.emptySearchList}
+                </Text>
+            </View>
+        );
+    };
+
+    const renderProductList = () => {
+        return (
+            <TwoProductsInRowList
+                productList={productListToRender}
+            />
+        );
     };
 
     return (
@@ -52,7 +92,8 @@ const SearchRootScreen = memo((props:IProps) => {
             <ScrollView>
                 <SearchInput
                     text={searchText}
-                    onPress={()=>{}}
+                    onPress={onSearchPress}
+                    onCleanPress={onCleanPress}
                     onTextChange={setSearchText}
                     style={styles.marginTop15}
                 />
@@ -61,10 +102,10 @@ const SearchRootScreen = memo((props:IProps) => {
                     onCardPress={onCardPress}
                 />
 
-                <TwoProductsInRowList
-                    productList={productList}
-                />
+                {productListToRender.length === 0 ? renderEmptyList() : renderProductList()}
             </ScrollView>
+
+            <Spinner visible={isLoading} />
         </CommonScreenWrapper>
     );
 });

@@ -33,7 +33,7 @@ const SearchMenuScreen = memo((props: IProps) => {
             params: {
                 title: pageTitle,
                 menuList,
-                setSearchText,
+                search,
             },
         },
     } = props;
@@ -49,13 +49,13 @@ const SearchMenuScreen = memo((props: IProps) => {
             return () => {
                 navigation.push(
                     SearchNavigatorRoutes.SEARCH_MENU_SCREEN,
-                    {title, setSearchText, menuList: additionalMenu},
+                    {title, search, menuList: additionalMenu},
                 );
             }
         }
 
         return () => {
-            setSearchText(title === TEXT.all ? pageTitle : title);
+            search(title === TEXT.all ? pageTitle : title);
             navigation.popToTop();
         };
 
