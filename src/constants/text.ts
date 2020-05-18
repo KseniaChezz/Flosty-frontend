@@ -375,4 +375,9 @@ export const TEXT = {
     totalSum: 'Итог',
     yandexMoney: 'Яндекс Деньги',
     bankCard: ' Банковская карта',
+
+    errorTitle: 'Упс, кажется что-то пошло не так...',
+    errorText: 'Обратитесь в службу технической поддержки',
+    sendMessageToSupport: 'Обратиться',
+    errorTextPreface: 'Добрый день! Сегодня при работе с приложением возникла ошибка ',
 };

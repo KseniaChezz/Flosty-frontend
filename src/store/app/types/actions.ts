@@ -11,8 +11,21 @@ export interface ISetIsDataProcessingAction {
     isProcessing: boolean;
 }
 
+export interface ISetErrorAction {
+    type: AppAction.APP_SET_ERROR;
+    error: string;
+}
+
+export interface IResetErrorAction {
+    type: AppAction.APP_RESET_ERROR;
+}
+
 export interface ISetDefaultAction {
     type: AppAction.APP_SET_DEFAULT;
 }
 
-export type IAppAction = ISetAppTabAction | ISetIsDataProcessingAction | ISetDefaultAction;
+export type IAppAction = ISetAppTabAction
+    | ISetIsDataProcessingAction
+    | ISetDefaultAction
+    | ISetErrorAction
+    | IResetErrorAction;
