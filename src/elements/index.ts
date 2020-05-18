@@ -25,6 +25,7 @@ import ScreenWrapperWithBackButton from './ScreenWrapperWithBackButton';
 import LoginAndRegistrationScreenWrapper from './LoginAndRegistrationScreenWrapper';
 
 import ModalWindow from './ModalWindow';
+import ModalInfoWindow from './ModalInfoWindow';
 
 import ChatMessage from './ChatMesage';
 
@@ -77,6 +78,7 @@ export {
     LoginAndRegistrationScreenWrapper,
 
     ModalWindow,
+    ModalInfoWindow,
 
     ChatMessage,
 

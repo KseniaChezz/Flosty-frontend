@@ -2,9 +2,6 @@ import React from 'react';
 import {memo, useState, useEffect, Fragment} from 'react';
 import {
     View,
-    Text,
-    Image,
-    TouchableOpacity,
     ScrollView,
 } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -19,7 +16,7 @@ import TagListSection from './TagListSection';
 import ProductPropertyPicker from './ProductPropertyPicker';
 import ShopSection from './ShopSection';
 import DeliveryAndGuaranteeSection from './DeliveryAndGuaranteeSection';
-import {ColoredButton} from '../../../elements';
+import {ColoredButton, ModalInfoWindow} from '../../../elements';
 
 import {getDetailProduct} from '../../../store/products/thunks/getProductDetail';
 import {getShop} from '../../../store/shop/thunks/getShop';
@@ -59,6 +56,8 @@ const ProductProfile = memo((props: IProps) => {
     const shop: IShop | undefined = useSelector((stor: IState) => stor.shop.map[shopId]);
     const isProductLoading: boolean = useSelector((stor: IState) => stor.products.isLoading);
     const isShopLoading: boolean = useSelector((stor: IState) => stor.shop.isLoading);
+    const [isProductAddedInBusketWindowShown, setIsProductAddedInBusketShown] = useState<boolean>(false);
+    const [isNotSizeOrColorSelectedWindowShown, setIsNotSizeOrColorSelectedWindowShown] = useState<boolean>(false);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -69,7 +68,15 @@ const ProductProfile = memo((props: IProps) => {
         if (!product) {
             dispatch(getDetailProduct(shopId, productId));
         }
-    }, [])
+    }, []);
+
+    const onAddProductWindowPress = () => {
+        setIsProductAddedInBusketShown(false);
+    };
+
+    const onIsNotSizeOrColorWindowPress = () => {
+        setIsNotSizeOrColorSelectedWindowShown(false);
+    };
 
     const onDescriptionPress = () => {
         if (!product) return;
@@ -84,8 +91,24 @@ const ProductProfile = memo((props: IProps) => {
     const onBuyPress = () => {
         if (!product) return;
 
-        dispatch(putProductToBasket(product.id, productColor?.value, productSize?.value));
-    }
+        const {
+            colorList,
+            sizeList,
+        } = product;
+
+        if ((!!colorList && colorList.length !== 0 && !productColor)
+            || (!!sizeList && sizeList.length !== 0 && !productSize)) {
+            setIsNotSizeOrColorSelectedWindowShown(true);
+            return;
+        }
+
+        dispatch(putProductToBasket(
+            product.id,
+            productColor?.value,
+            productSize?.value,
+            () => setIsProductAddedInBusketShown(true),
+        ));
+    };
 
     const renderProduct = () => {
         if (!product) return null;
@@ -144,6 +167,18 @@ const ProductProfile = memo((props: IProps) => {
         <Fragment>
             <Spinner visible={isProductLoading || isShopLoading} />
             {renderProduct()}
+
+            <ModalInfoWindow
+                isWindowVisible={isProductAddedInBusketWindowShown}
+                text={TEXT.productAdded}
+                onPress={onAddProductWindowPress}
+            />
+
+            <ModalInfoWindow
+                isWindowVisible={isNotSizeOrColorSelectedWindowShown}
+                text={productColor ? TEXT.selectSize : TEXT.selectColor}
+                onPress={onIsNotSizeOrColorWindowPress}
+            />
         </Fragment>
     );
 });

@@ -7,8 +7,7 @@
  */
 
 import 'react-native-gesture-handler';
-import React from 'react';
-import {View} from 'react-native';
+import React, {Fragment} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {useSelector, useDispatch} from 'react-redux';
@@ -77,7 +76,7 @@ const RootNavigator = () => {
     };
 
     return (
-        <View>
+        <Fragment>
             <NavigationContainer ref={navigationRef}>
                 <Stack.Navigator headerMode="none" initialRouteName={RootNavigatorRoutes.LOGIN}>
                     <Stack.Screen name={RootNavigatorRoutes.BASKET} component={Basket} />
@@ -106,7 +105,7 @@ const RootNavigator = () => {
                 </Stack.Navigator>
             </NavigationContainer>
 
-            <ModalWindow
+             <ModalWindow
                 isWindowVisible={isError}
                 title={TEXT.errorTitle}
                 text={TEXT.errorText}
@@ -114,7 +113,7 @@ const RootNavigator = () => {
                 onCancelPress={onCancelPress}
                 onSubmitPress={onSubmitPress}
             />
-        </View>
+        </Fragment>
     );
 };
 

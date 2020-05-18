@@ -52,7 +52,6 @@ const SubscriptionFeed = memo((props: IProps) => {
                 product={product}
                 isShopShown={true}
                 onProductPress={onProductPress(shopId, id)}
-                onBasketPress={() => {}}
             />
         );
     }

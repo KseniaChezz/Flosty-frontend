@@ -11,7 +11,12 @@ interface IResponse {
     data: any;
 }
 
-export const putProductToBasket = (productId: number, color: string | undefined, size: string | undefined) => {
+export const putProductToBasket = (
+    productId: number,
+    color: string | undefined,
+    size: string | undefined,
+    cb: () => void,
+) => {
     return (dispatch: Dispatch<IBasketAction>) => {
         dispatch(setIsBasketDataProcessing(true));
 
@@ -20,6 +25,7 @@ export const putProductToBasket = (productId: number, color: string | undefined,
                 const {data} = res;
 
                 dispatch(setIsBasketDataProcessing(false));
+                cb();
             })
             .catch((err: any) => {
                 console.log('err', err);
