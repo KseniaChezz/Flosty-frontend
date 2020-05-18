@@ -52,9 +52,9 @@ export const getDetailProduct = (shopId: number, productId: number) => {
                     characteristic: JSON.parse(characteristic),
                     date: +new Date(updated_at),
                     imageList: images,
-                    price: price_with_sale ? price_with_sale : price,
+                    price: price_with_sale,
                     shopId: shop_id,
-                    oldPrice: price_with_sale ? price: undefined,
+                    oldPrice: price_with_sale === price ? undefined : price,
                     boughtNumber: number_of_sales,
                     savedNumber: number_of_saves,
                 }

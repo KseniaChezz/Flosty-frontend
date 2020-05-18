@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     },
     iconContainer: {
         flexDirection: 'row',
-        width: 90,
+        width: 44,
         justifyContent: 'space-around',
         alignItems: 'center',
     },
