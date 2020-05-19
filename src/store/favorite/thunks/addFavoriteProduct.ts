@@ -24,12 +24,10 @@ export const addFavoriteProduct = (product: IShopProduct) => {
                 dispatch(addProductToFaforiteList(product));
                 dispatch(setFaforiteListDataIsProcessing(false));
             })
-            .catch((err: Error) => {
-                const {name, message, stack} = err;
-
+            .catch((err: string) => {
                 console.log('err', err);
                 dispatch(setFaforiteListDataIsProcessing(false));
-                dispatch(setError(`name: ${name}, message: ${message}, stack: ${stack}`));
+                dispatch(setError(err));
             })
     }
 }

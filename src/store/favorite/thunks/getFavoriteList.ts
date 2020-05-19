@@ -32,12 +32,10 @@ export const getFavoriteList = () => {
 
                 dispatch(setFaforiteListIsLoading(false));
             })
-            .catch((err: Error) => {
-                const {name, message, stack} = err;
-
+            .catch((err: string) => {
                 console.log('err', err);
                 dispatch(setFaforiteListIsLoading(false));
-                dispatch(setError(`name: ${name}, message: ${message}, stack: ${stack}`));
+                dispatch(setError(err));
             })
     }
 }

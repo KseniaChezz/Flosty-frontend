@@ -58,12 +58,10 @@ export const getBasketProducts = () => {
 
                 dispatch(setIsBasketListLoading(false));
             })
-            .catch((err: Error) => {
-                const {name, message, stack} = err;
-
+            .catch((err: string) => {
                 console.log('err', err);
                 dispatch(setIsBasketListLoading(false));
-                dispatch(setError(`name: ${name}, message: ${message}, stack: ${stack}`));
+                dispatch(setError(err));
             })
     }
 }

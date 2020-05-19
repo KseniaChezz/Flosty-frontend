@@ -36,12 +36,10 @@ export const postSubscription = (tags: number[], shops: number[], cb?: (id: numb
                 dispatch(setSubscriptionDataIsProcessing(false));
                 cb && cb(data.id);
             })
-            .catch((err: Error) => {
-                const {name, message, stack} = err;
-
+            .catch((err: string) => {
                 console.log('err', err);
                 dispatch(setSubscriptionDataIsProcessing(false));
-                dispatch(setError(`name: ${name}, message: ${message}, stack: ${stack}`));
+                dispatch(setError(err));
             })
     }
 }

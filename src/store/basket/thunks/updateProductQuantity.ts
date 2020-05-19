@@ -24,12 +24,10 @@ export const updateProductQuantity = (shopId: number, productId: number, quantit
                 dispatch(updateProductQuantityInBasketList(shopId, productId, quantity));
                 dispatch(setIsBasketDataProcessing(false));
             })
-            .catch((err: Error) => {
-                const {name, message, stack} = err;
-
+            .catch((err: string) => {
                 console.log('err', err);
                 dispatch(setIsBasketDataProcessing(false));
-                dispatch(setError(`name: ${name}, message: ${message}, stack: ${stack}`));
+                dispatch(setError(err));
             })
     }
 }

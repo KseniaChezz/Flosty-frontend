@@ -79,11 +79,13 @@ const styles = StyleSheet.create({
         color: COLORS.DarkGrey,
         paddingBottom: 5,
         marginRight: 5,
+        width: '90%',
     },
     dateText: {
         fontSize: 10,
         lineHeight: 14,
         color: COLORS.LightGrey,
+        width: '10%',
     },
 });
 

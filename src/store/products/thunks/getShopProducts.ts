@@ -34,12 +34,10 @@ export const getShopProducts = (shopId: number) => {
 
                 dispatch(setIsLoading(false));
             })
-            .catch((err: Error) => {
-                const {name, message, stack} = err;
-
+            .catch((err: string) => {
                 console.log('err', err);
                 dispatch(setIsLoading(false));
-                dispatch(setError(`name: ${name}, message: ${message}, stack: ${stack}`));
+                dispatch(setError(err));
             })
     }
 };

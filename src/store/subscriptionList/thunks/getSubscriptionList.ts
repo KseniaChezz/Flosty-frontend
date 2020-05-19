@@ -34,12 +34,10 @@ export const getSubscriptionList = () => {
 
                 dispatch(setSubscriptionListIsLoading(false));
             })
-            .catch((err: Error) => {
-                const {name, message, stack} = err;
-
+            .catch((err: string) => {
                 console.log('err', err);
                 dispatch(setSubscriptionListIsLoading(false));
-                dispatch(setError(`name: ${name}, message: ${message}, stack: ${stack}`));
+                dispatch(setError(err));
             })
     }
 }

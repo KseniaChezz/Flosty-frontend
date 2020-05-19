@@ -27,12 +27,10 @@ export const addUserCard = (card: Omit<ICard, 'id' |'type'>, cb?: (id: number) =
                 cb && cb(data.id);
                 dispatch(setProcessingData(false));
             })
-            .catch((err: Error) => {
-                const {name, message, stack} = err;
-
+            .catch((err: string) => {
                 dispatch(setProcessingData(false));
                 console.log('err', err);
-                dispatch(setError(`name: ${name}, message: ${message}, stack: ${stack}`));
+                dispatch(setError(err));
             })
     }
 };

@@ -24,12 +24,10 @@ export const updateSubscriptionInList = (id: number, tags: number[], shops: numb
                 dispatch(updateSubscription(mapSubscriptionFomResponse(data)))
                 dispatch(setSubscriptionDataIsProcessing(false));
             })
-            .catch((err: Error) => {
-                const {name, message, stack} = err;
-
+            .catch((err: string) => {
                 console.log('err', err);
                 dispatch(setSubscriptionDataIsProcessing(false));
-                dispatch(setError(`name: ${name}, message: ${message}, stack: ${stack}`));
+                dispatch(setError(err));
             })
     }
 }

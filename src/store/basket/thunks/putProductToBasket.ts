@@ -12,6 +12,11 @@ interface IResponse {
     data: any;
 }
 
+interface IParams {
+    color?: string;
+    size?: string;
+}
+
 export const putProductToBasket = (
     productId: number,
     color: string | undefined,
@@ -20,20 +25,27 @@ export const putProductToBasket = (
 ) => {
     return (dispatch: Dispatch<IBasketAction | IAppAction>) => {
         dispatch(setIsBasketDataProcessing(true));
+        const params: IParams = {};
 
-        return post(`/baskets/add/${productId}`, {color, size})
+        if (color) {
+            params.color = color;
+        }
+
+        if (size) {
+            params.size = size;
+        }
+
+        return post(`/baskets/add/${productId}`, {...params})
             .then((res: IResponse) => {
                 const {data} = res;
 
                 dispatch(setIsBasketDataProcessing(false));
                 cb();
             })
-            .catch((err: Error) => {
-                const {name, message, stack} = err;
-
+            .catch((err: string) => {
                 console.log('err', err);
                 dispatch(setIsBasketDataProcessing(false));
-                dispatch(setError(`name: ${name}, message: ${message}, stack: ${stack}`));
+                dispatch(setError(err));
             })
     }
 }

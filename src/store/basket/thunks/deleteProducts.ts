@@ -77,12 +77,10 @@ export const deleteAllProducts = () => {
                 dispatch(deleteAllProductFromBasketList());
                 dispatch(setIsBasketDataProcessing(false));
             })
-            .catch((err: Error) => {
-                const {name, message, stack} = err;
-
+            .catch((err: string) => {
                 console.log('err', err);
                 dispatch(setIsBasketDataProcessing(false));
-                dispatch(setError(`name: ${name}, message: ${message}, stack: ${stack}`));
+                dispatch(setError(err));
             })
     }
 }
