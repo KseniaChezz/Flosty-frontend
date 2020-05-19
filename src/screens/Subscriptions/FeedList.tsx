@@ -38,7 +38,7 @@ const SubscriptionFeed = memo((props: IProps) => {
     };
 
     const keyExtractor = (item: IFeedProduct) => {
-        return `${item.id}`;
+        return item.id.toString();
     };
 
     const renderProduct = (info: ListRenderItemInfo<IFeedProduct>) => {
@@ -50,7 +50,6 @@ const SubscriptionFeed = memo((props: IProps) => {
         return (
             <ProductCardBig
                 product={product}
-                isShopShown={true}
                 onProductPress={onProductPress(shopId, id)}
             />
         );

@@ -73,6 +73,7 @@ const RootNavigator = () => {
             }
         ));
         navigate(RootNavigatorRoutes.USER_PROFILE_SUPPORT);
+        dispatch(resetError());
     };
 
     return (

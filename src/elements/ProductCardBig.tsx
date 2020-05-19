@@ -33,7 +33,6 @@ import {RootNavigatorRoutes} from '../enums';
 interface IProps {
     product: IFeedProduct | IShopProduct;
     onProductPress: () => void;
-    isShopShown?: boolean;
 }
 
 const isFeedProduct = (product: IFeedProduct | IShopProduct): product is IFeedProduct => {
@@ -44,7 +43,6 @@ const ProductCardBig = memo((props: IProps) => {
     const {
         product,
         onProductPress,
-        isShopShown,
     }= props;
     const {
         id,
@@ -64,9 +62,13 @@ const ProductCardBig = memo((props: IProps) => {
     const source =  Image.getSize(
         img,
         (width: number, height: number) => {
+            if (!height) return;
+
             setRatio(width / height);
     },
-        (err) => console.log(err));
+        (err) => {
+            console.log(err);
+        });
 
     const onAddFavoritePress = () => {
         dispatch(addFavoriteProduct(product as IShopProduct));
@@ -114,6 +116,8 @@ const ProductCardBig = memo((props: IProps) => {
             </View>
         )
     }
+
+    if (!ratio) return null;
 
     return (
         <TouchableOpacity onPress={onProductPress} style={styles.container}>
