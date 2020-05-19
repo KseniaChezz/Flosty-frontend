@@ -1,8 +1,10 @@
 import {Dispatch} from 'react';
 
 import {setIsLoading, addDetailProduct} from '../actions';
+import {setError} from '../../app/actions';
 
 import {IProductsAction} from '../types/actions';
+import {IAppAction} from '../../app/types/actions';
 import {
     IDetailedProductResponse,
     IColorResponse,
@@ -18,7 +20,7 @@ interface IResponse {
 }
 
 export const getDetailProduct = (shopId: number, productId: number) => {
-    return (dispatch: Dispatch<IProductsAction>) => {
+    return (dispatch: Dispatch<IProductsAction | IAppAction>) => {
         dispatch(setIsLoading(true));
 
         return get(`/shops/${shopId}/products/${productId}`,)
@@ -70,9 +72,12 @@ export const getDetailProduct = (shopId: number, productId: number) => {
                 dispatch(addDetailProduct(detailProduct))
                 dispatch(setIsLoading(false));
             })
-            .catch((err: any) => {
+            .catch((err: Error) => {
+                const {name, message, stack} = err;
+
                 console.log('err', err);
                 dispatch(setIsLoading(false));
+                dispatch(setError(`name: ${name}, message: ${message}, stack: ${stack}`));
             })
     }
 };

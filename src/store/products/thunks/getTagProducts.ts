@@ -1,8 +1,10 @@
 import {Dispatch} from 'react';
 
 import {setIsLoading, addTagProducts} from '../actions';
+import {setError} from '../../app/actions';
 
 import {IProductsAction} from '../types/actions';
+import {IAppAction} from '../../app/types/actions';
 import {IShopProduct, IProductResponse} from '../../../types/product';
 import {ITag} from '../../../types/shop';
 
@@ -21,7 +23,7 @@ interface IResponse {
 }
 
 export const getTagProducts = (tagId: number) => {
-    return (dispatch: Dispatch<IProductsAction>) => {
+    return (dispatch: Dispatch<IProductsAction | IAppAction>) => {
         dispatch(setIsLoading(true));
 
         return get(`/tags/${tagId}/products`)
@@ -54,9 +56,12 @@ export const getTagProducts = (tagId: number) => {
 
                 dispatch(setIsLoading(false));
             })
-            .catch((err: any) => {
+            .catch((err: Error) => {
+                const {name, message, stack} = err;
+
                 console.log('err', err);
                 dispatch(setIsLoading(false));
+                dispatch(setError(`name: ${name}, message: ${message}, stack: ${stack}`));
             })
     }
 };

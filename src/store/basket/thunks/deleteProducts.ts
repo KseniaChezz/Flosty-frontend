@@ -6,12 +6,14 @@ import {
     deleteAllShopProductsFromBasketList,
     deleteShopProductsFromBasketList,
 } from '../actions';
+import {setError} from '../../app/actions';
 
 import {IBasketAction} from '../types/actions';
+import {IAppAction} from '../../app/types/actions';
 import {IState} from '../../../store';
 
 import {deleteMethod} from '../../../utils/network';
-import { IShopInfoAndBasketProduct } from '../types/state';
+import {IShopInfoAndBasketProduct} from '../types/state';
 import { isShopSelected } from '../../../utils';
 
 
@@ -20,7 +22,7 @@ interface IResponse {
 }
 
 export const deleteProducts = (selectedProductIdListMap: Record<number, number[]>) => {
-    return (dispatch: Dispatch<IBasketAction>, getState: () => IState) => {
+    return (dispatch: Dispatch<IBasketAction | IAppAction>, getState: () => IState) => {
         dispatch(setIsBasketDataProcessing(true));
 
         const basketList: IShopInfoAndBasketProduct[] = getState().basket.list;
@@ -61,7 +63,7 @@ export const deleteProducts = (selectedProductIdListMap: Record<number, number[]
 }
 
 export const deleteAllProducts = () => {
-    return (dispatch: Dispatch<IBasketAction>, getState: () => IState) => {
+    return (dispatch: Dispatch<IBasketAction | IAppAction>, getState: () => IState) => {
         dispatch(setIsBasketDataProcessing(true));
 
         const basketList: IShopInfoAndBasketProduct[] = getState().basket.list;
@@ -75,9 +77,12 @@ export const deleteAllProducts = () => {
                 dispatch(deleteAllProductFromBasketList());
                 dispatch(setIsBasketDataProcessing(false));
             })
-            .catch((err: any) => {
+            .catch((err: Error) => {
+                const {name, message, stack} = err;
+
                 console.log('err', err);
                 dispatch(setIsBasketDataProcessing(false));
+                dispatch(setError(`name: ${name}, message: ${message}, stack: ${stack}`));
             })
     }
 }

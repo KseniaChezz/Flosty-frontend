@@ -1,10 +1,12 @@
 import {Dispatch} from 'react';
 
 import {setProcessingData, addCard} from '../actions';
+import {setError} from '../../app/actions';
 
 import {post} from '../../../utils/network';
 
 import {IUserAction} from '../types/actions';
+import {IAppAction} from '../../app/types/actions';
 import {ICard, ICardResponse} from '../../../types/user';
 
 import {getCardObjectForSend, mapCardFromResponse} from '../../../utils';
@@ -14,7 +16,7 @@ interface IResponse {
 }
 
 export const addUserCard = (card: Omit<ICard, 'id' |'type'>, cb?: (id: number) => void) => {
-    return (dispatch: Dispatch<IUserAction>) => {
+    return (dispatch: Dispatch<IUserAction | IAppAction>) => {
         dispatch(setProcessingData(true));
 
         return post('/users/cards', getCardObjectForSend(card))
@@ -25,9 +27,12 @@ export const addUserCard = (card: Omit<ICard, 'id' |'type'>, cb?: (id: number) =
                 cb && cb(data.id);
                 dispatch(setProcessingData(false));
             })
-            .catch((err: any) => {
+            .catch((err: Error) => {
+                const {name, message, stack} = err;
+
                 dispatch(setProcessingData(false));
                 console.log('err', err);
+                dispatch(setError(`name: ${name}, message: ${message}, stack: ${stack}`));
             })
     }
 };

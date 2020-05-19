@@ -1,8 +1,10 @@
 import {Dispatch} from 'react';
 
 import {setIsLoading, setPopularProductList} from '../actions';
+import {setError} from '../../app/actions';
 
 import {IProductsAction} from '../types/actions';
+import {IAppAction} from '../../app/types/actions';
 import {IProductResponse, IShopProduct} from '../../../types/product';
 
 import {get} from '../../../utils/network';
@@ -13,7 +15,7 @@ interface IResponse {
 }
 
 export const searchProducts = (text: string, cb:(productList: IShopProduct[]) => void) => {
-    return (dispatch: Dispatch<IProductsAction>) => {
+    return (dispatch: Dispatch<IProductsAction | IAppAction>) => {
         dispatch(setIsLoading(true));
 
         return get('/products/search', {text})
@@ -29,9 +31,12 @@ export const searchProducts = (text: string, cb:(productList: IShopProduct[]) =>
                 cb(productList);
                 dispatch(setIsLoading(false));
             })
-            .catch((err: any) => {
+            .catch((err: Error) => {
+                const {name, message, stack} = err;
+
                 console.log('err', err);
                 dispatch(setIsLoading(false));
+                dispatch(setError(`name: ${name}, message: ${message}, stack: ${stack}`));
             })
     }
 };

@@ -1,8 +1,10 @@
 import {Dispatch} from 'react';
 
 import {setFaforiteListDataIsProcessing, deleteProductFromFaforiteList} from '../actions';
+import {setError} from '../../app/actions';
 
 import {IFavoriteAction} from '../types/actions';
+import {IAppAction} from '../../app/types/actions';
 
 import {deleteMethod} from '../../../utils/network';
 
@@ -11,7 +13,7 @@ interface IResponse {
 }
 
 export const deleteFavoriteProduct = (productId: number) => {
-    return (dispatch: Dispatch<IFavoriteAction>) => {
+    return (dispatch: Dispatch<IFavoriteAction | IAppAction>) => {
         dispatch(setFaforiteListDataIsProcessing(true));
 
         return deleteMethod(`/favorite/${productId}`)
@@ -19,9 +21,12 @@ export const deleteFavoriteProduct = (productId: number) => {
                 dispatch(deleteProductFromFaforiteList(productId));
                 dispatch(setFaforiteListDataIsProcessing(false));
             })
-            .catch((err: any) => {
+            .catch((err: Error) => {
+                const {name, message, stack} = err;
+
                 console.log('err', err);
                 dispatch(setFaforiteListDataIsProcessing(false));
+                dispatch(setError(`name: ${name}, message: ${message}, stack: ${stack}`));
             })
     }
 }

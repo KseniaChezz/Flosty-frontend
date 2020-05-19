@@ -1,8 +1,10 @@
 import {Dispatch} from 'react';
 
 import {setFaforiteListIsLoading, setFaforiteList} from '../actions';
+import {setError} from '../../app/actions';
 
 import {IFavoriteAction} from '../types/actions';
+import {IAppAction} from '../../app/types/actions';
 import {IProductResponse, IShopProduct} from '../../../types/product';
 
 import {get} from '../../../utils/network';
@@ -13,7 +15,7 @@ interface IResponse {
 }
 
 export const getFavoriteList = () => {
-    return (dispatch: Dispatch<IFavoriteAction>) => {
+    return (dispatch: Dispatch<IFavoriteAction | IAppAction>) => {
         dispatch(setFaforiteListIsLoading(true));
 
         return get('/favorite')
@@ -30,9 +32,12 @@ export const getFavoriteList = () => {
 
                 dispatch(setFaforiteListIsLoading(false));
             })
-            .catch((err: any) => {
+            .catch((err: Error) => {
+                const {name, message, stack} = err;
+
                 console.log('err', err);
                 dispatch(setFaforiteListIsLoading(false));
+                dispatch(setError(`name: ${name}, message: ${message}, stack: ${stack}`));
             })
     }
 }

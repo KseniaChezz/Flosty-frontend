@@ -1,8 +1,10 @@
 import {Dispatch} from 'react';
 
 import {setIsFeedListLoading, setFeedList} from '../../../store/feed/actions';
+import {setError} from '../../app/actions';
 
 import {IFeedAction} from '../../../store/feed/types/actions';
+import {IAppAction} from '../../app/types/actions';
 import {IFeedProduct} from '../../../types/product';
 import {ISubscription, ISubscriptionResponse} from '../../../types/subscription';
 
@@ -29,7 +31,7 @@ interface IFeedProductResponse {
 }
 
 export const getFeedList = () => {
-    return (dispatch: Dispatch<IFeedAction>) => {
+    return (dispatch: Dispatch<IFeedAction | IAppAction>) => {
         dispatch(setIsFeedListLoading(true));
 
         return get('/users/feed',)
@@ -72,9 +74,12 @@ export const getFeedList = () => {
 
                 dispatch(setIsFeedListLoading(false));
             })
-            .catch((err: any) => {
+            .catch((err: Error) => {
+                const {name, message, stack} = err;
+
                 console.log('err', err);
                 dispatch(setIsFeedListLoading(false));
+                dispatch(setError(`name: ${name}, message: ${message}, stack: ${stack}`));
             })
     }
 };

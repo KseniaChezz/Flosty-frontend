@@ -1,8 +1,10 @@
 import {Dispatch} from 'react';
 
 import {setSubscriptionList, setSubscriptionListIsLoading} from '../../subscriptionList/actions';
+import {setError} from '../../app/actions';
 
 import {ISubscriptionListAction} from '../../subscriptionList/types/actions';
+import {IAppAction} from '../../app/types/actions';
 import {ISubscription, ISubscriptionShop, ISubscriptionTag, ISubscriptionResponse} from '../../../types/subscription';
 
 import {get} from '../../../utils/network';
@@ -13,7 +15,7 @@ interface IResponse {
 }
 
 export const getSubscriptionList = () => {
-    return (dispatch: Dispatch<ISubscriptionListAction>) => {
+    return (dispatch: Dispatch<ISubscriptionListAction | IAppAction>) => {
         dispatch(setSubscriptionListIsLoading(true));
 
         return get('/personal_subs',)
@@ -32,9 +34,12 @@ export const getSubscriptionList = () => {
 
                 dispatch(setSubscriptionListIsLoading(false));
             })
-            .catch((err: any) => {
+            .catch((err: Error) => {
+                const {name, message, stack} = err;
+
                 console.log('err', err);
                 dispatch(setSubscriptionListIsLoading(false));
+                dispatch(setError(`name: ${name}, message: ${message}, stack: ${stack}`));
             })
     }
 }

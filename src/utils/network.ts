@@ -35,9 +35,6 @@ instance.interceptors.request.use((config: AxiosRequestConfig) => {
 
     return config;
 }, (err: Error) => {
-    const {name, message, stack} = err;
-    const dispatch = useDispatch();
-    dispatch(setError(`name: ${name}, message: ${message}, stack: ${stack}`));
     console.log('requestError: ', err);
 
     return Promise.reject(err);
@@ -48,9 +45,6 @@ instance.interceptors.response.use(function (response: AxiosResponse) {
 
     return response;
 }, (err: Error) => {
-    const {name, message, stack} = err;
-    const dispatch = useDispatch();
-    dispatch(setError(`name: ${name}, message: ${message}, stack: ${stack}`));
     console.log(err);
 
     return Promise.reject(`responseError: ${err}`);

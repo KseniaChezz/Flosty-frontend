@@ -1,8 +1,10 @@
 import {Dispatch} from 'react';
 
 import {setIsBasketListLoading, setBasketList} from '../actions';
+import {setError} from '../../app/actions';
 
 import {IBasketAction} from '../types/actions';
+import {IAppAction} from '../../app/types/actions';
 import {IBasketProductResponse} from '../../../types/basket';
 import {IShopInfoAndBasketProduct} from '../types/state';
 
@@ -23,7 +25,7 @@ interface IBasketItemResponse {
 }
 
 export const getBasketProducts = () => {
-    return (dispatch: Dispatch<IBasketAction>) => {
+    return (dispatch: Dispatch<IBasketAction | IAppAction>) => {
         dispatch(setIsBasketListLoading(true));
 
         return get('/baskets/get')
@@ -56,9 +58,12 @@ export const getBasketProducts = () => {
 
                 dispatch(setIsBasketListLoading(false));
             })
-            .catch((err: any) => {
+            .catch((err: Error) => {
+                const {name, message, stack} = err;
+
                 console.log('err', err);
                 dispatch(setIsBasketListLoading(false));
+                dispatch(setError(`name: ${name}, message: ${message}, stack: ${stack}`));
             })
     }
 }

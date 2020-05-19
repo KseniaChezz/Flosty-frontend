@@ -1,8 +1,10 @@
 import {Dispatch} from 'react';
 
 import {setIsBasketDataProcessing, deleteProductFromBasketList} from '../actions';
+import {setError} from '../../app/actions';
 
 import {IBasketAction} from '../types/actions';
+import {IAppAction} from '../../app/types/actions';
 
 import {deleteMethod} from '../../../utils/network';
 
@@ -12,7 +14,7 @@ interface IResponse {
 }
 
 export const deleteProduct = (shopId: number, productId: number) => {
-    return (dispatch: Dispatch<IBasketAction>) => {
+    return (dispatch: Dispatch<IBasketAction | IAppAction>) => {
         dispatch(setIsBasketDataProcessing(true));
 
         return deleteMethod('/baskets/remove/', {products: [productId]})
@@ -22,9 +24,12 @@ export const deleteProduct = (shopId: number, productId: number) => {
                 dispatch(deleteProductFromBasketList(shopId, productId));
                 dispatch(setIsBasketDataProcessing(false));
             })
-            .catch((err: any) => {
+            .catch((err: Error) => {
+                const {name, message, stack} = err;
+
                 console.log('err', err);
                 dispatch(setIsBasketDataProcessing(false));
+                dispatch(setError(`name: ${name}, message: ${message}, stack: ${stack}`));
             })
     }
 }

@@ -1,6 +1,7 @@
 import {Dispatch} from 'react';
 
 import {setProcessingData, deleteCard} from '../actions';
+import {setError} from '../../app/actions';
 
 import {deleteMethod} from '../../../utils/network';
 
@@ -20,9 +21,12 @@ export const deleteUserCard = (cardId: number) => {
                 dispatch(deleteCard(cardId));
                 dispatch(setProcessingData(false));
             })
-            .catch((err: any) => {
+            .catch((err: Error) => {
+                const {name, message, stack} = err;
+
                 dispatch(setProcessingData(false));
                 console.log('err', err);
+                dispatch(setError(`name: ${name}, message: ${message}, stack: ${stack}`));
             })
     }
 };

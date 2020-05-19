@@ -1,8 +1,10 @@
 import {Dispatch} from 'react';
 
 import {setIsLoading, addShopAndTagListProducts} from '../actions';
+import {setError} from '../../app/actions';
 
 import {IProductsAction} from '../types/actions';
+import {IAppAction} from '../../app/types/actions';
 import {IShopProduct, IProductResponse} from '../../../types/product';
 import {ITag} from '../../../types/shop';
 
@@ -20,7 +22,7 @@ export const getProductsByTagListAndShop = (
     tagIdList: number[],
     shopId: number[] | undefined,
     cb?: (productList: IShopProduct[], popularTagList: ITag[]) => void) => {
-    return (dispatch: Dispatch<IProductsAction>) => {
+    return (dispatch: Dispatch<IProductsAction | IAppAction>) => {
         dispatch(setIsLoading(true));
 
         const params: {tags: number[]; shops?: number[];} = {
@@ -57,9 +59,12 @@ export const getProductsByTagListAndShop = (
 
                 dispatch(setIsLoading(false));
             })
-            .catch((err: any) => {
+            .catch((err: Error) => {
+                const {name, message, stack} = err;
+
                 console.log('err', err);
                 dispatch(setIsLoading(false));
+                dispatch(setError(`name: ${name}, message: ${message}, stack: ${stack}`));
             })
     }
 };
