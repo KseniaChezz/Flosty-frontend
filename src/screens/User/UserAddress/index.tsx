@@ -3,9 +3,10 @@ import {
     View,
     Text,
     TextInput,
+    ScrollView,
     ViewStyle,
 } from 'react-native';
-import {StackNavigationProp} from '@react-navigation/stack';
+import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
 import {RouteProp} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 
@@ -18,7 +19,8 @@ import {
     ModalWindow
 } from '../../../elements';
 
-import {addAddress, deleteAddress} from '../../../store/user/actions';
+import {deleteUserAddress} from '../../../store/user/thunks/deleteUserAddress';
+import {addUserAddress} from '../../../store/user/thunks/addUserAddress';
 
 import {IRootNavigatorParamList} from '../../../types/rootNavigator';
 import {IUserAddressField, IUserAddressFieldList} from '../../../types/user';
@@ -68,7 +70,7 @@ const UserAddress = memo((props: IProps) => {
             throw new Error('Variable id must be defined');
         }
 
-        dispatch(deleteAddress(id));
+        dispatch(deleteUserAddress(id));
         onCanselPress();
         onBackPress();
     }
@@ -90,7 +92,7 @@ const UserAddress = memo((props: IProps) => {
             return;
         }
 
-        dispatch(addAddress({...getAddressObjectForSave(fieldList)}));
+        dispatch(addUserAddress(getAddressObjectForSave(fieldList)));
         onBackPress();
     }
 
@@ -129,30 +131,34 @@ const UserAddress = memo((props: IProps) => {
             onBackPress={onBackPress}
             style={styles.container}
         >
-            {renderItems(0, 4)}
+            <View style={styles.flex1}>
+                <ScrollView>
+                    {renderItems(0, 4)}
 
-            <View style={styles.fieldsContainer}>
-                {renderItems(4, 8, styles.flex1)}
+                    <View style={styles.fieldsContainer}>
+                        {renderItems(4, 8, styles.flex1)}
+                    </View>
+
+                    {renderItems(8, 11)}
+
+                    <View style={styles.fieldsContainer}>
+
+                        <TextInputWithTitleAndValidation
+                            value={'+7'}
+                            onValueChange={()=>{}}
+                            title={TEXT.code}
+                            style={styles.flex1}
+                        />
+
+                        {renderItems(11, 12, styles.flex5)}
+
+                    </View>
+
+                    {renderItems(12, 13)}
+
+                    <View style={styles.flex1} />
+                </ScrollView>
             </View>
-
-            {renderItems(8, 11)}
-
-            <View style={styles.fieldsContainer}>
-
-                <TextInputWithTitleAndValidation
-                    value={'+7'}
-                    onValueChange={()=>{}}
-                    title={TEXT.code}
-                    style={styles.flex1}
-                />
-
-                {renderItems(11, 12, styles.flex5)}
-
-            </View>
-
-            {renderItems(12, 13)}
-
-            <View style={styles.flex1} />
 
             <View style={styles.saveButtonContainer}>
                 <ColoredButton

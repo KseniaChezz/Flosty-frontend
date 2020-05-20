@@ -2,6 +2,7 @@ import {SetStateAction, Dispatch} from 'react';
 
 import {IBasketProductResponse, IBasketProduct} from '../types/basket';
 import {IShopInfoAndBasketProduct} from '../store/basket/types/state';
+import {IAddress} from '../types/user';
 
 export const mapBasketProductResponse = (basketProductResponse: IBasketProductResponse): IBasketProduct => {
     const {
@@ -167,3 +168,30 @@ export const getSelectedBasketProductsPrice = (
 
     return result;
 };
+
+export const getAddressForBasketMenuItem = (address: IAddress): string => {
+    const {
+        country,
+        region,
+        city,
+        street,
+        house,
+        building,
+        block,
+        apartment,
+        index,
+    } = address;
+    let result: string = `${index}, ${country}, ${city}, ${street}, д.${house}, `;
+
+    if (building) {
+        result += `к.${building}, `;
+    }
+
+    if (block) {
+        result += `стр.${block}, `;
+    }
+
+    result += `кв.${apartment}`;
+
+    return result;
+}

@@ -7,7 +7,7 @@ import {
     Image,
     ListRenderItemInfo,
 } from 'react-native';
-import {StackNavigationProp} from '@react-navigation/stack';
+import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
 import {RouteProp} from '@react-navigation/native';
 
 import {ScreenWrapperWithBackButton, RowMenuItem} from '../../../elements';

@@ -1,7 +1,7 @@
 import React, {memo, useState} from 'react';
 import {View, Text, Image, ScrollView} from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
-import {StackNavigationProp} from '@react-navigation/stack';
+import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
 import {useSelector, useDispatch} from 'react-redux';
 
 import {styles} from './style';

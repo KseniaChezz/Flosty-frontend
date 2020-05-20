@@ -21,7 +21,7 @@ export interface IUserAddressField extends IField {}
 export interface IUserAddressFieldList extends IFieldList {}
 
 export interface IAddress {
-    id: string;
+    id: number;
     country: string;
     region: string;
     city: string;
@@ -48,7 +48,6 @@ export interface ICard {
     cardHolderName: string;
     expiryMonth: number;
     expiryYear: number;
-    // code: number;
 }
 
 export interface ICardResponse {

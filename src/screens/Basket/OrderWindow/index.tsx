@@ -10,6 +10,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import RootOrderScreen from './RootOrderScreen';
 import PaymentScreen from './PaymentScreen';
+import DeliveryScreen from './DeliveryScreen';
+import AddressListScreen from './AddressListScreen';
 
 import {COLORS} from '../../../constants';
 import {OrderNavigatorRoutes} from '../../../enums/orderNavigatorRoutes';
@@ -50,6 +52,14 @@ const OrderWindow = memo((props: IProps) => {
                         <Stack.Screen
                             name={OrderNavigatorRoutes.NEW_CARD_SCREEN}
                             component={UserCard}
+                        />
+                        <Stack.Screen
+                            name={OrderNavigatorRoutes.DELIVERY_SCREEN}
+                            component={DeliveryScreen}
+                        />
+                        <Stack.Screen
+                            name={OrderNavigatorRoutes.ADDRESS_LIST_SCREEN}
+                            component={AddressListScreen}
                         />
                     </Stack.Navigator>
                 </NavigationContainer>

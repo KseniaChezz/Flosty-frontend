@@ -34,6 +34,7 @@ import FilterListRow from './FilterListRow';
 import InfoRow from './InfoRow';
 import PlainRadioButtonRowItem from './PlainRadioButtonRowItem';
 import RadioButtonRowItem from './RadioButtonRowItem';
+import AddressRadioButtonItem from './AddressRadioButtonItem';
 
 import ProductCardBig from './ProductCardBig';
 import ProductCardSmall from './ProductCardSmall';
@@ -87,6 +88,7 @@ export {
     InfoRow,
     PlainRadioButtonRowItem,
     RadioButtonRowItem,
+    AddressRadioButtonItem,
 
     ProductCardBig,
     ProductCardSmall,

@@ -1,6 +1,7 @@
 import {basketAction} from '../basketActionEnum';
 
 import {IShopInfoAndBasketProduct} from './state';
+import { IAddress, ICard } from '../../../types/user';
 
 export interface ISetListIsLoading {
     type: basketAction.BASKET_SET_LIST_IS_LOADING;
@@ -50,6 +51,16 @@ export interface IUpdateProductQuantity {
     productQuantity: number;
 }
 
+export interface ISelectAddress {
+    type: basketAction.BASKET_SELECT_ADDRESS;
+    address: IAddress | undefined;
+}
+
+export interface ISelectCard {
+    type: basketAction.BASKET_SELECT_CARD;
+    card: ICard | undefined;
+}
+
 export type IBasketAction = ISetListIsLoading
     | ISetDataIsProcessing
     | ISetList
@@ -59,3 +70,5 @@ export type IBasketAction = ISetListIsLoading
     | IDeleteShopProducts
     | IDeleteAllProducts
     | IUpdateProductQuantity
+    | ISelectAddress
+    | ISelectCard

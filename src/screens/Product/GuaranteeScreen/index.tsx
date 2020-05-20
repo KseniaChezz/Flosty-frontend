@@ -6,7 +6,7 @@ import {
     Image,
     StyleSheet,
 } from 'react-native';
-import {StackNavigationProp} from '@react-navigation/stack';
+import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
 
 import {ScreenWrapperWithBackButton} from '../../../elements';
 import GuaranteeCard from './GuaranteeCard';

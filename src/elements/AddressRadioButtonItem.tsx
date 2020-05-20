@@ -2,30 +2,32 @@ import React, {useState, memo} from 'react';
 import {
     View,
     Text,
-    TouchableOpacity,
     Image,
+    ImageSourcePropType,
+    TouchableOpacity,
     StyleSheet,
 } from 'react-native';
 
-import {IAddress} from '../../../types/user';
+import {IAddress} from '../types/user';
 
-import {COLORS} from '../../../constants';
+import {COLORS} from '../constants';
 
-import {getAddressString} from '../../../utils';
+import {getAddressString} from '../utils';
 
 interface IProps {
     address: IAddress;
+    isSelected: boolean;
     onPress: () => void;
 }
 
-const AddresCard = memo((props: IProps) => {
+const AddressRadioButtonItem = memo((props: IProps) => {
     const {
-        onPress,
         address,
+        isSelected,
+        onPress,
     } = props;
     const {
         country,
-        region,
         city,
         street,
         house,
@@ -39,15 +41,19 @@ const AddresCard = memo((props: IProps) => {
         email,
     } = address;
 
+    const img: ImageSourcePropType = isSelected
+        ? require('../../assets/images/radio_button_select.png')
+        : require('../../assets/images/radio_button_default.png');
+
     return (
-        <TouchableOpacity
-            style={styles.cardContainer}
-            onPress={onPress}
-        >
-            <View style={styles.cardInnerContainer}>
+        <TouchableOpacity style={styles.itemContainer} onPress={onPress}>
+            <View style={styles.itemInnerContainer}>
+                <Image
+                    source={img}
+                    style={styles.img}
+                />
 
                 <View style={styles.textContainer}>
-
                     <Text style={[styles.text, styles.textBold]}>
                         {`${firstName} ${name},`}
                     </Text>
@@ -67,47 +73,30 @@ const AddresCard = memo((props: IProps) => {
                     <Text style={styles.text}>
                         {index}
                     </Text>
-
                 </View>
-
-                <View style={styles.iconContainer}>
-                    <Image
-                        style={styles.icon}
-                        source={require('../../../../assets/images/next.png')}
-                    />
-                </View>
-
             </View>
-
         </TouchableOpacity>
     );
 });
 
 const styles = StyleSheet.create({
-    cardContainer: {
-        backgroundColor: COLORS.White,
-        marginBottom: 5,
+    itemContainer: {
+        paddingHorizontal: 8,
     },
-    cardInnerContainer: {
+    itemInnerContainer: {
+        height: 44,
         flexDirection: 'row',
-        borderBottomWidth: 1,
+        alignItems: 'center',
         borderBottomColor: COLORS.Border,
-        marginHorizontal: 8,
-        paddingHorizontal: 4,
-        paddingTop: 10,
-        paddingBottom:5,
+        borderBottomWidth: 1,
     },
     textContainer: {
-        flex: 1,
+        paddingLeft: 4,
     },
-    iconContainer: {
+    img: {
+        height: 30,
         width: 30,
-        justifyContent: 'flex-start',
-        alignItems: 'flex-end',
-    },
-    icon: {
-        height: 20,
-        width: 20,
+        marginLeft: -5,
     },
     text: {
         fontFamily: 'Montserrat',
@@ -123,4 +112,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default AddresCard;
+export default AddressRadioButtonItem;

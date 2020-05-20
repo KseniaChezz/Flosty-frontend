@@ -10,8 +10,11 @@ import {
     IDeleteAllShopProducts,
     IDeleteShopProducts,
     IUpdateProductQuantity,
+    ISelectAddress,
+    ISelectCard,
 } from './types/actions';
 import {IShopInfoAndBasketProduct} from './types/state';
+import { IAddress, ICard } from '../../types/user';
 
 export const setIsBasketListLoading = (isLoading: boolean): ISetListIsLoading => {
     return {
@@ -73,5 +76,19 @@ export const deleteShopProductsFromBasketList = (shopId: number, productIdList: 
         type: basketAction.BASKET_DELETE_SHOP_PRODUCTS,
         shopId,
         productIdList,
+    }
+}
+
+export const selectAddress = (address?: IAddress): ISelectAddress => {
+    return {
+        type: basketAction.BASKET_SELECT_ADDRESS,
+        address,
+    }
+}
+
+export const selectCard = (card?: ICard): ISelectCard => {
+    return {
+        type: basketAction.BASKET_SELECT_CARD,
+        card,
     }
 }

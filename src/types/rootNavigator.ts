@@ -1,4 +1,4 @@
-import {IUserAddressFieldList, IUserCardFieldList, IMessage} from './user';
+import {IUserAddressFieldList, IUserCardFieldList, IMessage, ICard} from './user';
 import {ISubscription} from './subscription';
 
 import {SubscriptionType} from '../enums';
@@ -10,14 +10,14 @@ export type IRootNavigatorParamList = {
 
     UserProfile: undefined;
     UserProfileAddressList: undefined;
-    UserProfileAddress: {title: string, fieldList: IUserAddressFieldList, id?: string}
+    UserProfileAddress: {title: string, fieldList: IUserAddressFieldList, id?: number}
     UserProfileCardList: undefined;
     UserProfileCard: {
         title: string,
         fieldList: IUserCardFieldList,
         id?: string,
         isModalMode?: boolean,
-        onAddCardSuccess: (id: number) => void,
+        onAddCardSuccess: (card: ICard) => void,
     }
     UserProfileOrderList: undefined;
     UserProfileSettings: undefined;

@@ -192,7 +192,7 @@ export const checkPasswordChangeAndSetError = (
     return true;
 }
 
-export const getAddressObjectForSave = (addressObjectFieldList: IUserAddressFieldList): IAddress => {
+export const getAddressObjectForSave = (addressObjectFieldList: IUserAddressFieldList): Omit<IAddress, 'id'> => {
     return {
         country: addressObjectFieldList[TEXT.country].value,
         region: addressObjectFieldList[TEXT.region].value,
@@ -207,7 +207,6 @@ export const getAddressObjectForSave = (addressObjectFieldList: IUserAddressFiel
         name: addressObjectFieldList[TEXT.name].value,
         phoneNumber: addressObjectFieldList[TEXT.phoneNumber].value,
         email: addressObjectFieldList[TEXT.email].value,
-        id: `addressId${Math.random()}`,
     }
 };
 
@@ -339,4 +338,26 @@ export const getMessageCut = (message: IMessage, shopName: string): string => {
     const delta: number = maxMessageLength - shopNameLength;
 
     return `${shopName}: ${text.slice(0, delta)}${text.length > delta ? '...' : ''}`;
+}
+
+export const getAddressString = (
+    street: string,
+    house: string,
+    building: string | undefined,
+    block: string | undefined,
+    apartment: string,
+): string => {
+    let addressString: string = `${street}, д.${house}, `;
+
+    if (building) {
+        addressString += `к.${building}, `;
+    }
+
+    if (block) {
+        addressString += `стр.${block}, `;
+    }
+
+    addressString += `кв.${apartment}`;
+
+    return addressString;
 }

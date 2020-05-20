@@ -57,7 +57,7 @@ const SelectAll = memo((props: IProps) => {
                 onPress={onDeleteSelectedPress}
             >
                 <Text style={[styles.text, styles.redText]}>
-                    {TEXT.deleteSelected} {count}
+                    {TEXT.deleteSelected} ( {count} )
                 </Text>
             </TouchableOpacity>
         )

@@ -1,31 +1,24 @@
 import {Dispatch} from 'react';
 
-import {setProcessingData, addCard} from '../actions';
+import {setProcessingData, deleteCard} from '../actions';
 import {setError} from '../../app/actions';
 
-import {post} from '../../../utils/network';
+import {deleteMethod} from '../../../utils/network';
 
 import {IUserAction} from '../types/actions';
 import {IAppAction} from '../../app/types/actions';
-import {ICard, ICardResponse} from '../../../types/user';
-
-import {getCardObjectForSend, mapCardFromResponse} from '../../../utils';
 
 interface IResponse {
-    data: ICardResponse;
+    data: any;
 }
 
-export const addUserCard = (card: Omit<ICard, 'id' |'type'>, cb?: (card: ICard) => void) => {
+export const deleteUserAddress = (addressId: number) => {
     return (dispatch: Dispatch<IUserAction | IAppAction>) => {
         dispatch(setProcessingData(true));
 
-        return post('/users/cards', getCardObjectForSend(card))
+        return deleteMethod(`/users/addresses/${addressId}`)
             .then((res: IResponse) => {
-                const {data} = res;
-                const card: ICard = mapCardFromResponse(data);
-
-                dispatch(addCard(card));
-                cb && cb(card);
+                dispatch(deleteCard(addressId));
                 dispatch(setProcessingData(false));
             })
             .catch((err: string) => {

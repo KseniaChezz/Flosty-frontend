@@ -1,6 +1,6 @@
 import React, {memo, useState} from 'react';
 import {View, Text, ScrollView, StyleSheet} from 'react-native';
-import {StackNavigationProp} from '@react-navigation/stack';
+import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {

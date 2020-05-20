@@ -13,7 +13,8 @@ import {getBasketProducts} from '../../store/basket/thunks/getBasketProducts';
 
 import {IState} from '../../store';
 import {IShopInfoAndBasketProduct} from '../../store/basket/types/state';
-import { getSelectedBasketProductsPrice } from '../../utils';
+
+import {getSelectedBasketProductsPrice} from '../../utils';
 
 interface IProps {}
 

@@ -3,7 +3,7 @@ import {
     Text,
 } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
-import {StackNavigationProp} from '@react-navigation/stack';
+import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
 import {RouteProp} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 

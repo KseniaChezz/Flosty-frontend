@@ -12,6 +12,7 @@ import {
     getNotificationSectionList,
     getUserCommunicationShopList,
     isNotEmptyString,
+    getAddressString,
 } from './user';
 import {
     getReadableDate,
@@ -75,6 +76,7 @@ import {
     unSelectAllShopBasketProducts,
     getSelectedBasketProductsCount,
     getSelectedBasketProductsPrice,
+    getAddressForBasketMenuItem,
 } from './basket';
 
 export {
@@ -91,6 +93,7 @@ export {
     getNotificationSectionList,
     getUserCommunicationShopList,
     isNotEmptyString,
+    getAddressString,
 
     getReadableDate,
     isToday,
@@ -151,4 +154,5 @@ export {
     unSelectAllShopBasketProducts,
     getSelectedBasketProductsCount,
     getSelectedBasketProductsPrice,
+    getAddressForBasketMenuItem,
 }

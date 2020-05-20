@@ -1,5 +1,5 @@
 import React, { useState, memo } from 'react';
-import { StackNavigationProp } from '@react-navigation/stack';
+import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
 import { RouteProp } from '@react-navigation/native';
 
 import {styles} from './style';

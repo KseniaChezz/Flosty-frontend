@@ -377,7 +377,11 @@ export const TEXT = {
     discount: 'Скидка',
     totalSum: 'Итог',
     yandexMoney: 'Яндекс Деньги',
-    bankCard: ' Банковская карта',
+    bankCard: 'Банковская карта',
+    carrier: 'Курьер',
+    post: 'Почта',
+    deliveryAddress: 'Адрес доставки',
+    selectAddress: 'Выберите адрес',
 
     errorTitle: 'Упс, кажется что-то пошло не так...',
     errorText: 'Обратитесь в службу технической поддержки',

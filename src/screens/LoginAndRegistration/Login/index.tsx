@@ -4,7 +4,7 @@ import {
     View,
     Image,
 } from 'react-native';
-import {StackNavigationProp} from '@react-navigation/stack';
+import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
 import {useSelector, useDispatch} from 'react-redux';
 import Spinner from 'react-native-loading-spinner-overlay';
 

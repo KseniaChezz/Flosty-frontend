@@ -7,6 +7,8 @@ import {
     IDeleteAllShopProducts,
     IDeleteProduct,
     IDeleteShopProducts,
+    ISelectAddress,
+    ISelectCard,
     ISetDataIsProcessing,
     ISetList,
     ISetListIsLoading,
@@ -20,6 +22,8 @@ const initialState: IBasketState = {
     list: [],
     isListLoading: false,
     isDataProcessing: false,
+    selectedAddress: undefined,
+    selectedCard: undefined,
 }
 
 const onSetDataIsProcessing = (state: IBasketState, action: ISetDataIsProcessing): IBasketState => {
@@ -136,6 +140,24 @@ const onUpdateProductQuantity = (state: IBasketState, action: IUpdateProductQuan
     }
 }
 
+const onSelectAddress = (state: IBasketState, action: ISelectAddress): IBasketState => {
+    const {address} = action;
+
+    return {
+        ...state,
+        selectedAddress: address,
+    }
+}
+
+const onSelectCard = (state: IBasketState, action: ISelectCard): IBasketState => {
+    const {card} = action;
+
+    return {
+        ...state,
+        selectedCard: card,
+    }
+}
+
 export const basketReducer = (state: IBasketState = initialState, action: IBasketAction | IAppAction): IBasketState => {
     switch (action.type) {
         case basketAction.BASKET_SET_DATA_IS_PROCESSING:
@@ -154,6 +176,10 @@ export const basketReducer = (state: IBasketState = initialState, action: IBaske
             return onDeleteShopProducts(state, action);
         case basketAction.BASKET_UPDATE_PRODUCT_QUANTITY:
             return onUpdateProductQuantity(state, action);
+        case basketAction.BASKET_SELECT_ADDRESS:
+            return onSelectAddress(state, action);
+        case basketAction.BASKET_SELECT_CARD:
+            return onSelectCard(state, action);
         case AppAction.APP_SET_DEFAULT:
             return initialState;
         default:
