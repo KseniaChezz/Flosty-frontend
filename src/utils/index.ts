@@ -79,6 +79,7 @@ import {
     getSelectedBasketProductsCount,
     getSelectedBasketProductsPrice,
     getAddressForBasketMenuItem,
+    getProductIdList,
 } from './basket';
 
 export {
@@ -159,4 +160,5 @@ export {
     getSelectedBasketProductsCount,
     getSelectedBasketProductsPrice,
     getAddressForBasketMenuItem,
+    getProductIdList,
 }

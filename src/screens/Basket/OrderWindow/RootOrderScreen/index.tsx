@@ -46,6 +46,7 @@ const RootOrderScreen = memo((props: IProps) => {
     const selectedAddress: IAddress | undefined = useSelector((state: IState) => state.basket.selectedAddress);
     const selectedDeliveryType: any | undefined = useSelector(
         (state: IState) => state.basket.selectedDeliveryType);
+    const deliveryPrice: number = useSelector((state: IState) => state.basket.deliveryPrice);
     const addressText: string = selectedAddress
         ? selectedDeliveryType
             ? `${selectedDeliveryType.name}, ${getAddressForBasketMenuItem(selectedAddress)}`
@@ -97,7 +98,7 @@ const RootOrderScreen = memo((props: IProps) => {
 
                 <InfoRow
                     title={TEXT.deliverySum}
-                    value={0}
+                    value={deliveryPrice}
                 />
 
                 <InfoRow
@@ -107,7 +108,7 @@ const RootOrderScreen = memo((props: IProps) => {
 
                 <InfoRow
                     title={TEXT.totalSum}
-                    value={selectedProductsPrice}
+                    value={selectedProductsPrice + deliveryPrice}
                 />
             </View>
 

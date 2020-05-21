@@ -14,6 +14,7 @@ import {
     ISelectCard,
     ISetDeliveryTypeList,
     ISelectDeliveryType,
+    ISetDeliveryPrice,
 } from './types/actions';
 import {IShopInfoAndBasketProduct} from './types/state';
 import {IAddress, ICard} from '../../types/user';
@@ -107,5 +108,12 @@ export const selectDeliveryType = (deliveryType?: IDeliveryType): ISelectDeliver
     return {
         type: basketAction.BASKET_SELECT_DELIVERY_TYPE,
         deliveryType,
+    }
+}
+
+export const setDeliveryPrice = (deliveryPrice: number): ISetDeliveryPrice => {
+    return {
+        type: basketAction.BASKET_SET_DELIVERY_PRICE,
+        deliveryPrice,
     }
 }

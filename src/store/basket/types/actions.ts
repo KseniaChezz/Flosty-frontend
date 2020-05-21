@@ -72,6 +72,11 @@ export interface ISelectDeliveryType {
     deliveryType: IDeliveryType | undefined;
 }
 
+export interface ISetDeliveryPrice {
+    type: basketAction.BASKET_SET_DELIVERY_PRICE;
+    deliveryPrice: number;
+}
+
 export type IBasketAction = ISetListIsLoading
     | ISetDataIsProcessing
     | ISetList
@@ -85,3 +90,4 @@ export type IBasketAction = ISetListIsLoading
     | ISelectCard
     | ISetDeliveryTypeList
     | ISelectDeliveryType
+    | ISetDeliveryPrice

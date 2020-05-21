@@ -196,3 +196,13 @@ export const getAddressForBasketMenuItem = (address: IAddress): string => {
 
     return result;
 };
+
+export const getProductIdList = (selectedShopProductMap: Record<number, number[]>,): number[] => {
+    let result: number[] = [];
+
+    Object.keys(selectedShopProductMap).forEach((key: string) => {
+        result = result.concat(selectedShopProductMap[+key]);
+    });
+
+    return result;
+};

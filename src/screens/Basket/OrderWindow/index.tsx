@@ -19,6 +19,8 @@ import {OrderNavigatorRoutes} from '../../../enums/orderNavigatorRoutes';
 import {IOrderNavigatorParamList} from '../../../types/orderNavigator';
 import { UserCard } from '../../User';
 
+import {getProductIdList} from '../../../utils';
+
 interface IProps {
     isWindowVisible: boolean;
     selectedProductsPrice: number;
@@ -35,6 +37,7 @@ const OrderWindow = memo((props: IProps) => {
         selectedProductIdListMap,
         hide,
     } = props;
+    const productIdList: number[] = getProductIdList(selectedProductIdListMap);
 
     return (
         <Modal isVisible={isWindowVisible} style={styles.modalContainer}>
@@ -45,7 +48,7 @@ const OrderWindow = memo((props: IProps) => {
                         <Stack.Screen
                             name={OrderNavigatorRoutes.ROOT_ORDER_SCREEN}
                             component={RootOrderScreen}
-                            initialParams={{selectedProductsPrice, hide}}
+                            initialParams={{selectedProductsPrice, productIdList, hide}}
                         />
                         <Stack.Screen
                             name={OrderNavigatorRoutes.PAYMENT_SCREEN}
@@ -58,6 +61,7 @@ const OrderWindow = memo((props: IProps) => {
                         <Stack.Screen
                             name={OrderNavigatorRoutes.DELIVERY_SCREEN}
                             component={DeliveryScreen}
+                            initialParams={{productIdList}}
                         />
                         <Stack.Screen
                             name={OrderNavigatorRoutes.ADDRESS_LIST_SCREEN}

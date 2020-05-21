@@ -12,4 +12,5 @@ export enum basketAction {
     BASKET_SELECT_CARD = 'BasketSelectCard',
     BASKET_SET_DELIVERY_TYPE_LIST = 'BasketSetDeliveryTypeList',
     BASKET_SELECT_DELIVERY_TYPE = 'BasketSelectDeliveryType',
+    BASKET_SET_DELIVERY_PRICE = 'BasketSetDeliveryPrice',
 }

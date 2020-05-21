@@ -1,8 +1,9 @@
-import React, {useState, memo} from 'react';
+import React, {useState, useEffect, memo} from 'react';
 import {
     View,
     StyleSheet,
 } from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
 import {useSelector, useDispatch} from 'react-redux';
 import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
 import {RouteProp} from '@react-navigation/native';
@@ -15,6 +16,7 @@ import {
 import FilterItem from '../../../elements/ProductList/FilterWindow/FilterItem';
 
 import {selectDeliveryType} from '../../../store/basket/actions';
+import {getDeliveryPrice} from '../../../store/basket/thunks/getDeliveryPrice';
 
 import {IOrderNavigatorParamList} from '../../../types/orderNavigator';
 import {IState} from '../../../store';
@@ -41,15 +43,24 @@ const DeliveryScreen = memo((props: IProps) => {
         route: {
             params: {
                 hide,
+                productIdList,
             },
         },
     } = props;
     const addressList: IAddress[] = useSelector((store: IState) => store.user.addressList);
     const selectedAddress: IAddress | undefined = useSelector((state: IState) => state.basket.selectedAddress);
     const deliveryTypeList: IDeliveryType[] = useSelector((state: IState) => state.basket.deliveryTypeList);
-    const selectedDeliveryType: IDeliveryType | undefined = useSelector(
+    const selectedDeliveryType: IDeliveryType = useSelector(
         (state: IState) => state.basket.selectedDeliveryType);
+    const deliveryPrice: number = useSelector((state: IState) => state.basket.deliveryPrice);
+    const isDataProcessing: boolean = useSelector((state: IState) => state.basket.isDataProcessing);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (!selectedAddress) return;
+
+        dispatch(getDeliveryPrice(selectedAddress.id, selectedDeliveryType.id, productIdList));
+    }, [selectedAddress, selectedDeliveryType]);
 
     const onBackPress = () => {
         navigation.goBack();
@@ -103,9 +114,11 @@ const DeliveryScreen = memo((props: IProps) => {
 
                 <InfoRow
                     title={TEXT.deliverySum}
-                    value={0}
+                    value={deliveryPrice}
                 />
             </View>
+
+            <Spinner visible={isDataProcessing} />
 
         </View>
     );

@@ -9,6 +9,7 @@ export interface IBasketState {
     selectedCard: ICard | undefined;
     selectedDeliveryType: any;
     deliveryTypeList: IDeliveryType[];
+    deliveryPrice: number;
 }
 
 export interface IShopInfoAndBasketProduct {

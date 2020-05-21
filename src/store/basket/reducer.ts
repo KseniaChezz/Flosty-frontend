@@ -11,6 +11,7 @@ import {
     ISelectCard,
     ISelectDeliveryType,
     ISetDataIsProcessing,
+    ISetDeliveryPrice,
     ISetDeliveryTypeList,
     ISetList,
     ISetListIsLoading,
@@ -28,6 +29,7 @@ const initialState: IBasketState = {
     selectedCard: undefined,
     deliveryTypeList: [],
     selectedDeliveryType: undefined,
+    deliveryPrice: 0,
 }
 
 const onSetDataIsProcessing = (state: IBasketState, action: ISetDataIsProcessing): IBasketState => {
@@ -180,6 +182,15 @@ const onSelectDeliveryType = (state: IBasketState, action: ISelectDeliveryType):
     }
 }
 
+const onSetDeliveryPrice = (state: IBasketState, action: ISetDeliveryPrice): IBasketState => {
+    const {deliveryPrice} = action;
+
+    return {
+        ...state,
+        deliveryPrice,
+    }
+}
+
 export const basketReducer = (state: IBasketState = initialState, action: IBasketAction | IAppAction): IBasketState => {
     switch (action.type) {
         case basketAction.BASKET_SET_DATA_IS_PROCESSING:
@@ -206,6 +217,8 @@ export const basketReducer = (state: IBasketState = initialState, action: IBaske
             return onSetDeliveryTypeList(state, action);
         case basketAction.BASKET_SELECT_DELIVERY_TYPE:
             return onSelectDeliveryType(state, action);
+        case basketAction.BASKET_SET_DELIVERY_PRICE:
+            return onSetDeliveryPrice(state, action);
         case AppAction.APP_SET_DEFAULT:
             return initialState;
         default:
