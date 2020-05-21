@@ -1,4 +1,4 @@
-import {IAddress, ICardResponse} from '../../../types/user';
+import {IAddressResponse, ICardResponse} from '../../../types/user';
 
 export interface ILoginAndRegistrationResponse {
     data: {
@@ -7,7 +7,7 @@ export interface ILoginAndRegistrationResponse {
             email: string;
             name: string;
             role: string;
-            addresses: IAddress[];
+            addresses: IAddressResponse[];
             cards: ICardResponse[];
         },
         token: string;

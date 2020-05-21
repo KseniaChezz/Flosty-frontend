@@ -10,7 +10,7 @@ import {
 
 import {IAddress} from '../types/user';
 
-import {COLORS} from '../constants';
+import {COLORS, TEXT} from '../constants';
 
 import {getAddressString} from '../utils';
 
@@ -27,7 +27,6 @@ const AddressRadioButtonItem = memo((props: IProps) => {
         onPress,
     } = props;
     const {
-        country,
         city,
         street,
         house,
@@ -67,7 +66,7 @@ const AddressRadioButtonItem = memo((props: IProps) => {
                     </Text>
 
                     <Text style={styles.text}>
-                        {`${country}, ${city}`}
+                        {`${TEXT.Russia}, ${city}`}
                     </Text>
 
                     <Text style={styles.text}>
@@ -84,14 +83,15 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8,
     },
     itemInnerContainer: {
-        height: 44,
+        minHeight: 44,
         flexDirection: 'row',
-        alignItems: 'center',
         borderBottomColor: COLORS.Border,
         borderBottomWidth: 1,
     },
     textContainer: {
+        paddingTop: 5,
         paddingLeft: 4,
+        paddingBottom: 5,
     },
     img: {
         height: 30,

@@ -9,5 +9,7 @@ export enum basketAction {
     BASKET_DELETE_SHOP_PRODUCTS = 'BasketDeleteShopProducts',
     BASKET_UPDATE_PRODUCT_QUANTITY = 'BasketUpdateProductquantity',
     BASKET_SELECT_ADDRESS = 'BasketSelectAddress',
-    BASKET_SELECT_CARD = 'BasketSelectCard'
+    BASKET_SELECT_CARD = 'BasketSelectCard',
+    BASKET_SET_DELIVERY_TYPE_LIST = 'BasketSetDeliveryTypeList',
+    BASKET_SELECT_DELIVERY_TYPE = 'BasketSelectDeliveryType',
 }

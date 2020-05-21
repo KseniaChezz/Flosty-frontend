@@ -1,4 +1,4 @@
-import {IBasketProduct} from '../../../types/basket';
+import {IBasketProduct, IDeliveryType} from '../../../types/basket';
 import {IAddress, ICard} from '../../../types/user';
 
 export interface IBasketState {
@@ -7,6 +7,8 @@ export interface IBasketState {
     isDataProcessing: boolean;
     selectedAddress: IAddress | undefined;
     selectedCard: ICard | undefined;
+    selectedDeliveryType: any;
+    deliveryTypeList: IDeliveryType[];
 }
 
 export interface IShopInfoAndBasketProduct {

@@ -21,7 +21,7 @@ import {ICard, IAddress} from '../../../../types/user';
 import {OrderNavigatorRoutes} from '../../../../enums/orderNavigatorRoutes';
 import {TEXT} from '../../../../constants';
 
-import {getAddressForBasketMenuItem} from '../../../../utils';
+import {getAddressForBasketMenuItem, getCardString} from '../../../../utils';
 
 type ScreenNavigationProp = StackNavigationProp<IOrderNavigatorParamList, OrderNavigatorRoutes.ROOT_ORDER_SCREEN>;
 type ScreenRouteProp = RouteProp<IOrderNavigatorParamList, OrderNavigatorRoutes.ROOT_ORDER_SCREEN>;
@@ -41,18 +41,23 @@ const RootOrderScreen = memo((props: IProps) => {
             }
         }
     } = props;
-    const [paymentWay, setPaymentWay] = useState<string>(TEXT.choosePaymentWay);
     const [address, setAddress] = useState<string>(TEXT.doAddAddress);
-    const [deliveryWay, setDeliveryWay] = useState<string>(TEXT.carrier);
     const selectedCard: ICard | undefined = useSelector((state: IState) => state.basket.selectedCard);
     const selectedAddress: IAddress | undefined = useSelector((state: IState) => state.basket.selectedAddress);
+    const selectedDeliveryType: any | undefined = useSelector(
+        (state: IState) => state.basket.selectedDeliveryType);
+    const addressText: string = selectedAddress
+        ? selectedDeliveryType
+            ? `${selectedDeliveryType.name}, ${getAddressForBasketMenuItem(selectedAddress)}`
+            : `${getAddressForBasketMenuItem(selectedAddress)}`
+        : TEXT.doAddAddress;
 
     const onPaymentWayPress = () => {
-        navigation.navigate(OrderNavigatorRoutes.PAYMENT_SCREEN, {setPaymentWay});
+        navigation.navigate(OrderNavigatorRoutes.PAYMENT_SCREEN);
     };
 
     const onDeliveryPress = () => {
-        navigation.navigate(OrderNavigatorRoutes.DELIVERY_SCREEN, {hide, setDeliveryWay, deliveryWay});
+        navigation.navigate(OrderNavigatorRoutes.DELIVERY_SCREEN, {hide});
     };
 
     return (
@@ -73,15 +78,15 @@ const RootOrderScreen = memo((props: IProps) => {
 
                 <FilterItem
                     title={TEXT.delivery}
-                    value={selectedAddress ? `${deliveryWay}, ${getAddressForBasketMenuItem(selectedAddress)}` : TEXT.doAddAddress}
+                    value={addressText}
                     isDefault={!selectedAddress}
                     onPress={onDeliveryPress}
                 />
 
                 <FilterItem
                     title={TEXT.paymentWay}
-                    value={paymentWay}
-                    isDefault={paymentWay === TEXT.choosePaymentWay}
+                    value={selectedCard ? getCardString(selectedCard) : TEXT.choosePaymentWay}
+                    isDefault={!selectedCard}
                     onPress={onPaymentWayPress}
                 />
 

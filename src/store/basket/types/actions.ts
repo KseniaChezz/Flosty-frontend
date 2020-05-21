@@ -1,7 +1,8 @@
 import {basketAction} from '../basketActionEnum';
 
 import {IShopInfoAndBasketProduct} from './state';
-import { IAddress, ICard } from '../../../types/user';
+import {IAddress, ICard} from '../../../types/user';
+import {IDeliveryType} from '../../../types/basket';
 
 export interface ISetListIsLoading {
     type: basketAction.BASKET_SET_LIST_IS_LOADING;
@@ -61,6 +62,16 @@ export interface ISelectCard {
     card: ICard | undefined;
 }
 
+export interface ISetDeliveryTypeList {
+    type: basketAction.BASKET_SET_DELIVERY_TYPE_LIST;
+    deliveryTypeList: IDeliveryType[];
+}
+
+export interface ISelectDeliveryType {
+    type: basketAction.BASKET_SELECT_DELIVERY_TYPE;
+    deliveryType: IDeliveryType | undefined;
+}
+
 export type IBasketAction = ISetListIsLoading
     | ISetDataIsProcessing
     | ISetList
@@ -72,3 +83,5 @@ export type IBasketAction = ISetListIsLoading
     | IUpdateProductQuantity
     | ISelectAddress
     | ISelectCard
+    | ISetDeliveryTypeList
+    | ISelectDeliveryType

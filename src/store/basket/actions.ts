@@ -12,9 +12,12 @@ import {
     IUpdateProductQuantity,
     ISelectAddress,
     ISelectCard,
+    ISetDeliveryTypeList,
+    ISelectDeliveryType,
 } from './types/actions';
 import {IShopInfoAndBasketProduct} from './types/state';
-import { IAddress, ICard } from '../../types/user';
+import {IAddress, ICard} from '../../types/user';
+import {IDeliveryType} from '../../types/basket';
 
 export const setIsBasketListLoading = (isLoading: boolean): ISetListIsLoading => {
     return {
@@ -90,5 +93,19 @@ export const selectCard = (card?: ICard): ISelectCard => {
     return {
         type: basketAction.BASKET_SELECT_CARD,
         card,
+    }
+}
+
+export const setDeliveryTypeList = (deliveryTypeList: IDeliveryType[]): ISetDeliveryTypeList => {
+    return {
+        type: basketAction.BASKET_SET_DELIVERY_TYPE_LIST,
+        deliveryTypeList,
+    }
+}
+
+export const selectDeliveryType = (deliveryType?: IDeliveryType): ISelectDeliveryType => {
+    return {
+        type: basketAction.BASKET_SELECT_DELIVERY_TYPE,
+        deliveryType,
     }
 }

@@ -4,6 +4,8 @@ import {IBasketProductResponse, IBasketProduct} from '../types/basket';
 import {IShopInfoAndBasketProduct} from '../store/basket/types/state';
 import {IAddress} from '../types/user';
 
+import {TEXT} from '../constants';
+
 export const mapBasketProductResponse = (basketProductResponse: IBasketProductResponse): IBasketProduct => {
     const {
         id,
@@ -171,7 +173,6 @@ export const getSelectedBasketProductsPrice = (
 
 export const getAddressForBasketMenuItem = (address: IAddress): string => {
     const {
-        country,
         region,
         city,
         street,
@@ -181,7 +182,7 @@ export const getAddressForBasketMenuItem = (address: IAddress): string => {
         apartment,
         index,
     } = address;
-    let result: string = `${index}, ${country}, ${city}, ${street}, д.${house}, `;
+    let result: string = `${index}, ${TEXT.Russia}, ${city}, ${street}, д.${house}, `;
 
     if (building) {
         result += `к.${building}, `;
@@ -194,4 +195,4 @@ export const getAddressForBasketMenuItem = (address: IAddress): string => {
     result += `кв.${apartment}`;
 
     return result;
-}
+};

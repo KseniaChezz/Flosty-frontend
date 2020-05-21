@@ -13,6 +13,7 @@ import {
     IShopMessageMap,
     IMessage,
     ICardResponse,
+    IAddressResponse,
 } from '../types/user';
 
 import {
@@ -30,7 +31,7 @@ export const getAddressObjectForRender = (address?: IAddress): IUserAddressField
     return  {
         [TEXT.country]: {
             title: TEXT.country,
-            value: address?.country || 'Россия',
+            value: 'Россия',
             validate: isNotEmptyString,
         },
         [TEXT.region]: {
@@ -144,11 +145,6 @@ export const getCardObjectForRender = (): IUserCardFieldList => {
             value: '',
             validate: isNotEmptyString,
         },
-        // [TEXT.cvc]: {
-        //     title: TEXT.cvc,
-        //     value: '',
-        //     validate: isNotEmptyString,
-        // },
     };
 }
 
@@ -194,7 +190,6 @@ export const checkPasswordChangeAndSetError = (
 
 export const getAddressObjectForSave = (addressObjectFieldList: IUserAddressFieldList): Omit<IAddress, 'id'> => {
     return {
-        country: addressObjectFieldList[TEXT.country].value,
         region: addressObjectFieldList[TEXT.region].value,
         city: addressObjectFieldList[TEXT.city].value,
         street:addressObjectFieldList[TEXT.street].value,
@@ -236,7 +231,40 @@ export const mapCardFromResponse = (cardResponse: ICardResponse): ICard => {
         cardHolderName: holder,
         expiryMonth: expiry_month,
         expiryYear: expiry_year,
-        // code: card.code,
+    }
+}
+
+export const mapAddressFromResponse = (addressResponse: IAddressResponse): IAddress => {
+    const {
+        id,
+        city,
+        street,
+        house,
+        apartment,
+        email,
+        recipient_first_name,
+        recipient_last_name,
+        phone_number,
+        zip_code,
+        building,
+        block,
+        region,
+    } = addressResponse;
+
+    return {
+        id,
+        city,
+        street,
+        house,
+        apartment,
+        email,
+        building,
+        block,
+        region,
+        name: recipient_first_name,
+        firstName: recipient_last_name,
+        phoneNumber: phone_number,
+        index: zip_code,
     }
 }
 
@@ -254,13 +282,6 @@ export const getCardObjectForSend = (card: Omit<ICard, 'id' |'type'>) => {
         expiry_month: expiryMonth,
         expiry_year: expiryYear,
     }
-}
-
-export const getRandomCardType = (): string => {
-    const cardTypeList: string[] = ['MasterCard', 'Visa', 'Maestro', 'МИР'];
-    const randomIndex: number = getRandomInt(cardTypeList.length);
-
-    return cardTypeList[randomIndex];
 }
 
 const getRandomInt = (max: number): number => {
@@ -360,4 +381,10 @@ export const getAddressString = (
     addressString += `кв.${apartment}`;
 
     return addressString;
-}
+};
+
+export const getCardString = (card: ICard): string => {
+    const {type, cardNumber} = card;
+
+    return `${type}, **** ${cardNumber.toString().slice(-4)}`
+};

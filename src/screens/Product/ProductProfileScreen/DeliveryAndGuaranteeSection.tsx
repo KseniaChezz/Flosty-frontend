@@ -34,7 +34,7 @@ const DeliveryAndGuaranteeSection = memo((props: IProps) => {
 
                 <Text style={[styles.text, styles.deliveryText]}>
                     {/*{price === 0 ? TEXT.free : price}, {time}*/}
-                    Бесплатно, 2 – 5 дней
+                    1 – 14 дней
                 </Text>
             </View>
 

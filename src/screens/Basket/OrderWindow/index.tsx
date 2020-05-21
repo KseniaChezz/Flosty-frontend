@@ -22,6 +22,7 @@ import { UserCard } from '../../User';
 interface IProps {
     isWindowVisible: boolean;
     selectedProductsPrice: number;
+    selectedProductIdListMap: Record<number, number[]>
     hide: () => void;
 }
 
@@ -31,6 +32,7 @@ const OrderWindow = memo((props: IProps) => {
     const {
         isWindowVisible,
         selectedProductsPrice,
+        selectedProductIdListMap,
         hide,
     } = props;
 

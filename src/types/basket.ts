@@ -18,3 +18,8 @@ export interface IBasketProductResponse {
     quantity: number;
     image: string;
 }
+
+export interface IDeliveryType {
+    id: number;
+    name: string;
+}

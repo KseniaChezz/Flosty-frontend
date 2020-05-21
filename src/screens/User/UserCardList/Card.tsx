@@ -11,6 +11,8 @@ import {ICard} from '../../../types/user';
 
 import {COLORS} from '../../../constants';
 
+import {getCardString} from '../../../utils';
+
 interface IProps {
     card: ICard;
     onPress: () => void;
@@ -21,10 +23,6 @@ const Card = memo((props: IProps) => {
         onPress,
         card,
     } = props;
-    const {
-        cardNumber,
-        type,
-    } = card;
 
     return (
         <TouchableOpacity
@@ -36,7 +34,7 @@ const Card = memo((props: IProps) => {
                 <View style={styles.textContainer}>
 
                     <Text style={styles.text}>
-                        {`${type}, **** ${cardNumber.slice(-4)}`}
+                        {getCardString(card)}
                     </Text>
 
                 </View>

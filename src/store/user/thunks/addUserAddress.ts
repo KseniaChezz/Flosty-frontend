@@ -1,43 +1,24 @@
 import {Dispatch} from 'react';
 
-import {setProcessingData, addCard} from '../actions';
+import {setProcessingData, addAddress} from '../actions';
 import {setError} from '../../app/actions';
 
 import {post} from '../../../utils/network';
 
 import {IUserAction} from '../types/actions';
 import {IAppAction} from '../../app/types/actions';
-import {ICard, ICardResponse, IAddress} from '../../../types/user';
+import {IAddress, IAddressResponse} from '../../../types/user';
 
-import {getCardObjectForSend, mapCardFromResponse} from '../../../utils';
+import {getCardObjectForSend, mapAddressFromResponse} from '../../../utils';
 
 interface IResponse {
-    data: ICardResponse;
-}
-
-interface IAddressObligatoryFields {
-    zip_code: string;
-    region: string;
-    city: string;
-    street: string;
-    house: string;
-    apartment: string;
-    recipient_first_name: string;
-    recipient_last_name: string;
-    phone_number: string;
-    email: string;
-}
-
-interface IAddressForSave extends IAddressObligatoryFields {
-    building?: string;
-    block?: string;
+    data: IAddressResponse;
 }
 
 export const addUserAddress = (address: Omit<IAddress, 'id'>) => {
     return (dispatch: Dispatch<IUserAction | IAppAction>) => {
         dispatch(setProcessingData(true));
         const {
-            country,
             region,
             city,
             street,
@@ -51,8 +32,7 @@ export const addUserAddress = (address: Omit<IAddress, 'id'>) => {
             phoneNumber,
             email,
         } = address;
-        const addressForSave: IAddressForSave = {
-            region,
+        const addressForSave: Omit<IAddressResponse, 'id'> = {
             city,
             street,
             house,
@@ -72,12 +52,15 @@ export const addUserAddress = (address: Omit<IAddress, 'id'>) => {
             addressForSave.block = block;
         }
 
+        if (region) {
+            addressForSave.region = region;
+        }
+
         return post('/users/addresses', {...addressForSave})
             .then((res: IResponse) => {
                 const {data} = res;
-                debugger;
 
-                dispatch(addCard(mapCardFromResponse(data)));
+                dispatch(addAddress(mapAddressFromResponse(data)));
                 dispatch(setProcessingData(false));
             })
             .catch((err: string) => {

@@ -7,10 +7,15 @@ import {
     StyleSheet,
 } from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
-import {RouteProp} from '@react-navigation/native';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
-import {HeaderWithBackButton, PlainRadioButtonRowItem, RadioButtonRowItem} from '../../../elements';
+import {
+    HeaderWithBackButton,
+    PlainRadioButtonRowItem,
+    RadioButtonRowItem,
+} from '../../../elements';
+
+import {selectCard} from '../../../store/basket/actions';
 
 import {IOrderNavigatorParamList} from '../../../types/orderNavigator';
 import {IState} from '../../../store';
@@ -18,45 +23,33 @@ import {ICard} from '../../../types/user';
 
 import {OrderNavigatorRoutes} from '../../../enums/orderNavigatorRoutes';
 import {TEXT, COLORS} from '../../../constants';
-import {getCardObjectForRender} from '../../../utils';
+
+import {getCardObjectForRender, getCardString} from '../../../utils';
 
 type ScreenNavigationProp = StackNavigationProp<IOrderNavigatorParamList, OrderNavigatorRoutes.PAYMENT_SCREEN>;
-type ScreenRouteProp = RouteProp<IOrderNavigatorParamList, OrderNavigatorRoutes.PAYMENT_SCREEN>;
 
 interface IProps {
     navigation: ScreenNavigationProp;
-    route: ScreenRouteProp;
 }
 
 const PaymentScreen = memo((props: IProps) => {
-    const {
-        navigation,
-        route: {
-            params: {
-                setPaymentWay,
-            },
-        },
-    } = props;
+    const {navigation,} = props;
     const cardList: ICard[] = useSelector((store: IState) => store.user.cardList);
-    const [selectedPayment, setSelectedPayment] = useState<string | number | undefined>();
+    const selectedCard: ICard | undefined = useSelector((state: IState) => state.basket.selectedCard);
+    const dispatch = useDispatch();
 
     const onBackPress = () => {
         navigation.goBack();
     };
 
-    const onPaymentPress = (value: string | number, text: string) => {
+    const onPaymentPress = (card: ICard) => {
         return () => {
-            setSelectedPayment(value);
-            setPaymentWay(text);
+            dispatch(selectCard(card));
         }
     };
 
     const onAddCardSuccess = (card: ICard) => {
-        const {id, type, cardNumber} = card;
-        const text: string = `${type}, **** ${cardNumber.toString().slice(-4)}`;
-
-        setSelectedPayment(id);
-        setPaymentWay(text);
+        dispatch(selectCard(card));
     };
 
     const onNewCardPress = () => {
@@ -84,15 +77,15 @@ const PaymentScreen = memo((props: IProps) => {
             <View style={styles.mainContent}>
                 <ScrollView>
                     {cardList.map((card: ICard) => {
-                        const {id, type, cardNumber} = card;
-                        const text: string = `${type}, **** ${cardNumber.toString().slice(-4)}`;
+                        const {id} = card;
+                        const text: string = getCardString(card);
 
                         return (
                             <PlainRadioButtonRowItem
                                 key={id}
                                 text={text}
-                                isSelected={selectedPayment === id}
-                                onPress={onPaymentPress(id, text)}
+                                isSelected={selectedCard?.id === id}
+                                onPress={onPaymentPress(card)}
                             />
                         )
                     })}
@@ -103,12 +96,6 @@ const PaymentScreen = memo((props: IProps) => {
                         isSelected={false}
                         isDefault={true}
                         onPress={onNewCardPress}
-                    />
-
-                    <PlainRadioButtonRowItem
-                        text={TEXT.yandexMoney}
-                        isSelected={selectedPayment === TEXT.yandexMoney}
-                        onPress={onPaymentPress(TEXT.yandexMoney, TEXT.yandexMoney)}
                     />
                 </ScrollView>
             </View>

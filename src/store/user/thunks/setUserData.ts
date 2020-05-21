@@ -4,12 +4,12 @@ import {setUser, setAddressList, setCardList} from '../actions';
 
 import {IUserAction} from '../types/actions';
 import {ILoginAndRegistrationResponse} from '../types/ILoginAndRegistrationResponse';
-import {ICardResponse} from '../../../types/user';
+import {ICardResponse, IAddressResponse} from '../../../types/user';
 
 import {TEXT} from '../../../constants';
 
 import {setToken} from '../../../utils/network';
-import {mapCardFromResponse} from '../../../utils';
+import {mapCardFromResponse, mapAddressFromResponse} from '../../../utils';
 
 export const setUserData = (
     dispatch: Dispatch<IUserAction>,
@@ -33,6 +33,6 @@ export const setUserData = (
     setToken(token);
 
     dispatch(setUser({email, name, profile: role === 'user' ? TEXT.private : TEXT.business}));
-    dispatch(setAddressList(addresses));
+    dispatch(setAddressList(addresses.map((address: IAddressResponse) => mapAddressFromResponse(address))));
     dispatch(setCardList(cards.map((card: ICardResponse) => mapCardFromResponse(card))));
 }

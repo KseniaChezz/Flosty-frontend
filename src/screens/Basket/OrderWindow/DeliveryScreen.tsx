@@ -3,7 +3,7 @@ import {
     View,
     StyleSheet,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
 import {RouteProp} from '@react-navigation/native';
 
@@ -14,9 +14,12 @@ import {
 } from '../../../elements';
 import FilterItem from '../../../elements/ProductList/FilterWindow/FilterItem';
 
+import {selectDeliveryType} from '../../../store/basket/actions';
+
 import {IOrderNavigatorParamList} from '../../../types/orderNavigator';
 import {IState} from '../../../store';
 import {IAddress} from '../../../types/user';
+import {IDeliveryType} from '../../../types/basket';
 
 import {OrderNavigatorRoutes} from '../../../enums/orderNavigatorRoutes';
 import {RootNavigatorRoutes} from '../../../enums';
@@ -38,23 +41,23 @@ const DeliveryScreen = memo((props: IProps) => {
         route: {
             params: {
                 hide,
-                deliveryWay,
-                setDeliveryWay,
             },
         },
     } = props;
-    const [selectedDelivery, setSelectedDelivery] = useState<string>(deliveryWay);
     const addressList: IAddress[] = useSelector((store: IState) => store.user.addressList);
     const selectedAddress: IAddress | undefined = useSelector((state: IState) => state.basket.selectedAddress);
+    const deliveryTypeList: IDeliveryType[] = useSelector((state: IState) => state.basket.deliveryTypeList);
+    const selectedDeliveryType: IDeliveryType | undefined = useSelector(
+        (state: IState) => state.basket.selectedDeliveryType);
+    const dispatch = useDispatch();
 
     const onBackPress = () => {
         navigation.goBack();
     };
 
-    const onDeliveryTypePress = (text: string) => {
+    const onDeliveryTypePress = (type: IDeliveryType) => {
         return () => {
-            setSelectedDelivery(text);
-            setDeliveryWay(text);
+            dispatch(selectDeliveryType(type));
         }
     };
 
@@ -78,17 +81,18 @@ const DeliveryScreen = memo((props: IProps) => {
             />
 
             <View style={styles.mainContent}>
-                <PlainRadioButtonRowItem
-                    text={TEXT.carrier}
-                    isSelected={selectedDelivery === TEXT.carrier}
-                    onPress={onDeliveryTypePress(TEXT.carrier)}
-                />
+                {deliveryTypeList.map((type: IDeliveryType) => {
+                    const {id, name} = type;
 
-                <PlainRadioButtonRowItem
-                    text={TEXT.post}
-                    isSelected={selectedDelivery === TEXT.post}
-                    onPress={onDeliveryTypePress(TEXT.post)}
-                />
+                    return (
+                        <PlainRadioButtonRowItem
+                            key={id}
+                            text={name}
+                            isSelected={selectedDeliveryType?.id === id}
+                            onPress={onDeliveryTypePress(type)}
+                        />
+                    )
+                })}
 
                 <FilterItem
                     title={TEXT.deliveryAddress}

@@ -22,19 +22,37 @@ export interface IUserAddressFieldList extends IFieldList {}
 
 export interface IAddress {
     id: number;
-    country: string;
-    region: string;
+    region: string | undefined;
     city: string;
     street: string;
     house: string;
-    building: string;
-    block: string;
+    building: string | undefined;
+    block: string | undefined;
     apartment: string;
     index: string;
     firstName: string;
     name: string;
     phoneNumber: string;
     email: string;
+}
+
+export interface IAddressResponseObligatoryFields {
+    id: number;
+    zip_code: string;
+    city: string;
+    street: string;
+    house: string;
+    apartment: string;
+    recipient_first_name: string;
+    recipient_last_name: string;
+    phone_number: string;
+    email: string;
+}
+
+export interface IAddressResponse extends IAddressResponseObligatoryFields {
+    building?: string;
+    block?: string;
+    region?: string;
 }
 
 export interface IUserCardFieldList extends IFieldList {}

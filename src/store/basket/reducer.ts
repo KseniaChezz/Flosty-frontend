@@ -9,7 +9,9 @@ import {
     IDeleteShopProducts,
     ISelectAddress,
     ISelectCard,
+    ISelectDeliveryType,
     ISetDataIsProcessing,
+    ISetDeliveryTypeList,
     ISetList,
     ISetListIsLoading,
     IUpdateProductQuantity,
@@ -24,6 +26,8 @@ const initialState: IBasketState = {
     isDataProcessing: false,
     selectedAddress: undefined,
     selectedCard: undefined,
+    deliveryTypeList: [],
+    selectedDeliveryType: undefined,
 }
 
 const onSetDataIsProcessing = (state: IBasketState, action: ISetDataIsProcessing): IBasketState => {
@@ -158,6 +162,24 @@ const onSelectCard = (state: IBasketState, action: ISelectCard): IBasketState =>
     }
 }
 
+const onSetDeliveryTypeList = (state: IBasketState, action: ISetDeliveryTypeList): IBasketState => {
+    const {deliveryTypeList} = action;
+
+    return {
+        ...state,
+        deliveryTypeList,
+    }
+}
+
+const onSelectDeliveryType = (state: IBasketState, action: ISelectDeliveryType): IBasketState => {
+    const {deliveryType} = action;
+
+    return {
+        ...state,
+        selectedDeliveryType: deliveryType,
+    }
+}
+
 export const basketReducer = (state: IBasketState = initialState, action: IBasketAction | IAppAction): IBasketState => {
     switch (action.type) {
         case basketAction.BASKET_SET_DATA_IS_PROCESSING:
@@ -180,6 +202,10 @@ export const basketReducer = (state: IBasketState = initialState, action: IBaske
             return onSelectAddress(state, action);
         case basketAction.BASKET_SELECT_CARD:
             return onSelectCard(state, action);
+        case basketAction.BASKET_SET_DELIVERY_TYPE_LIST:
+            return onSetDeliveryTypeList(state, action);
+        case basketAction.BASKET_SELECT_DELIVERY_TYPE:
+            return onSelectDeliveryType(state, action);
         case AppAction.APP_SET_DEFAULT:
             return initialState;
         default:

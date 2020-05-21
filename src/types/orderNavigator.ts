@@ -5,7 +5,7 @@ export type IOrderNavigatorParamList = {
         selectedProductsPrice: number;
         hide: () => void;
     };
-    PaymentScreen: {setPaymentWay: (way: string) => void};
+    PaymentScreen: undefined;
     NewCardScreen: {
         title: string;
         fieldList: IUserCardFieldList,
@@ -14,8 +14,6 @@ export type IOrderNavigatorParamList = {
     };
     DeliveryScreen: {
         hide: () => void;
-        setDeliveryWay: (way: string) => void;
-        deliveryWay: string;
     };
     AddressListScreen: undefined;
 };

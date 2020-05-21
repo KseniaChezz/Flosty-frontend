@@ -1,4 +1,5 @@
 export const TEXT = {
+    Russia: 'Россия',
     privacyPolicy: 'Политика конфиденциальности',
     email: 'Email',
     password: 'Пароль',
@@ -378,8 +379,6 @@ export const TEXT = {
     totalSum: 'Итог',
     yandexMoney: 'Яндекс Деньги',
     bankCard: 'Банковская карта',
-    carrier: 'Курьер',
-    post: 'Почта',
     deliveryAddress: 'Адрес доставки',
     selectAddress: 'Выберите адрес',
 

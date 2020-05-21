@@ -9,7 +9,7 @@ import {
 
 import {IAddress} from '../../../types/user';
 
-import {COLORS} from '../../../constants';
+import {COLORS, TEXT} from '../../../constants';
 
 import {getAddressString} from '../../../utils';
 
@@ -24,7 +24,6 @@ const AddresCard = memo((props: IProps) => {
         address,
     } = props;
     const {
-        country,
         region,
         city,
         street,
@@ -61,7 +60,7 @@ const AddresCard = memo((props: IProps) => {
                     </Text>
 
                     <Text style={styles.text}>
-                        {`${country}, ${city}`}
+                        {`${TEXT.Russia}, ${city}`}
                     </Text>
 
                     <Text style={styles.text}>

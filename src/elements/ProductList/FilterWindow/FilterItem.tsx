@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
     },
     textContainer: {
         paddingLeft: 4,
+        flex: 1,
     },
     imageNext: {
         height: 20,
