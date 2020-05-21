@@ -178,7 +178,7 @@ const onSelectDeliveryType = (state: IBasketState, action: ISelectDeliveryType):
 
     return {
         ...state,
-        selectedDeliveryType: deliveryType,
+        selectedDeliveryType: deliveryType ? deliveryType : state.deliveryTypeList[0],
     }
 }
 

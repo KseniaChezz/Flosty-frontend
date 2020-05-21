@@ -1,25 +1,26 @@
-import React, {useState, memo} from 'react';
+import React, {memo} from 'react';
 import {
     View,
-    Text,
-    TouchableOpacity,
-    TextInput,
+    StyleSheet,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
 import {RouteProp} from '@react-navigation/native';
 
-import styles from './style';
-
-import {ColoredButton, Title, InfoRow} from '../../../../elements';
+import {InfoRow} from '../../../../elements';
 import FilterItem from '../../../../elements/ProductList/FilterWindow/FilterItem';
+import OrderButton from './OrderButton';
+import OrderHeader from './OrderHeader';
+
+import {makeOrder} from '../../../../store/basket/thunks/makeOrder';
 
 import {IOrderNavigatorParamList} from '../../../../types/orderNavigator';
 import {IState} from '../../../../store';
 import {ICard, IAddress} from '../../../../types/user';
+import {IDeliveryType} from '../../../../types/basket';
 
 import {OrderNavigatorRoutes} from '../../../../enums/orderNavigatorRoutes';
-import {TEXT} from '../../../../constants';
+import {TEXT, COLORS} from '../../../../constants';
 
 import {getAddressForBasketMenuItem, getCardString} from '../../../../utils';
 
@@ -37,14 +38,14 @@ const RootOrderScreen = memo((props: IProps) => {
         route: {
             params: {
                 selectedProductsPrice,
+                productIdList,
                 hide,
             }
         }
     } = props;
-    const [address, setAddress] = useState<string>(TEXT.doAddAddress);
     const selectedCard: ICard | undefined = useSelector((state: IState) => state.basket.selectedCard);
     const selectedAddress: IAddress | undefined = useSelector((state: IState) => state.basket.selectedAddress);
-    const selectedDeliveryType: any | undefined = useSelector(
+    const selectedDeliveryType: IDeliveryType = useSelector(
         (state: IState) => state.basket.selectedDeliveryType);
     const deliveryPrice: number = useSelector((state: IState) => state.basket.deliveryPrice);
     const addressText: string = selectedAddress
@@ -52,6 +53,8 @@ const RootOrderScreen = memo((props: IProps) => {
             ? `${selectedDeliveryType.name}, ${getAddressForBasketMenuItem(selectedAddress)}`
             : `${getAddressForBasketMenuItem(selectedAddress)}`
         : TEXT.doAddAddress;
+    const isButtonDisabled: boolean = !selectedAddress || !selectedCard;
+    const dispatch = useDispatch();
 
     const onPaymentWayPress = () => {
         navigation.navigate(OrderNavigatorRoutes.PAYMENT_SCREEN);
@@ -61,21 +64,22 @@ const RootOrderScreen = memo((props: IProps) => {
         navigation.navigate(OrderNavigatorRoutes.DELIVERY_SCREEN, {hide});
     };
 
+    const onOrderSuccessCallback = () => {
+        hide();
+    };
+
+    const onOrderButtonPress = () => {
+        if (!selectedAddress) return;
+
+        dispatch(makeOrder(selectedAddress.id, selectedDeliveryType.id, productIdList, onOrderSuccessCallback));
+    };
+
     return (
         <View style={styles.container}>
             <View style={styles.mainContent}>
-                <View style={styles.titleRow}>
-                    <Title
-                        text={TEXT.orderProcessing}
-                        textStyle={styles.title}
-                    />
-                    <TouchableOpacity
-                        style={styles.close}
-                        onPress={hide}
-                    >
-                        <Text style={styles.title}>X</Text>
-                    </TouchableOpacity>
-                </View>
+                <OrderHeader
+                    hide={hide}
+                />
 
                 <FilterItem
                     title={TEXT.delivery}
@@ -112,26 +116,22 @@ const RootOrderScreen = memo((props: IProps) => {
                 />
             </View>
 
-            <View>
-                <ColoredButton
-                    text={TEXT.agreeOrder}
-                    onPress={()=>{}}
-                    buttonStyle={styles.button}
-                    textStyle={styles.buttonText}
-                />
-
-                <Text style={styles.conditionsText}>
-                    {TEXT.pressOrder}
-                    <Text
-                        style={[styles.conditionsText, styles.conditionButtonText]}
-                        onPress={()=>{}}
-                    >
-                        {TEXT.userAgreement}
-                    </Text>
-                </Text>
-            </View>
+            <OrderButton
+                isDisabled={isButtonDisabled}
+                onPress={onOrderButtonPress}
+            />
         </View>
     );
+});
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: COLORS.White,
+    },
+    mainContent: {
+        flex: 1,
+    },
 });
 
 export default RootOrderScreen;
