@@ -1,6 +1,6 @@
 import {UserAction} from '../userActionEnum'
 
-import {IUser, IAddress, ICard, INotification, IMessage} from '../../../types/user';
+import {IUser, IAddress, ICard, INotification, IMessage, IOrder} from '../../../types/user';
 
 export interface ISetUser {
     type: UserAction.USER_SET_USER;
@@ -19,12 +19,17 @@ export interface IAddAddress {
 
 export interface IDeleteAddress {
     type: UserAction.USER_DELETE_ADDRESS;
-    addressId: string;
+    addressId: number;
 }
 
 export interface ISetCardList {
     type: UserAction.USER_SET_CARD_LIST;
     cardList: ICard[];
+}
+
+export interface ISetOrderList {
+    type: UserAction.USER_SET_ORDER_LIST;
+    orderList: IOrder[];
 }
 
 export interface IAddCard {
@@ -40,6 +45,11 @@ export interface IDeleteCard {
 export interface ISetProcessingData {
     type: UserAction.USER_SET_PROCESSING_DATA;
     isProcessingData: boolean;
+}
+
+export interface ISetIsLoading {
+    type: UserAction.USER_SET_IS_LOADING;
+    isLoading: boolean;
 }
 
 export interface ISetNotificationList {
@@ -71,9 +81,11 @@ export type IUserAction = ISetUser
     | IAddAddress
     | IDeleteAddress
     | ISetCardList
+    | ISetOrderList
     | IAddCard
     | IDeleteCard
     | ISetProcessingData
+    | ISetIsLoading
     | ISetNotificationList
     | IAddMessageInSupportChat
     | IAddMessageInShopChat

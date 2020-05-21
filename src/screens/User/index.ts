@@ -1,4 +1,5 @@
 import UserProfile from './UserProfile';
+import UserOrderList from './UserOrderList';
 import UserAddressList from './UserAddressList';
 import UserAddress from './UserAddress';
 import UserCardList from './UserCardList';
@@ -11,6 +12,7 @@ import ShopChat from './ShopChat';
 
 export {
     UserProfile,
+    UserOrderList,
     UserAddressList,
     UserAddress,
     UserCardList,

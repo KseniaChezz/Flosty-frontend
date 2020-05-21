@@ -1,5 +1,5 @@
 import {ISubscription} from './subscription';
-import { ITag } from './shop';
+import {ITag} from './shop';
 
 export interface IShopProduct {
     id: number;

@@ -28,6 +28,7 @@ import {
     SupportChat,
     UserCommunicationShopList,
     ShopChat,
+    UserOrderList,
 } from '../screens/User';
 import Subscriptions from '../screens/Subscriptions';
 import SubscriptionDetail from '../screens/SubscriptionDetail';
@@ -91,6 +92,7 @@ const RootNavigator = () => {
                     <Stack.Screen name={RootNavigatorRoutes.SUBSCRIPTION_PERSONAL} component={SubscriptionPersonal} />
                     <Stack.Screen name={RootNavigatorRoutes.SUBSCRIPTION_LINKED} component={SubscriptionLinked} />
                     <Stack.Screen name={RootNavigatorRoutes.USER_PROFILE} component={UserProfile} />
+                    <Stack.Screen name={RootNavigatorRoutes.USER_PROFILE_ORDER_LIST} component={UserOrderList} />
                     <Stack.Screen name={RootNavigatorRoutes.USER_PROFILE_ADDRESS_LIST} component={UserAddressList} />
                     <Stack.Screen name={RootNavigatorRoutes.USER_PROFILE_ADDRESS} component={UserAddress} />
                     <Stack.Screen name={RootNavigatorRoutes.USER_PROFILE_CARD_LIST} component={UserCardList} />

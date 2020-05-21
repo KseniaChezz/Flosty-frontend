@@ -72,3 +72,11 @@ export const getTimeOrDate = (timestamp: number): string => {
 
     return `${day} ${getStringMonth(month).slice(0, 4)}`;
 }
+
+export const getDayAndMonth = (timestamp: number): string => {
+    const date: Date = new Date(timestamp);
+    const day: number = date.getDate();
+    const month: number = date.getMonth();
+
+    return `${day} ${getStringMonth(month)}`;
+}

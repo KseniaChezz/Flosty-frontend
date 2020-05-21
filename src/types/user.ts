@@ -109,3 +109,41 @@ export interface IShopInfoAndMessage {
     name: string;
     messageList: IMessage[];
 }
+
+export interface IOrderResponse {
+    id: number;
+    track_number: string;
+    will_delivered: string;
+    status: string;
+    products: IOrderProductResponse[];
+}
+
+export interface IOrderProductResponse {
+    id: number;
+    image: string;
+    name: string;
+    quantity: number;
+    price: number;
+    order_id: number;
+    size?: string;
+    color?: string;
+}
+
+export interface IOrder {
+    id: number;
+    trackNumber: string;
+    deliveryDate: number;
+    status: string;
+    products: IOrderProduct[];
+}
+
+export interface IOrderProduct {
+    id: number;
+    image: string;
+    name: string;
+    quantity: number;
+    price: number;
+    orderId: number;
+    size?: string;
+    color?: string;
+}

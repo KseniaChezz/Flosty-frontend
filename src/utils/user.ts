@@ -14,6 +14,10 @@ import {
     IMessage,
     ICardResponse,
     IAddressResponse,
+    IOrderResponse,
+    IOrder,
+    IOrderProductResponse,
+    IOrderProduct,
 } from '../types/user';
 
 import {
@@ -388,3 +392,70 @@ export const getCardString = (card: ICard): string => {
 
     return `${type}, **** ${cardNumber.toString().slice(-4)}`
 };
+
+export const mapOrderProductResponse = (productResponse: IOrderProductResponse): IOrderProduct => {
+    const {
+        id,
+        image,
+        name,
+        quantity,
+        price,
+        order_id,
+        size,
+        color,
+    } = productResponse;
+
+    const product: IOrderProduct = {
+        id,
+        image,
+        name,
+        quantity,
+        price,
+        orderId: order_id,
+    };
+
+    if (color) {
+        product.color = color;
+    }
+
+    if (size) {
+        product.size = size;
+    }
+
+    return product;
+};
+
+export const mapOrderResponse = (response: IOrderResponse): IOrder => {
+    const {
+        id,
+        track_number,
+        will_delivered,
+        status,
+        products,
+    } = response;
+
+    return {
+        id,
+        status,
+        trackNumber: track_number,
+        deliveryDate: new Date(will_delivered).valueOf(),
+        products: products.map((product: IOrderProductResponse) => mapOrderProductResponse(product)),
+    }
+};
+
+export const getSizeColorQuantityText = (product: IOrderProduct): string => {
+    const {color, size, quantity} = product;
+    let result: string = '';
+
+    if (size) {
+        result += `${size} | `;
+    }
+
+    if (color) {
+        result += `${color} | `;
+    }
+
+
+    result += `${quantity}шт.`;
+    return result;
+}

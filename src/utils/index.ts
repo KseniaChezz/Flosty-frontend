@@ -15,6 +15,9 @@ import {
     isNotEmptyString,
     getAddressString,
     getCardString,
+    mapOrderResponse,
+    mapOrderProductResponse,
+    getSizeColorQuantityText,
 } from './user';
 import {
     getReadableDate,
@@ -23,6 +26,7 @@ import {
     isDateBelongTwentyThreeDaysBeforeThisWeek,
     getTime,
     getTimeOrDate,
+    getDayAndMonth,
 } from './time';
 import {
     mapShopFromResponse,
@@ -99,6 +103,9 @@ export {
     isNotEmptyString,
     getAddressString,
     getCardString,
+    mapOrderResponse,
+    mapOrderProductResponse,
+    getSizeColorQuantityText,
 
     getReadableDate,
     isToday,
@@ -106,6 +113,7 @@ export {
     isDateBelongTwentyThreeDaysBeforeThisWeek,
     getTime,
     getTimeOrDate,
+    getDayAndMonth,
 
     getSubscribersValueText,
     filterSubscriptionList,

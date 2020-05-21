@@ -7,13 +7,15 @@ import {
     ISetCardList,
     IAddCard,
     IDeleteCard,
+    ISetOrderList,
     ISetProcessingData,
+    ISetIsLoading,
     ISetNotificationList,
     IAddMessageInSupportChat,
     IAddMessageInShopChat,
     IAddFirstMessageInShopChat,
 } from './types/actions';
-import {IUser, IAddress, ICard, INotification, IMessage} from '../../types/user';
+import {IUser, IAddress, ICard, INotification, IMessage, IOrder} from '../../types/user';
 
 import {UserAction} from './userActionEnum';
 
@@ -38,7 +40,7 @@ export const addAddress = (address: IAddress): IAddAddress => {
     };
 }
 
-export const deleteAddress = (addressId: string): IDeleteAddress => {
+export const deleteAddress = (addressId: number): IDeleteAddress => {
     return {
         type: UserAction.USER_DELETE_ADDRESS,
         addressId,
@@ -66,10 +68,24 @@ export const deleteCard = (cardId: number): IDeleteCard => {
     };
 }
 
+export const setOrderList = (orderList: IOrder[]): ISetOrderList => {
+    return {
+        type: UserAction.USER_SET_ORDER_LIST,
+        orderList,
+    };
+}
+
 export const setProcessingData = (isProcessingData: boolean): ISetProcessingData => {
     return {
         type: UserAction.USER_SET_PROCESSING_DATA,
         isProcessingData,
+    };
+}
+
+export const setIsLoading = (isLoading: boolean): ISetIsLoading => {
+    return {
+        type: UserAction.USER_SET_IS_LOADING,
+        isLoading,
     };
 }
 

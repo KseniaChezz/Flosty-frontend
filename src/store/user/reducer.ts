@@ -1,18 +1,20 @@
 import {IUserState} from './types/state';
 import {
-    IUserAction,
-    ISetUser,
-    ISetAddressList,
     IAddAddress,
-    IDeleteAddress,
-    ISetCardList,
     IAddCard,
-    IDeleteCard,
-    ISetProcessingData,
-    ISetNotificationList,
-    IAddMessageInSupportChat,
-    IAddMessageInShopChat,
     IAddFirstMessageInShopChat,
+    IAddMessageInShopChat,
+    IAddMessageInSupportChat,
+    IDeleteAddress,
+    IDeleteCard,
+    ISetAddressList,
+    ISetCardList,
+    ISetIsLoading,
+    ISetNotificationList,
+    ISetOrderList,
+    ISetProcessingData,
+    ISetUser,
+    IUserAction,
 } from './types/actions';
 import {IAddress, ICard} from '../../types/user';
 import {IAppAction} from '../app/types/actions';
@@ -24,6 +26,7 @@ import {AppAction} from '../app/appActionEnum';
 
 const initialState: IUserState = {
     isProcessingData: false,
+    isLoading: false,
     main: {
         profile: TEXT.private,
         name: 'Ivan Ivanov',
@@ -47,6 +50,7 @@ const initialState: IUserState = {
         },
     ],
     messageList: {},
+    orderList:[],
 }
 
 const onSetUser = (state: IUserState, action: ISetUser): IUserState => {
@@ -85,6 +89,15 @@ const onDeleteAddress = (state: IUserState, action: IDeleteAddress): IUserState 
     };
 }
 
+const onSetOrderList = (state: IUserState, action: ISetOrderList): IUserState => {
+    const {orderList} = action;
+
+    return {
+        ...state,
+        orderList,
+    };
+}
+
 const onSetCardList = (state: IUserState, action: ISetCardList): IUserState => {
     const {cardList} = action;
 
@@ -118,6 +131,15 @@ const onSetProcessingData = (state: IUserState, action: ISetProcessingData): IUs
     return {
         ...state,
         isProcessingData,
+    };
+}
+
+const onSetIsLoading = (state: IUserState, action: ISetIsLoading): IUserState => {
+    const {isLoading} = action;
+
+    return {
+        ...state,
+        isLoading,
     };
 }
 
@@ -195,8 +217,12 @@ export const userReducer = (state: IUserState = initialState, action: IUserActio
             return onAddCard(state, action);
         case UserAction.USER_DELETE_CARD:
             return onDeleteCard(state, action);
+        case UserAction.USER_SET_ORDER_LIST:
+            return onSetOrderList(state, action);
         case UserAction.USER_SET_PROCESSING_DATA:
             return onSetProcessingData(state, action);
+        case UserAction.USER_SET_IS_LOADING:
+            return onSetIsLoading(state, action);
         case UserAction.USER_SUPPORT_CHAT_ADD_MESSAGE:
             return onAddMessageInSupportChat(state, action);
         case UserAction.USER_SHOP_CHAT_ADD_MESSAGE:

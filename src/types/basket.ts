@@ -1,5 +1,6 @@
 export interface IBasketProduct {
     id: number;
+    basketProductId: number;
     name: string;
     image: string;
     color: string;
@@ -10,6 +11,7 @@ export interface IBasketProduct {
 
 export interface IBasketProductResponse {
     id: number;
+    basket_product_id: number;
     name: string;
     price: number;
     total_price: number;

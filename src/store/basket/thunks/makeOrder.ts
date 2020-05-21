@@ -31,7 +31,6 @@ export const makeOrder = (addressId: number, deliveryId: number, productIdList: 
         )
             .then((res: IResponse) => {
                 const {data} = res;
-                debugger;
 
                 dispatch(setIsBasketDataProcessing(false));
                 dispatch(selectAddress());

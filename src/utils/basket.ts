@@ -9,6 +9,7 @@ import {TEXT} from '../constants';
 export const mapBasketProductResponse = (basketProductResponse: IBasketProductResponse): IBasketProduct => {
     const {
         id,
+        basket_product_id,
         name,
         price,
         total_price,
@@ -25,6 +26,7 @@ export const mapBasketProductResponse = (basketProductResponse: IBasketProductRe
         color,
         size,
         quantity,
+        basketProductId: basket_product_id,
         price: total_price ? total_price : price,
     }
 };
