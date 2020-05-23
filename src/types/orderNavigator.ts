@@ -1,3 +1,5 @@
+import {SetStateAction, Dispatch} from 'react';
+
 import {IUserCardFieldList} from './user';
 
 export type IOrderNavigatorParamList = {
@@ -5,6 +7,7 @@ export type IOrderNavigatorParamList = {
         selectedProductsPrice: number;
         productIdList: number[];
         hide: () => void;
+        setSelectedProductIdListMap: Dispatch<SetStateAction<Record<number, number[]>>>;
     };
     PaymentScreen: undefined;
     NewCardScreen: {

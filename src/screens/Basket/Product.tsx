@@ -27,7 +27,7 @@ interface IProps {
 
 const Product = memo((props: IProps) => {
     const {product, quantity, shopId, selectedProductIdListMap, setSelectedProductIdListMap} = props;
-    const {id: productId} = product;
+    const {basketProductId: productId} = product;
     const isSelected = isProductSelected(shopId, productId, selectedProductIdListMap);
     const dispatch = useDispatch();
 
@@ -40,6 +40,7 @@ const Product = memo((props: IProps) => {
     };
 
     const onIncreaseProductQuantityPress = () => {
+        console.log('product', product);
         dispatch(updateProductQuantity(shopId, productId, quantity + 1));
     };
 

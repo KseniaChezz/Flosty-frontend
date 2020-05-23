@@ -40,6 +40,7 @@ const RootOrderScreen = memo((props: IProps) => {
                 selectedProductsPrice,
                 productIdList,
                 hide,
+                setSelectedProductIdListMap,
             }
         }
     } = props;
@@ -64,14 +65,24 @@ const RootOrderScreen = memo((props: IProps) => {
         navigation.navigate(OrderNavigatorRoutes.DELIVERY_SCREEN, {hide});
     };
 
-    const onOrderSuccessCallback = () => {
+    const onOrderCallback = (isError: boolean) => {
         hide();
+
+        if (!isError) {
+            setSelectedProductIdListMap({});
+        }
     };
 
     const onOrderButtonPress = () => {
-        if (!selectedAddress) return;
+        if (!selectedAddress || !selectedCard || !selectedDeliveryType) return;
 
-        dispatch(makeOrder(selectedAddress.id, selectedDeliveryType.id, productIdList, onOrderSuccessCallback));
+        dispatch(makeOrder(
+            selectedAddress.id,
+            selectedCard.id,
+            selectedDeliveryType.id,
+            productIdList,
+            onOrderCallback,
+        ));
     };
 
     return (

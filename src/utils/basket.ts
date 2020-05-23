@@ -73,7 +73,7 @@ export const selectAllBasketProducts = (
     basketProductList.forEach((item: IShopInfoAndBasketProduct) => {
         const {id, productList} = item;
 
-        newSelectedProductListMap[id] = productList.map((item: IBasketProduct) => item.id);
+        newSelectedProductListMap[id] = productList.map((item: IBasketProduct) => item.basketProductId);
     });
 
     setSelectedProductIdListMap(newSelectedProductListMap);
@@ -90,7 +90,7 @@ export const selectAllShopBasketProducts = (
             basketProductList.find((item: IShopInfoAndBasketProduct) => item.id === shopId);
 
         if (shop) {
-            newSelectedProductList[shopId] = shop.productList.map((item: IBasketProduct) => item.id);
+            newSelectedProductList[shopId] = shop.productList.map((item: IBasketProduct) => item.basketProductId);
         }
 
         return newSelectedProductList;
@@ -159,7 +159,7 @@ export const getSelectedBasketProductsPrice = (
 
             if (shop) {
                 const product: IBasketProduct | undefined = shop.productList.find(
-                    (item: IBasketProduct) => item.id === id);
+                    (item: IBasketProduct) => item.basketProductId === id);
 
                 if (product) {
                     const {price, quantity} = product;

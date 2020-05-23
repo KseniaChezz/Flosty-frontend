@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, {useState, memo} from 'react';
+import React, {useState, memo, SetStateAction, Dispatch} from 'react';
 import {
     View,
     StyleSheet,
@@ -17,7 +17,7 @@ import {COLORS} from '../../../constants';
 import {OrderNavigatorRoutes} from '../../../enums/orderNavigatorRoutes';
 
 import {IOrderNavigatorParamList} from '../../../types/orderNavigator';
-import { UserCard } from '../../User';
+import {UserCard} from '../../User';
 
 import {getProductIdList} from '../../../utils';
 
@@ -25,6 +25,7 @@ interface IProps {
     isWindowVisible: boolean;
     selectedProductsPrice: number;
     selectedProductIdListMap: Record<number, number[]>
+    setSelectedProductIdListMap: Dispatch<SetStateAction<Record<number, number[]>>>;
     hide: () => void;
 }
 
@@ -35,6 +36,7 @@ const OrderWindow = memo((props: IProps) => {
         isWindowVisible,
         selectedProductsPrice,
         selectedProductIdListMap,
+        setSelectedProductIdListMap,
         hide,
     } = props;
     const productIdList: number[] = getProductIdList(selectedProductIdListMap);
@@ -48,7 +50,7 @@ const OrderWindow = memo((props: IProps) => {
                         <Stack.Screen
                             name={OrderNavigatorRoutes.ROOT_ORDER_SCREEN}
                             component={RootOrderScreen}
-                            initialParams={{selectedProductsPrice, productIdList, hide}}
+                            initialParams={{selectedProductsPrice, productIdList, hide, setSelectedProductIdListMap}}
                         />
                         <Stack.Screen
                             name={OrderNavigatorRoutes.PAYMENT_SCREEN}

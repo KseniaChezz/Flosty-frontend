@@ -66,6 +66,7 @@ const Basket = memo((props:IProps) => {
                     isWindowVisible={isOrderWindowVisible}
                     selectedProductsPrice={selectedProductsPrice}
                     selectedProductIdListMap={selectedProductIdListMap}
+                    setSelectedProductIdListMap={setSelectedProductIdListMap}
                     hide={hide}
                 />
             </Fragment>

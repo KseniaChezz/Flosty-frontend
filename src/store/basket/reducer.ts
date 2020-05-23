@@ -65,10 +65,10 @@ const onDeleteProduct = (state: IBasketState, action: IDeleteProduct): IBasketSt
     const filteredList: IShopInfoAndBasketProduct[] = list.filter((item: IShopInfoAndBasketProduct) => {
         if (item.id !== shopId) {
             return true;
-        } else if (item.productList.length === 1 && item.productList[0].id === productId) {
+        } else if (item.productList.length === 1 && item.productList[0].basketProductId === productId) {
             return false;
         } else {
-            item.productList = item.productList.filter((item: IBasketProduct) => item.id !== productId);
+            item.productList = item.productList.filter((item: IBasketProduct) => item.basketProductId !== productId);
             return true;
         }
     })
@@ -110,7 +110,7 @@ const onDeleteShopProducts = (state: IBasketState, action: IDeleteShopProducts):
 
     if (productList) {
         productList = productList.filter((item: IBasketProduct) => {
-            return !productIdList.some((productId: number) => productId === item.id);
+            return !productIdList.some((productId: number) => productId === item.basketProductId);
         });
     }
 
@@ -131,7 +131,7 @@ const onUpdateProductQuantity = (state: IBasketState, action: IUpdateProductQuan
 
     if (productList) {
         productList = productList.map((item: IBasketProduct) => {
-            if (item.id === productId) {
+            if (item.basketProductId === productId) {
                 item.quantity = productQuantity;
                 return item;
             } else {

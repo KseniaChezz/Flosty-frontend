@@ -67,7 +67,6 @@ export const deleteAllProducts = () => {
         dispatch(setIsBasketDataProcessing(true));
 
         const basketList: IShopInfoAndBasketProduct[] = getState().basket.list;
-        debugger;
         const shops: number[] = basketList.map(item => item.id);
 
         return deleteMethod('/baskets/remove/', {shops})
