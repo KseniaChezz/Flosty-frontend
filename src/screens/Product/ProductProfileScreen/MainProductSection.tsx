@@ -26,7 +26,6 @@ const MainProductSection = memo((props: IProps) => {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 40,
         marginBottom: 10,
     },
 });

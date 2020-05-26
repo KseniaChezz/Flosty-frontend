@@ -18,7 +18,7 @@ interface IProps {
     imageList: string[];
 }
 
-const windowWidth = Dimensions.get('window').width;
+const {width} = Dimensions.get('window');
 
 const ProductImage = memo((props: IProps) => {
     const {imageList} = props;
@@ -52,8 +52,8 @@ const ProductImage = memo((props: IProps) => {
             <Carousel<string>
                 data={imageList}
                 renderItem={renderItem}
-                sliderWidth={windowWidth * imageList.length}
-                itemWidth={windowWidth}
+                sliderWidth={width * imageList.length}
+                itemWidth={width}
                 layout={'default'}
                 firstItem={index}
                 activeSlideAlignment={'start'}
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
         position: 'relative',
     },
     img: {
-        width: windowWidth,
+        width: width,
         height: 400,
         resizeMode: 'contain',
     },

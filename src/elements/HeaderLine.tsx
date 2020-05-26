@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8,
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginTop: 40,
     },
     shadow: {
         shadowColor: COLORS.GreyBlue,

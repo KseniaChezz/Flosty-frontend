@@ -2,6 +2,7 @@ import React from 'react';
 import {memo, ReactNode} from 'react';
 import {
     View,
+    SafeAreaView,
     ImageSourcePropType,
     ViewStyle,
     StyleSheet,
@@ -33,20 +34,18 @@ const ScreenWrapperWithBackButton = memo((props: IProps) => {
     } = props;
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
+                <HeaderWithBackButton
+                    text={text}
+                    img={img}
+                    onImgPress={onImgPress}
+                    onBackPress={onBackPress}
+                />
 
-            <HeaderWithBackButton
-                text={text}
-                img={img}
-                onImgPress={onImgPress}
-                onBackPress={onBackPress}
-            />
-
-            <View style={[styles.innerContainer, style]}>
-                {children}
-            </View>
-
-        </View>
+                <View style={[styles.innerContainer, style]}>
+                    {children}
+                </View>
+        </SafeAreaView>
     );
 });
 

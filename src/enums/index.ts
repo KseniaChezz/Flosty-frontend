@@ -1,4 +1,5 @@
 import {RootNavigatorRoutes} from './rootNavigatorRoutes';
+import {LoginAndRegistrationNavigatorRoutes} from './loginAndRegistrationNavigatorRoutes';
 import {FilterNavigatorRoutes} from './filterNavigatorRoutes'
 import {AppTab} from './appTab';
 import {MessageAuthor} from './messageAuthor';
@@ -10,6 +11,7 @@ import {SubscriptionType} from './subscriptionType';
 
 export {
     RootNavigatorRoutes,
+    LoginAndRegistrationNavigatorRoutes,
     FilterNavigatorRoutes,
     AppTab,
     MessageAuthor,

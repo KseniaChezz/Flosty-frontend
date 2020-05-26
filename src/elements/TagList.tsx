@@ -66,6 +66,7 @@ const TagList = memo((props:IProps) => {
                 renderItem={renderTag}
                 keyExtractor={keyExtractor}
                 horizontal
+                showsHorizontalScrollIndicator={false}
             />
         </View>
 

@@ -1,7 +1,5 @@
 export enum RootNavigatorRoutes {
-    LOGIN = 'Login',
-    REGISTRATION = 'Registration',
-    REGISTRATION_FORM = 'RegistrationForm',
+    LOGIN_AND_REGISTRATION = 'LoginAndRegistration',
 
     USER_PROFILE = 'UserProfile',
     USER_PROFILE_ORDER_LIST = 'UserProfileOrderList',

@@ -1,6 +1,6 @@
-import React, { useState, memo } from 'react';
-import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
-import { RouteProp } from '@react-navigation/native';
+import React, {useState, memo} from 'react';
+import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
+import {RouteProp} from '@react-navigation/native';
 
 import {styles} from './style';
 
@@ -13,13 +13,17 @@ import {
     SubTitle,
 } from '../../../elements';
 
-import {IRootNavigatorParamList} from '../../../types/rootNavigator';
+import {ILoginAndRegistrationNavigatorParamList} from '../../../types/loginAndRegistrationNavigator';
 
 import {TEXT, registrationScreenNumber} from '../../../constants';
-import {RootNavigatorRoutes} from '../../../enums';
+import {LoginAndRegistrationNavigatorRoutes} from '../../../enums';
 
-type ScreenNavigationProp = StackNavigationProp<IRootNavigatorParamList, RootNavigatorRoutes.REGISTRATION>;
-type ScreenRouteProp = RouteProp<IRootNavigatorParamList, RootNavigatorRoutes.REGISTRATION>;
+type ScreenNavigationProp = StackNavigationProp<
+    ILoginAndRegistrationNavigatorParamList,
+    LoginAndRegistrationNavigatorRoutes.REGISTRATION_SCREEN>;
+type ScreenRouteProp = RouteProp<
+    ILoginAndRegistrationNavigatorParamList,
+    LoginAndRegistrationNavigatorRoutes.REGISTRATION_SCREEN>;
 
 interface IProps {
     navigation: ScreenNavigationProp;
@@ -44,7 +48,7 @@ const Registration = memo((props: IProps) => {
     const onNextPress = () => {
         switch (account) {
             case TEXT.private:
-                props.navigation.navigate(RootNavigatorRoutes.REGISTRATION_FORM, {screen: 2});
+                props.navigation.navigate(LoginAndRegistrationNavigatorRoutes.REGISTRATION_FORM_SCREEN, {screen: 2});
                 break;
             default:
                 break;

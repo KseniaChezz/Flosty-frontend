@@ -4,9 +4,7 @@ import {ISubscription} from './subscription';
 import {SubscriptionType} from '../enums';
 
 export type IRootNavigatorParamList = {
-    Login: undefined;
-    Registration: {screen: number};
-    RegistrationForm: {screen: number};
+    LoginAndRegistration: undefined;
 
     UserProfile: undefined;
     UserProfileAddressList: undefined;

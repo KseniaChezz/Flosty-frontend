@@ -12,11 +12,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {useSelector, useDispatch} from 'react-redux';
 
-import {
-    Login,
-    Registration,
-    RegistrationForm,
-} from '../screens/LoginAndRegistration';
+import LoginAndRegistration from '../screens/LoginAndRegistration';
 import {
     UserProfile,
     UserAddressList,
@@ -80,7 +76,8 @@ const RootNavigator = () => {
     return (
         <Fragment>
             <NavigationContainer ref={navigationRef}>
-                <Stack.Navigator headerMode="none" initialRouteName={RootNavigatorRoutes.LOGIN}>
+                <Stack.Navigator headerMode="none" initialRouteName={RootNavigatorRoutes.LOGIN_AND_REGISTRATION}>
+                    <Stack.Screen name={RootNavigatorRoutes.LOGIN_AND_REGISTRATION} component={LoginAndRegistration} />
                     <Stack.Screen name={RootNavigatorRoutes.BASKET} component={Basket} />
                     <Stack.Screen name={RootNavigatorRoutes.PRODUCT_PROFILE} component={Product} />
                     <Stack.Screen name={RootNavigatorRoutes.SHOP_PROFILE} component={ShopProfile} />
@@ -102,9 +99,6 @@ const RootNavigator = () => {
                     <Stack.Screen name={RootNavigatorRoutes.USER_PROFILE_SUPPORT} component={SupportChat} />
                     <Stack.Screen name={RootNavigatorRoutes.USER_PROFILE_MESSAGE_LIST} component={UserCommunicationShopList} />
                     <Stack.Screen name={RootNavigatorRoutes.USER_PROFILE_SHOP_CHAT} component={ShopChat} />
-                    <Stack.Screen name={RootNavigatorRoutes.LOGIN} component={Login} />
-                    <Stack.Screen name={RootNavigatorRoutes.REGISTRATION} component={Registration} />
-                    <Stack.Screen name={RootNavigatorRoutes.REGISTRATION_FORM} component={RegistrationForm} />
                 </Stack.Navigator>
             </NavigationContainer>
 

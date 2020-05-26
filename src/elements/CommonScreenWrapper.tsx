@@ -1,7 +1,9 @@
 import React from 'react';
-import {memo, ReactNode} from 'react';
+import {memo, ReactNode, Fragment} from 'react';
 import {
     View,
+    SafeAreaView,
+    StatusBar,
     ViewStyle,
     StyleSheet,
 } from 'react-native';
@@ -23,19 +25,35 @@ const CommonScreenWrapper = memo((props:IProps) => {
     } = props;
 
     return (
-        <View style={styles.container}>
-            <HeaderWithLogo/>
+        <Fragment>
+            <SafeAreaView style={styles.safeTop} />
 
-            <View style={[styles.innerContainer, style]}>
-                {children}
-            </View>
+            <SafeAreaView style={styles.safe}>
 
-            <Footer />
-        </View>
+                <StatusBar barStyle='dark-content' />
+
+                <View style={styles.container}>
+                    <HeaderWithLogo/>
+
+                    <View style={[styles.innerContainer, style]}>
+                        {children}
+                    </View>
+
+                    <Footer />
+                </View>
+            </SafeAreaView>
+        </Fragment>
     );
 });
 
 const styles = StyleSheet.create({
+    safeTop: {
+        backgroundColor: COLORS.WhiteGrey,
+    },
+    safe: {
+        flex: 1,
+        backgroundColor: COLORS.White,
+    },
     container: {
         flex: 1,
         backgroundColor: COLORS.WhiteGrey,

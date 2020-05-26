@@ -20,7 +20,7 @@ import {
 
 import {registerUser} from '../../../store/user/thunks/register';
 
-import {IRootNavigatorParamList} from '../../../types/rootNavigator';
+import {ILoginAndRegistrationNavigatorParamList} from '../../../types/loginAndRegistrationNavigator';
 import {IState} from '../../../store';
 
 import {
@@ -28,12 +28,16 @@ import {
     registrationScreenNumber,
     COLORS,
 } from '../../../constants';
-import {RootNavigatorRoutes} from '../../../enums';
+import {LoginAndRegistrationNavigatorRoutes, RootNavigatorRoutes} from '../../../enums';
 
-import {isNotEmptyString} from '../../../utils';
+import {isNotEmptyString, navigate} from '../../../utils';
 
-type ScreenNavigationProp = StackNavigationProp<IRootNavigatorParamList, RootNavigatorRoutes.REGISTRATION_FORM>;
-type ScreenRouteProp = RouteProp<IRootNavigatorParamList, RootNavigatorRoutes.REGISTRATION_FORM>;
+type ScreenNavigationProp = StackNavigationProp<
+    ILoginAndRegistrationNavigatorParamList,
+    LoginAndRegistrationNavigatorRoutes.REGISTRATION_FORM_SCREEN>;
+type ScreenRouteProp = RouteProp<
+    ILoginAndRegistrationNavigatorParamList,
+    LoginAndRegistrationNavigatorRoutes.REGISTRATION_FORM_SCREEN>;
 
 interface IProps {
     navigation: ScreenNavigationProp;
@@ -61,7 +65,7 @@ const RegistrationForm = memo((props: IProps) => {
     };
 
     const registerSuccessCallback = () => {
-        navigation.navigate(RootNavigatorRoutes.SUBSCRIPTIONS);
+        navigate(RootNavigatorRoutes.SUBSCRIPTIONS);
     };
 
     const onRegisterButtonPress = () => {

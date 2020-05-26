@@ -3,6 +3,7 @@ import {memo, useState, useEffect, Fragment} from 'react';
 import {
     View,
     ScrollView,
+    SafeAreaView,
 } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
@@ -123,7 +124,7 @@ const ProductProfile = memo((props: IProps) => {
         return (
             <Fragment>
                 <View style={styles.container}>
-                    <ScrollView>
+                    <ScrollView showsVerticalScrollIndicator={false}>
                         <MainProductSection
                             product={product}
                         />
@@ -156,7 +157,6 @@ const ProductProfile = memo((props: IProps) => {
                     <ColoredButton
                         text={`${TEXT.buyFor}${formatProductPrice(product.price)}`}
                         onPress={onBuyPress}
-                        buttonStyle={styles.button}
                     />
                 </View>
             </Fragment>
@@ -165,20 +165,25 @@ const ProductProfile = memo((props: IProps) => {
 
     return (
         <Fragment>
-            <Spinner visible={isProductLoading || isShopLoading} />
-            {renderProduct()}
+            <SafeAreaView style={styles.safeTop}>
+                <Spinner visible={isProductLoading || isShopLoading} />
 
-            <ModalInfoWindow
-                isWindowVisible={isProductAddedInBusketWindowShown}
-                text={TEXT.productAdded}
-                onPress={onAddProductWindowPress}
-            />
+                {renderProduct()}
 
-            <ModalInfoWindow
-                isWindowVisible={isNotSizeOrColorSelectedWindowShown}
-                text={productColor ? TEXT.selectSize : TEXT.selectColor}
-                onPress={onIsNotSizeOrColorWindowPress}
-            />
+                <ModalInfoWindow
+                    isWindowVisible={isProductAddedInBusketWindowShown}
+                    text={TEXT.productAdded}
+                    onPress={onAddProductWindowPress}
+                />
+
+                <ModalInfoWindow
+                    isWindowVisible={isNotSizeOrColorSelectedWindowShown}
+                    text={productColor ? TEXT.selectSize : TEXT.selectColor}
+                    onPress={onIsNotSizeOrColorWindowPress}
+                />
+            </SafeAreaView>
+
+            <SafeAreaView style={styles.safe} />
         </Fragment>
     );
 });

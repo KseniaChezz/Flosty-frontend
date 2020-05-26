@@ -1,7 +1,7 @@
 import React from 'react';
 import {memo, useState} from 'react';
 import {View, Text} from 'react-native';
-import {StackNavigationProp} from '@react-navigation/stack';
+import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
 import {useSelector, useDispatch} from 'react-redux';
 
 import {styles} from './style';
@@ -23,7 +23,9 @@ import {
     userInfoList,
     messagesAndSettingsList,
 } from '../../../constants';
-import {RootNavigatorRoutes} from '../../../enums';
+import {RootNavigatorRoutes, LoginAndRegistrationNavigatorRoutes} from '../../../enums';
+
+import {navigate} from '../../../utils';
 
 type ScreenNavigationProp = StackNavigationProp<IRootNavigatorParamList, RootNavigatorRoutes.USER_PROFILE>;
 
@@ -51,7 +53,11 @@ const UserProfile = memo((props: IProps) => {
     };
 
     const onLogoutSuccessCallback = () => {
-        navigation.navigate(RootNavigatorRoutes.LOGIN);
+        navigate(
+            RootNavigatorRoutes.LOGIN_AND_REGISTRATION,
+            undefined,
+            LoginAndRegistrationNavigatorRoutes.LOGIN_SCREEN,
+        );
     };
 
     const onExitSubmitPress = () => {

@@ -3,6 +3,13 @@ import {StyleSheet} from 'react-native';
 import {COLORS} from '../../../constants/colors';
 
 export const styles = StyleSheet.create({
+    safeTop: {
+        flex: 1,
+        backgroundColor: COLORS.WhiteGrey,
+    },
+    safe: {
+        backgroundColor: COLORS.White,
+    },
     container: {
         flex: 1,
     },
@@ -13,12 +20,9 @@ export const styles = StyleSheet.create({
         shadowColor: COLORS.GreyBlue,
         shadowOffset: {
             width: 0,
-            height: 0,
+            height: -5,
         },
         shadowRadius: 5,
-        shadowOpacity: 1.0,
-    },
-    button: {
-        marginBottom: 30,
+        shadowOpacity: 0.5,
     },
 });

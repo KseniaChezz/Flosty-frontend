@@ -81,22 +81,23 @@ const SearchRootScreen = memo((props:IProps) => {
 
     const renderProductList = () => {
         return (
-            <TwoProductsInRowList
-                productList={productListToRender}
-            />
+            <View style={styles.productListContainer}>
+                <TwoProductsInRowList
+                    productList={productListToRender}
+                />
+            </View>
         );
     };
 
     return (
         <CommonScreenWrapper style={styles.container}>
-            <ScrollView>
-                <SearchInput
-                    text={searchText}
-                    onPress={onSearchPress}
-                    onCleanPress={onCleanPress}
-                    onTextChange={setSearchText}
-                    style={styles.marginTop15}
-                />
+            <SearchInput
+                text={searchText}
+                onPress={onSearchPress}
+                onCleanPress={onCleanPress}
+                onTextChange={setSearchText}
+                style={styles.marginTop15}
+            />
 
             <ScrollView showsVerticalScrollIndicator={false}>
 

@@ -1,8 +1,10 @@
 import React from 'react';
 import {memo, ReactNode} from 'react';
 import {
-    StyleSheet,
     View,
+    SafeAreaView,
+    StatusBar,
+    StyleSheet,
 } from 'react-native';
 
 import PlainButton from './PlainButton';
@@ -19,33 +21,40 @@ const LoginAndRegistrationScreenWrapper = memo((props: IProps) => {
     } = props;
 
     return (
-        <View style={styles.container}>
-            <View style={styles.innerContainer}>
-                {children}
-            </View>
+        <SafeAreaView style={styles.safe}>
+            <StatusBar barStyle='light-content' />
 
-            <PlainButton
-                text={TEXT.privacyPolicy}
-                onPress={()=> {}}
-                textStyle={styles.policyButtonText}
-            />
-        </View>
+            <View style={styles.container}>
+                <View style={styles.innerContainer}>
+                    {children}
+                </View>
+
+                <PlainButton
+                    text={TEXT.privacyPolicy}
+                    onPress={()=> {}}
+                    textStyle={styles.policyButtonText}
+                />
+            </View>
+        </SafeAreaView>
     );
 });
 
 const styles = StyleSheet.create({
+    safe: {
+        backgroundColor: COLORS.GreyBlue,
+        flex: 1,
+    },
     container: {
         flex: 1,
         backgroundColor: COLORS.GreyBlue,
-        paddingTop: 50,
         paddingHorizontal: 10,
-        paddingBottom: 20,
     },
     innerContainer: {
         flex: 1,
         backgroundColor: COLORS.WhiteGrey,
         paddingHorizontal: 25,
         marginBottom: 10,
+        borderRadius: 10,
     },
     policyButtonText: {
         color: COLORS.White,

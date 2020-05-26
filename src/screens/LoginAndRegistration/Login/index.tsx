@@ -19,15 +19,16 @@ import {
 
 import {loginUser} from '../../../store/user/thunks/login';
 
-import {IRootNavigatorParamList} from '../../../types/rootNavigator';
+import {ILoginAndRegistrationNavigatorParamList} from '../../../types/loginAndRegistrationNavigator';
 import {IState} from '../../../store';
 
 import {TEXT} from '../../../constants';
-import {RootNavigatorRoutes} from '../../../enums';
+import {LoginAndRegistrationNavigatorRoutes, RootNavigatorRoutes} from '../../../enums';
 
-import {isNotEmptyString} from '../../../utils';
+import {isNotEmptyString, navigate} from '../../../utils';
 
-type ScreenNavigationProp = StackNavigationProp<IRootNavigatorParamList, RootNavigatorRoutes.LOGIN>;
+type ScreenNavigationProp =
+    StackNavigationProp<ILoginAndRegistrationNavigatorParamList, LoginAndRegistrationNavigatorRoutes.LOGIN_SCREEN>;
 
 interface IProps {
     navigation: ScreenNavigationProp;
@@ -58,11 +59,11 @@ const Login = memo((props: IProps) => {
     };
 
     const onRegisterPress = () => {
-        navigation.navigate(RootNavigatorRoutes.REGISTRATION, {screen: 1});
+        navigation.navigate(LoginAndRegistrationNavigatorRoutes.REGISTRATION_SCREEN, {screen: 1});
     };
 
     const loginSuccessCallback = () => {
-        navigation.navigate(RootNavigatorRoutes.SUBSCRIPTIONS);
+        navigate(RootNavigatorRoutes.SUBSCRIPTIONS);
     };
 
     const onLoginPress = () => {
