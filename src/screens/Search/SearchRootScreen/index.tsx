@@ -98,6 +98,8 @@ const SearchRootScreen = memo((props:IProps) => {
                     style={styles.marginTop15}
                 />
 
+            <ScrollView showsVerticalScrollIndicator={false}>
+
                 <SearchCardList
                     onCardPress={onCardPress}
                 />

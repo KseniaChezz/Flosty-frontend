@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     },
     innerPropertyContainer: {
         paddingHorizontal: 4,
-        paddingVertical: 15,
+        paddingTop: 15,
         borderBottomWidth: 1,
         borderBottomColor: COLORS.Border,
     },
@@ -39,8 +39,11 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         backgroundColor: COLORS.Border,
         marginRight: 10,
+        marginBottom: 10,
         justifyContent: 'center',
         alignItems: 'center',
+        borderColor: COLORS.Border,
+        borderWidth: 1,
     },
     bageSelected: {
         borderColor: COLORS.DarkGrey,

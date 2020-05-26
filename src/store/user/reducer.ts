@@ -28,9 +28,9 @@ const initialState: IUserState = {
     isProcessingData: false,
     isLoading: false,
     main: {
-        profile: TEXT.private,
-        name: 'Ivan Ivanov',
-        email: 'qwerty@mail.ru',
+        profile: '',
+        name: '',
+        email: '',
     },
     addressList: [],
     cardList: [],

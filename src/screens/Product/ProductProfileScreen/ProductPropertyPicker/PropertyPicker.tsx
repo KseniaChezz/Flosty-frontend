@@ -29,7 +29,6 @@ const PropertyPicker = memo((props: IProps) => {
         setSelectedValue,
         renderBage,
     } = props;
-    // const isColorProperty: boolean = TEXT.color === propertyName;
     const choosenValue: string | undefined = selectedValue?.value;
 
     const onItemPress = (item: IProductProperty) => {

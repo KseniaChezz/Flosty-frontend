@@ -142,7 +142,7 @@ const Shop = memo((props:IProps) => {
     };
 
     return (
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
             <ShopInfoCard
                 name={name}
                 logo={logo}

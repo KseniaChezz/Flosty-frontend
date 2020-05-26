@@ -60,6 +60,7 @@ const SubscriptionFeed = memo((props: IProps) => {
             data={list}
             keyExtractor={keyExtractor}
             renderItem={renderProduct}
+            showsVerticalScrollIndicator={false}
             refreshControl={
                 <RefreshControl
                     refreshing={isRefreshing}
